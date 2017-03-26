@@ -1,0 +1,9 @@
+1. Jason
+This week should implement methods which is about loading the real stock data from cvs file.
+Work in package com.capstone.dataService
+
+2. Richard
+Write your task of this week
+
+3. Daniel
+Write your task of this week
