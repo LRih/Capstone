@@ -1,0 +1,1 @@
+Java Version: JRE 8 Update 121 (x64)
