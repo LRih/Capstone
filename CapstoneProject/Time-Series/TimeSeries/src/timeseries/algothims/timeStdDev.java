@@ -5,9 +5,14 @@
  */
 package timeseries.algothims;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import java.lang.Double;
+import java.lang.Math;
 
 import timeseries.entities.Stock;
 import timeseries.entities.StockPoint;
@@ -64,23 +69,47 @@ public class timeStdDev extends timeAlgorithm {
         varVolume = new LinkedList<Double>();
         
         calculateMeans();
-        calculateMeanRateOfReturn();
         calculateVariences();
+        
+        calculateStandardDeviations();
+        calculateAnomalyThreasholds();
+        
+        System.out.println("Mean: " + meanRateOfReturn + "," + meanVolume);
+        //System.out.println("Varience: " + varSumRateOfReturn + "," + varSumVolume);
+        //System.out.println("StdDev: " + stdRateOfReturn + "," + stdVolume);
+        
+        System.out.printf("Varience: %.4f, %.4f \n", varSumRateOfReturn, varSumVolume);
+        System.out.printf("StdDev: %.4f, %.4f \n", stdRateOfReturn, stdVolume);
+        System.out.println("Volume Anomaly Levels: " + anomalyCoeffientVolume + "," + anomalyThreasholdVolume);
+        System.out.println("Rate of Return Anomaly Levels: " + anomalyCoeffientRateOfReturn + "," + anomalyThreasholdRateOfReturn);
+        
+        
+        for (int i = 0; i < stock.getStockElements(); i++)
+        {
+            if(stock.getStockElement(i).getVolume() > (meanVolume + anomalyThreasholdVolume) || 
+                    stock.getStockElement(i).getVolume() < (meanVolume - anomalyThreasholdVolume))
+            {
+                System.out.println("Anomaly: " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
+                anomalies.add(stock.getStockElement(i));
+                
+            }
+        }
         
         return anomalies;
     } 
     
-    private double calculateMeanRateOfReturn ()
+    private void calculateStandardDeviations ()
     {
-        double mean = 0.0;
-        
-        for (int i = 0; i < stock.getStockElements(); i++)
-        {
-            stock.getStockElement(i).calculateRateOfReturn();
-            mean += stock.getStockElement(i).getRateOfReturn();
-        }
-        
-        return mean;
+        stdRateOfReturn = Math.sqrt(Math.pow((varSumRateOfReturn - meanRateOfReturn), 2.0) / stock.getStockElements());
+        stdVolume = Math.sqrt(Math.pow((varSumVolume - meanVolume) , 2.0) / stock.getStockElements());
+        System.out.println("STD Math: SQRT(POW((" + varSumRateOfReturn + " - " + meanRateOfReturn + ") / " + stock.getStockElements() + ", 2.0))");
+    }
+     
+    
+    private void calculateAnomalyThreasholds ()
+    {
+        anomalyThreasholdRateOfReturn = anomalyCoeffientRateOfReturn * stdRateOfReturn;
+        anomalyThreasholdVolume = anomalyCoeffientVolume * stdVolume;
     }
     
     private void calculateMeans ()
@@ -91,8 +120,8 @@ public class timeStdDev extends timeAlgorithm {
         for (int i = 0; i < stock.getStockElements(); i++)
         {
             stock.getStockElement(i).calculateRateOfReturn();
-            meanVolume += stock.getStockElement(i).getRateOfReturn();
-            meanRateOfReturn += stock.getStockElement(i).getVolume();
+            meanVolume += stock.getStockElement(i). getVolume();
+            meanRateOfReturn += stock.getStockElement(i).getRateOfReturn();
         }
         
         meanRateOfReturn = meanRateOfReturn / stock.getStockElements();
@@ -101,21 +130,71 @@ public class timeStdDev extends timeAlgorithm {
     
     private void calculateVariences ()
     {
-        double varRateOfReturn;
-        double varVolume;
+        double rateOfReturn;
+        double volume;
         
         varSumRateOfReturn = 0.0;
         varSumVolume = 0.0;
         
         for (int i = 0; i < stock.getStockElements(); i++)
         {
-            varRateOfReturn = stock.getStockElement(i).getRateOfReturn() - meanRateOfReturn;
-            this.varRateOfReturn.add(varRateOfReturn);
-            varSumRateOfReturn += varRateOfReturn;
+            rateOfReturn = (stock.getStockElement(i).getRateOfReturn() - meanRateOfReturn);
+            this.varRateOfReturn.add(rateOfReturn);
+            this.varSumRateOfReturn += Math.sqrt(rateOfReturn * rateOfReturn);
+            varSumRateOfReturn += rateOfReturn * rateOfReturn;
             
-            varVolume = stock.getStockElement(i).getVolume() - meanVolume;
-            this.varVolume.add(varVolume);
-            varSumVolume += varRateOfReturn;
+            volume = stock.getStockElement(i).getVolume() - meanVolume;
+            this.varVolume.add(volume);
+            //varSumVolume += Math.sqrt(volume * volume);
+            varSumVolume += volume * volume;
+            //System.out.println(stock.getStockElement(i).getListedDate());
+            //System.out.println(stock.getStockElement(i).getRateOfReturn());
+            //System.out.printf("Mean Volume: %.2f \n  ", meanRateOfReturn);
+            
+           
+        }
+        
+        varSumRateOfReturn = Math.sqrt(varSumRateOfReturn);
+        varSumVolume = Math.sqrt(varSumVolume);
+        //System.out.println(varSumRateOfReturn);
+        //System.out.println(Math.sqrt(1.97));
+    }
+    
+    public void outputToDebugFile(String filename)
+    {
+        /**
+         * @param   filename    filename to output anomalies to.
+         */
+        BufferedWriter bufferedWriter = null;
+        
+        try
+        {
+           
+            bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
+            for(int i = 0; i < stock.getStockElements(); i++)
+            {
+                bufferedWriter.write(stock.getStockElement(i).toString() + "," + varVolume.get(i) + "," + 
+                        varRateOfReturn.get(i) + "," + stock.getStockElement(i).getRateOfReturn());
+                bufferedWriter.newLine();
+            }
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (bufferedWriter != null)
+                {
+                    bufferedWriter.close();
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

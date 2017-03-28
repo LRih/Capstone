@@ -70,8 +70,8 @@ public class DataImport {
                 stockPoint.setPriceHigh(Double.parseDouble(splitLine[5]));
                 stockPoint.setVolume(Double.parseDouble(splitLine[6]));
                 
+                stockPoint.calculateRateOfReturn();
                 
-                System.out.println(readLine);
                 stock.addStock(stockPoint);
             }
         }

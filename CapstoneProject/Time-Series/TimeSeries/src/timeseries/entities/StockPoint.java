@@ -28,7 +28,7 @@ public class StockPoint {
     }
     
     public StockPoint (String listedDate, String stockSymbol, double priceOpen, 
-            double priceClose, double priceHigh, double priceLow, double volume)
+            double priceClose, double priceHigh, double priceLow, long volume)
     {
         /**
          * @param   strDate     the string date to be converted into a date-time format and saved.
@@ -53,7 +53,8 @@ public class StockPoint {
     
     public void calculateRateOfReturn()
     {
-        rateOfReturn = priceHigh - priceLow;
+        this.rateOfReturn = priceHigh - priceLow;
+        System.out.println(rateOfReturn + " = " + priceHigh + " - " + priceLow);
     }
     
     public Date getListedDate ()

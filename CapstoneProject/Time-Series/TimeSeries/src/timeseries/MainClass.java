@@ -31,6 +31,7 @@ public class MainClass {
         // Initialize the class
         DataImport dataImport = new DataImport();
         Stock testStock = new Stock();
+        LinkedList<StockPoint> anomalies;
         
         // Load data into system
         testStock = dataImport.importData("d:\\testdata1.csv");
@@ -39,13 +40,16 @@ public class MainClass {
         // Setups and runs algorithms
         timeStdDev algorithmStdDev = new timeStdDev(testStock);
         
+        anomalies = algorithmStdDev.findAnomalies();
         algorithmStdDev.outputToFile("d:\\output.csv");
+        algorithmStdDev.outputToDebugFile("d:\\output.csv");
         
-        for (int i = 0; i < testStock.getStockElements(); i++)
+        
+        /*for (int i = 0; i < testStock.getStockElements(); i++)
         {
             System.out.println(testStock.getStockElement(i).getListedDate() + " " + 
                     testStock.getStockElement(i).getPriceHigh());
-        }
+        }*/
         // Run analysis tools in sequence
         
         // Output to file(s)
