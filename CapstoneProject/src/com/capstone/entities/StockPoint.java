@@ -87,9 +87,9 @@ public class StockPoint
 	{
 		double retValue = Math.sqrt(Math.pow((p2.getpY() - p1.getpY()), 2)
 				+ Math.pow((p2.getpX() - p1.getpX()), 2));
-		
+
 		BigDecimal bg = new BigDecimal(retValue).setScale(2, RoundingMode.UP);
-		
+
 		return bg.doubleValue();
 	}
 	

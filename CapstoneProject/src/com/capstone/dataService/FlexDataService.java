@@ -1,12 +1,12 @@
 /***********************************************************************
- * Semester 1 2017 
+ * Semester 1 2017
  * COSC2408_1710 (Programming Project 1)
  * Full Name        : Kaizhi.Zhuang
  * Student Number   : s3535252
  * Course Code      : COSC2408
  * Create Date      : March 2017
- * 
- * This is provided by Kaizhi.Zhuang 
+ *
+ * This is provided by Kaizhi.Zhuang
  **********************************************************************/
 package com.capstone.dataService;
 
@@ -29,7 +29,7 @@ import flex.messaging.io.amf.ASObject;
 public class FlexDataService
 {
 	KMeans k = new KMeans();
-	
+
 	/**
 	 * Service for Flex to get all stock data points
 	 * @return
@@ -38,7 +38,7 @@ public class FlexDataService
 	public ArrayCollection getPointsCollection()
 	{
 		ArrayCollection retCollection =	new ArrayCollection();
-		k.init();
+		k.init(3);
 		k.calculate();
 		List<StockPoint> points = KMeans.getPoints();
 		for (Iterator<StockPoint> iterator = points.iterator(); iterator.hasNext();)
@@ -50,10 +50,10 @@ public class FlexDataService
 			asObject.put("gp", stockPoint.getpGroup_number());
 			retCollection.add(asObject);
 		}
-		
+
 		return retCollection;
 	}
-	
+
 	/**
 	 * get the first group data
 	 * @return
@@ -67,17 +67,17 @@ public class FlexDataService
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
-			
+
 			asObject.put("rr", stockPoint.getpX());
 			asObject.put("vl", stockPoint.getpY());
 			asObject.put("gp", stockPoint.getpGroup_number());
-			
+
 			retCollection.add(asObject);
 		}
 		System.out.println("111111111111111111111111111111111111111111111");
 		return retCollection;
 	}
-	
+
 	/**
 	 * get the second group data
 	 * @return
@@ -91,7 +91,7 @@ public class FlexDataService
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
-			
+
 			asObject.put("rr", stockPoint.getpX());
 			asObject.put("vl", stockPoint.getpY());
 			asObject.put("gp", stockPoint.getpGroup_number());
@@ -100,7 +100,7 @@ public class FlexDataService
 		System.out.println("22222222222222222222222222222222222222222222");
 		return retCollection;
 	}
-	
+
 	/**
 	 * get the third group data
 	 * @return
@@ -114,7 +114,7 @@ public class FlexDataService
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
-			
+
 			asObject.put("rr", stockPoint.getpX());
 			asObject.put("vl", stockPoint.getpY());
 			asObject.put("gp", stockPoint.getpGroup_number());

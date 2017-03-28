@@ -18,7 +18,7 @@ public class MainRun
 	public static void main(String[] args)
 	{
 		KMeans kmeans = new KMeans();
-		kmeans.init();
+		kmeans.init(3);
 		kmeans.calculate();
 
 	}

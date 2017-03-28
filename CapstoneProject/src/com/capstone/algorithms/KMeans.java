@@ -31,21 +31,28 @@ import com.capstone.utils.DataConstant;
  */
 public class KMeans
 {
+    /**
+     * The number of clusters
+     */
+	private int k;
+
 	/**
 	 *  all stock points
 	 */
-	private static List<StockPoint> points = new ArrayList<StockPoint>();
+	private List<StockPoint> points = new ArrayList<StockPoint>();
 
 	/**
 	 * cluster groups
 	 */
-	private static List<ClusterGroup> groups = new ArrayList<ClusterGroup>();;
+	private List<ClusterGroup> groups = new ArrayList<ClusterGroup>();
 
 	/**
 	 *  Initializes the process
 	 */
-	public void init()
+	public void init(int k)
 	{
+	    this.k = k;
+
 		System.out.println("!!! initialise points and Group n !!!");
 		// init stock Points
 		points.clear();
@@ -53,7 +60,7 @@ public class KMeans
 
 		// init Cluster Group
 		groups.clear();
-		for (int i = 0; i < DataConstant.NUM_GROUPS; i++)
+		for (int i = 0; i < k; i++)
 		{
 			ClusterGroup group = new ClusterGroup(i);
 
@@ -88,9 +95,9 @@ public class KMeans
 		int i_loop = 0;
 		while (!finish)
 		{
-			for (int i = 0; i < DataConstant.NUM_GROUPS; i++)
+			for (int i = 0; i < k; i++)
 			{
-				groups.get(i).getPoints().clear();;
+				groups.get(i).getPoints().clear();
 			}
 			
 			for (Iterator<StockPoint> itP = points.iterator(); itP.hasNext();)
@@ -131,7 +138,7 @@ public class KMeans
 
 			// compare all central point
 			finish = true;
-			for (int i = 0; i < DataConstant.NUM_GROUPS; i++)
+			for (int i = 0; i < k; i++)
 			{
 				ClusterGroup cg = groups.get(i);
 				StockPoint point_new = cg.getCentroid();
@@ -144,7 +151,7 @@ public class KMeans
 			}
 			
 			System.out.println("this is :"+i_loop+" loop:");
-			for (int i = 0; i < DataConstant.NUM_GROUPS; i++)
+			for (int i = 0; i < k; i++)
 			{
 				ClusterGroup cg = groups.get(i);
 				plotClusterGroup(cg);
@@ -156,8 +163,6 @@ public class KMeans
 			}
 			
 			i_loop ++;
-			
-			
 		}
 	}
 
@@ -202,19 +207,19 @@ public class KMeans
 		System.out.println("[Centroid: X=" + cg.getCentroid().getpX()+",Y="+cg.getCentroid().getpY() + "]");
 	}
 	
-	public static List<StockPoint> getPoints()
+	public List<StockPoint> getPoints()
 	{
 		return points;
 	}
 
-	public static void setPoints(List<StockPoint> points)
+	public void setPoints(List<StockPoint> points)
 	{
-		KMeans.points = points;
+		this.points = points;
 	}
 
-	public static void setGroups(List<ClusterGroup> groups)
+	public void setGroups(List<ClusterGroup> groups)
 	{
-		KMeans.groups = groups;
+		this.groups = groups;
 	}
 
 	public List<ClusterGroup> getGroups()
