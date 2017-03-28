@@ -22,12 +22,17 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // Initialize the class
-        StockPoint testStock = new StockPoint();
+        StockPoint testStockPoint1 = new StockPoint();
+        Stock testStock = new Stock();
+        
+        testStock.addStock(new StockPoint());
+        testStock.getStockElement(0).setPriceHigh(1.2);
         
         // Load data into system
-        testStock.setPriceHigh(1.1);
+        testStockPoint1.setPriceHigh(1.1);
         
-        System.out.println(testStock.getPriceHigh());
+        System.out.println(testStock.getStockElement(0).getPriceHigh());
+        System.out.println(testStockPoint1.getPriceHigh());
         // Run analysis tools in sequence
         
         // Output to file(s)
