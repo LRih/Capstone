@@ -41,6 +41,14 @@ public abstract class timeAlgorithm {
         anomalies = new LinkedList<StockPoint>();
     }
     
+    public LinkedList<StockPoint> findAnomalies()
+    {
+        /**
+         * @return  returns all anomalies found in the calculations.
+         */
+        return anomalies;
+    } 
+    
     public void setStock (Stock stock)
     {
         /**

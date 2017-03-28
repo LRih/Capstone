@@ -23,11 +23,11 @@ public class timeStdDev extends timeAlgorithm {
     }
     
     
-    public LinkedList<StockPoint> getAnomalies()
+    public LinkedList<StockPoint> findAnomalies()
     {
         /**
          * @return  returns all anomalies found in the calculations.
          */
         return anomalies;
-    }
+    } 
 }

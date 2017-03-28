@@ -32,13 +32,14 @@ public class MainClass {
         DataImport dataImport = new DataImport();
         Stock testStock = new Stock();
         
-        
-        timeStdDev algorithmStdDev = new timeStdDev(testStock);
-        
         // Load data into system
         testStock = dataImport.importData("d:\\testdata1.csv");
         System.out.println("Elements: " + testStock.getStockElements());
         
+        // Setups and runs algorithms
+        timeStdDev algorithmStdDev = new timeStdDev(testStock);
+        
+        algorithmStdDev.outputToFile("d:\\output.csv");
         
         for (int i = 0; i < testStock.getStockElements(); i++)
         {
