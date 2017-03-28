@@ -9,6 +9,7 @@
 package timeseries;
 
 import timeseries.entities.Stock;
+import timeseries.entities.StockPoint;
 /**
  *
  * @author Daniel Johnson, s3395210
@@ -21,7 +22,7 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // Initialize the class
-        Stock testStock = new Stock();
+        StockPoint testStock = new StockPoint();
         
         // Load data into system
         testStock.setPriceHigh(1.1);
