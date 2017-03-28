@@ -33,7 +33,7 @@ public class MainClass {
         Stock testStock = new Stock();
         
         
-        timeStdDev algorithmStdDev = new timeStdDev();
+        timeStdDev algorithmStdDev = new timeStdDev(testStock);
         
         // Load data into system
         testStock = dataImport.importData("d:\\testdata1.csv");

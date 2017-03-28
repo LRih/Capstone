@@ -24,10 +24,10 @@ public abstract class timeAlgorithm {
      * @param   stock       Is the full set of stock data to be processed.
      * @param   anomalies   Is the resulting dataset that is the stockpoints of anamoly data.
      */
-    protected LinkedList<Stock> stock;
+    protected Stock stock;
     protected LinkedList<StockPoint> anomalies;
     
-    public timeAlgorithm(LinkedList<Stock> stock)
+    public timeAlgorithm(Stock stock)
     {
         /**
          * @param   stock   Stock dataset that contains the data to be used.
@@ -41,7 +41,7 @@ public abstract class timeAlgorithm {
         anomalies = new LinkedList<StockPoint>();
     }
     
-    public void setStock (LinkedList<Stock> stock)
+    public void setStock (Stock stock)
     {
         /**
          * @param   stock   Stock dataset that contains the data to be used.
