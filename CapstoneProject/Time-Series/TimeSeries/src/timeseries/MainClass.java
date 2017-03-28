@@ -8,10 +8,15 @@
  */
 package timeseries;
 
+import java.util.LinkedList;
+
 import timeseries.entities.Stock;
 import timeseries.entities.StockPoint;
 
 import timeseries.utils.DataImport;
+
+import timeseries.algothims.timeStdDev;
+import timeseries.algothims.timeAlgorithm;
 /**
  *
  * @author Daniel Johnson, s3395210
@@ -25,9 +30,10 @@ public class MainClass {
     public static void main(String[] args) {
         // Initialize the class
         DataImport dataImport = new DataImport();
-        StockPoint testStockPoint1 = new StockPoint();
         Stock testStock = new Stock();
         
+        
+        timeStdDev algorithmStdDev = new timeStdDev();
         
         // Load data into system
         testStock = dataImport.importData("d:\\testdata1.csv");

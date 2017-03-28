@@ -11,6 +11,7 @@ import java.lang.Double;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 
 import timeseries.entities.Stock;
@@ -38,7 +39,8 @@ public class DataImport {
         
         try 
         {
-            bufferedReader = new BufferedReader(new FileReader(fileLocation));
+            bufferedReader = new BufferedReader(new FileReader(new File(fileLocation)));
+            //bufferedReader = new BufferedReader(fileLocation);
             // Firstline are headers
             bufferedReader.readLine();
             
