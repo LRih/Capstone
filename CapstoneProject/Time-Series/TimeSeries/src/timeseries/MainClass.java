@@ -8,6 +8,7 @@
  */
 package timeseries;
 
+import timeseries.entities.Stock;
 /**
  *
  * @author Daniel Johnson, s3395210
@@ -20,9 +21,12 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // Initialize the class
+        Stock testStock = new Stock();
         
         // Load data into system
+        testStock.setPriceHigh(1.1);
         
+        System.out.println(testStock.getPriceHigh());
         // Run analysis tools in sequence
         
         // Output to file(s)
