@@ -178,4 +178,11 @@ public class StockPoint {
          */
         this.volume = volume;
     }
+    
+    public String toString ()
+    {
+        return this.listedDate + "," + this.stockSymbol + "," + this.priceOpen + 
+                "," + this.priceClose + "," + this.priceLow + "," + this.priceHigh +
+                "," + this.volume;                
+    }
 }
