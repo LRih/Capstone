@@ -93,6 +93,14 @@ public class StockPoint {
         return priceOpen;
     }
     
+    public double getRateOfReturn()
+    {
+        /** 
+         * @return the volume of stock sold.
+         */
+        return rateOfReturn;
+    }
+    
     public String getSymbol()
     {
         /** 
