@@ -10,6 +10,8 @@ package timeseries;
 
 import timeseries.entities.Stock;
 import timeseries.entities.StockPoint;
+
+import timeseries.utils.DataImport;
 /**
  *
  * @author Daniel Johnson, s3395210
@@ -22,17 +24,21 @@ public class MainClass {
      */
     public static void main(String[] args) {
         // Initialize the class
+        DataImport dataImport = new DataImport();
         StockPoint testStockPoint1 = new StockPoint();
         Stock testStock = new Stock();
         
-        testStock.addStock(new StockPoint());
-        testStock.getStockElement(0).setPriceHigh(1.2);
         
         // Load data into system
-        testStockPoint1.setPriceHigh(1.1);
+        testStock = dataImport.importData("d:\\testdata1.csv");
+        System.out.println("Elements: " + testStock.getStockElements());
         
-        System.out.println(testStock.getStockElement(0).getPriceHigh());
-        System.out.println(testStockPoint1.getPriceHigh());
+        
+        for (int i = 0; i < testStock.getStockElements(); i++)
+        {
+            System.out.println(testStock.getStockElement(i).getListedDate() + " " + 
+                    testStock.getStockElement(i).getPriceHigh());
+        }
         // Run analysis tools in sequence
         
         // Output to file(s)

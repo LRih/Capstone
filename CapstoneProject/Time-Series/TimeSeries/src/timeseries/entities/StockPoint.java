@@ -20,7 +20,7 @@ public class StockPoint {
     protected double priceHigh;
     protected double priceLow;
     protected double rateOfReturn;
-    protected long volume;
+    protected double volume;
     
     public StockPoint()
     {
@@ -28,7 +28,7 @@ public class StockPoint {
     }
     
     public StockPoint (String listedDate, String stockSymbol, double priceOpen, 
-            double priceClose, double priceHigh, double priceLow, long volume)
+            double priceClose, double priceHigh, double priceLow, double volume)
     {
         /**
          * @param   strDate     the string date to be converted into a date-time format and saved.
@@ -101,7 +101,7 @@ public class StockPoint {
         return stockSymbol;
     }
     
-    public long getVolume()
+    public double getVolume()
     {
         /** 
          * @return the volume of stock sold.
@@ -116,7 +116,7 @@ public class StockPoint {
          * @param   strDate the string date to be converted into a date-time format and saved.
          * @return  a boolean that states if the operation was successful.
          */
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
         try
         {
@@ -171,7 +171,7 @@ public class StockPoint {
         this.stockSymbol = stockSymbol;
     }
     
-    public void setVolume(long volume)
+    public void setVolume(double volume)
     {
         /** 
          * @param volume the volume of stock sold.
