@@ -35,14 +35,15 @@ public class MainClass {
         
         // Load data into system
         testStock = dataImport.importData("d:\\testdata1.csv");
-        System.out.println("Elements: " + testStock.getStockElements());
         
         // Setups and runs algorithms
         timeStdDev algorithmStdDev = new timeStdDev(testStock);
         
         anomalies = algorithmStdDev.findAnomalies();
-        algorithmStdDev.outputToFile("d:\\output.csv");
-        algorithmStdDev.outputToDebugFile("d:\\output.csv");
+        algorithmStdDev.outputToFile("d:\\output.time.StdDev.csv");
+        
+        // For Debug of Data Only
+        //algorithmStdDev.outputToDebugFile("d:\\debug.csv");
         
         
         /*for (int i = 0; i < testStock.getStockElements(); i++)

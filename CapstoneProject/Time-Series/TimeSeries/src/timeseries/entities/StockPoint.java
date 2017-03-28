@@ -54,7 +54,6 @@ public class StockPoint {
     public void calculateRateOfReturn()
     {
         this.rateOfReturn = priceHigh - priceLow;
-        System.out.println(rateOfReturn + " = " + priceHigh + " - " + priceLow);
     }
     
     public Date getListedDate ()

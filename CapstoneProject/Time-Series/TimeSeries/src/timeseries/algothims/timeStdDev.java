@@ -74,14 +74,12 @@ public class timeStdDev extends timeAlgorithm {
         calculateStandardDeviations();
         calculateAnomalyThreasholds();
         
-        System.out.println("Mean: " + meanRateOfReturn + "," + meanVolume);
-        //System.out.println("Varience: " + varSumRateOfReturn + "," + varSumVolume);
-        //System.out.println("StdDev: " + stdRateOfReturn + "," + stdVolume);
+        //System.out.println("Mean: " + meanRateOfReturn + "," + meanVolume);
         
-        System.out.printf("Varience: %.4f, %.4f \n", varSumRateOfReturn, varSumVolume);
-        System.out.printf("StdDev: %.4f, %.4f \n", stdRateOfReturn, stdVolume);
-        System.out.println("Volume Anomaly Levels: " + anomalyCoeffientVolume + "," + anomalyThreasholdVolume);
-        System.out.println("Rate of Return Anomaly Levels: " + anomalyCoeffientRateOfReturn + "," + anomalyThreasholdRateOfReturn);
+        //System.out.printf("Varience: %.4f, %.4f \n", varSumRateOfReturn, varSumVolume);
+        //System.out.printf("StdDev: %.4f, %.4f \n", stdRateOfReturn, stdVolume);
+        //System.out.println("Volume Anomaly Levels: " + anomalyCoeffientVolume + "," + anomalyThreasholdVolume);
+        //System.out.println("Rate of Return Anomaly Levels: " + anomalyCoeffientRateOfReturn + "," + anomalyThreasholdRateOfReturn);
         
         
         for (int i = 0; i < stock.getStockElements(); i++)
@@ -89,14 +87,14 @@ public class timeStdDev extends timeAlgorithm {
             if(stock.getStockElement(i).getVolume() > (meanVolume + anomalyThreasholdVolume) || 
                     stock.getStockElement(i).getVolume() < (meanVolume - anomalyThreasholdVolume))
             {
-                System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
+                //System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
                 anomalies.add(stock.getStockElement(i));
                 
             }
             else if(stock.getStockElement(i).getRateOfReturn() > (meanRateOfReturn + anomalyThreasholdRateOfReturn) || 
                     stock.getStockElement(i).getRateOfReturn() < (meanRateOfReturn - anomalyThreasholdRateOfReturn))
             {
-                System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
+                //System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
                 anomalies.add(stock.getStockElement(i));
                 
             }
@@ -109,7 +107,7 @@ public class timeStdDev extends timeAlgorithm {
     {
         stdRateOfReturn = Math.sqrt(Math.pow((varSumRateOfReturn - meanRateOfReturn), 2.0) / stock.getStockElements());
         stdVolume = Math.sqrt(Math.pow((varSumVolume - meanVolume) , 2.0) / stock.getStockElements());
-        System.out.println("STD Math: SQRT(POW((" + varSumRateOfReturn + " - " + meanRateOfReturn + ") / " + stock.getStockElements() + ", 2.0))");
+        
     }
      
     
@@ -152,7 +150,6 @@ public class timeStdDev extends timeAlgorithm {
             
             volume = stock.getStockElement(i).getVolume() - meanVolume;
             this.varVolume.add(volume);
-            //varSumVolume += Math.sqrt(volume * volume);
             varSumVolume += volume * volume;
         }
         
