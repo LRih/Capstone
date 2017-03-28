@@ -89,7 +89,14 @@ public class timeStdDev extends timeAlgorithm {
             if(stock.getStockElement(i).getVolume() > (meanVolume + anomalyThreasholdVolume) || 
                     stock.getStockElement(i).getVolume() < (meanVolume - anomalyThreasholdVolume))
             {
-                System.out.println("Anomaly: " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
+                System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
+                anomalies.add(stock.getStockElement(i));
+                
+            }
+            else if(stock.getStockElement(i).getRateOfReturn() > (meanRateOfReturn + anomalyThreasholdRateOfReturn) || 
+                    stock.getStockElement(i).getRateOfReturn() < (meanRateOfReturn - anomalyThreasholdRateOfReturn))
+            {
+                System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
                 anomalies.add(stock.getStockElement(i));
                 
             }
@@ -140,24 +147,17 @@ public class timeStdDev extends timeAlgorithm {
         {
             rateOfReturn = (stock.getStockElement(i).getRateOfReturn() - meanRateOfReturn);
             this.varRateOfReturn.add(rateOfReturn);
-            this.varSumRateOfReturn += Math.sqrt(rateOfReturn * rateOfReturn);
+            this.varSumRateOfReturn += rateOfReturn * rateOfReturn;
             varSumRateOfReturn += rateOfReturn * rateOfReturn;
             
             volume = stock.getStockElement(i).getVolume() - meanVolume;
             this.varVolume.add(volume);
             //varSumVolume += Math.sqrt(volume * volume);
             varSumVolume += volume * volume;
-            //System.out.println(stock.getStockElement(i).getListedDate());
-            //System.out.println(stock.getStockElement(i).getRateOfReturn());
-            //System.out.printf("Mean Volume: %.2f \n  ", meanRateOfReturn);
-            
-           
         }
         
         varSumRateOfReturn = Math.sqrt(varSumRateOfReturn);
         varSumVolume = Math.sqrt(varSumVolume);
-        //System.out.println(varSumRateOfReturn);
-        //System.out.println(Math.sqrt(1.97));
     }
     
     public void outputToDebugFile(String filename)
