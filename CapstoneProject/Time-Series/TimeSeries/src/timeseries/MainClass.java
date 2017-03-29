@@ -15,8 +15,10 @@ import timeseries.entities.StockPoint;
 
 import timeseries.utils.DataImport;
 
-import timeseries.algothims.timeStdDev;
 import timeseries.algothims.timeAlgorithm;
+import timeseries.algothims.timeStdDev;
+import timeseries.algothims.timeARMA;
+
 /**
  *
  * @author Daniel Johnson, s3395210
@@ -37,10 +39,21 @@ public class MainClass {
         testStock = dataImport.importData("d:\\testdata1.csv");
         
         // Setups and runs algorithms
+        System.out.println("Running Algorithm: Standard Deviation");
         timeStdDev algorithmStdDev = new timeStdDev(testStock);
-        
         anomalies = algorithmStdDev.findAnomalies();
         algorithmStdDev.outputToFile("d:\\output.time.StdDev.csv");
+        System.out.println("Completed Algorithm: Standard Deviation");
+        
+        System.out.println("Running Algorithm: ARMA");
+        timeARMA algorithmARMA = new timeARMA(testStock);
+        algorithmARMA.setPValue(2);
+        algorithmARMA.setQValue(3);
+        
+        anomalies = algorithmARMA.findAnomalies();
+        algorithmARMA.outputToFile("d:\\output.time.ARMA.csv");
+        System.out.println("Completed Algorithm: ARMA");
+        
         
         // For Debug of Data Only
         //algorithmStdDev.outputToDebugFile("d:\\debug.csv");
