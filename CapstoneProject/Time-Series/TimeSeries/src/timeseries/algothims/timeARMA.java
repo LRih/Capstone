@@ -103,7 +103,7 @@ public class timeARMA extends timeAlgorithm{
         double varMA = 0.0;
         double varARMA = 0.0;
         
-        
+        // Creates new lists for data to be housed.
         bestUtVolume = new LinkedList<Double>();
         bestUtVolumeType = new LinkedList<String>();
         bestUtRateOfReturn = new LinkedList<Double>();
@@ -115,16 +115,15 @@ public class timeARMA extends timeAlgorithm{
          *  - Work out AM
          *  - Combine to work out ARMA
          *  - Determine best function to use
-         *  - Determine if anomaly.
+         *  - [Incomplete] Determine if anomaly.
          */
         
-        // TODO - MA Modelling
+        // MA Modelling
         modelMA();
         
-        // TODO - AR Modelling
+        // AR Modelling
         modelAR();
         
-        // TODO - Combine AR + MA to get ARMA
         // Work out best function to use by closest to actual value.
         for(int t = 0; t < stock.getStockElements(); t++)
         {
@@ -137,24 +136,26 @@ public class timeARMA extends timeAlgorithm{
             {
                 bestUtVolume.add(varAR);
                 bestUtVolumeType.add("AR");
-                System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
+                //System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
             }
             else if (varMA < varARMA)
             {
                 bestUtVolume.add(varMA);
                 bestUtVolumeType.add("MA");
-                System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
+                //System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
             }
             else
             {
                 bestUtVolume.add(varARMA);
                 bestUtVolumeType.add("ARMA");
-                System.out.println("Volume at time " + t + " varience is " + varARMA + " with formula ARMA");
+                //System.out.println("Volume at time " + t + " varience is " + varARMA + " with formula ARMA");
             }
+            /* Debug readouts
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
                     ", var(MA): " + varMA + ", var(ARMA): " + varARMA);
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", AR: " + ARUtVolume.get(t) + 
                     ", MA: " + MAUtVolume.get(t) + ", ARMA: " + (ARUtVolume.get(t) + MAUtVolume.get(t)));
+            */
             
             // Rate of Return
             varAR = Math.sqrt(Math.pow((stock.getStockElement(t).getRateOfReturn() - ARUtRateOfReturn.get(t)), 2.0));
@@ -165,30 +166,29 @@ public class timeARMA extends timeAlgorithm{
             {
                 bestUtRateOfReturn.add(varAR);
                 bestUtRateOfReturnType.add("AR");
-                System.out.println("Rate of Return at time " + t + " varience is " + varAR + " with formula AR");
+                //System.out.println("Rate of Return at time " + t + " varience is " + varAR + " with formula AR");
             }
             else if (varMA < varARMA)
             {
                 bestUtRateOfReturn.add(varMA);
                 bestUtRateOfReturnType.add("MA");
-                System.out.println("Rate of Return at time " + t + " varience is " + varAR + " with formula AR");
+                //System.out.println("Rate of Return at time " + t + " varience is " + varAR + " with formula AR");
             }
             else
             {
                 bestUtRateOfReturn.add(varARMA);
                 bestUtRateOfReturnType.add("ARMA");
-                System.out.println("Rate of Return at time " + t + " varience is " + varARMA + " with formula ARMA");
+                //System.out.println("Rate of Return at time " + t + " varience is " + varARMA + " with formula ARMA");
             }
+            /* Debug Readouts
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
                     ", var(MA): " + varMA + ", var(ARMA): " + varARMA);
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", AR: " + ARUtRateOfReturn.get(t) + 
                     ", MA: " + MAUtRateOfReturn.get(t) + ", ARMA: " + (ARUtRateOfReturn.get(t) + MAUtRateOfReturn.get(t)));
-            
+            */
         }
         
-        System.out.println(stock.getStockElements());
-        
-        
+        // Returns the detected anomalies
         return anomalies;
     }
     
@@ -212,7 +212,7 @@ public class timeARMA extends timeAlgorithm{
         double ZtRateOfReturn = 0.0;
         double Ut = 0.0;
         
-        
+        // Creates new linked lists for the data to be housed.
         ARUtVolume = new LinkedList<Double>();
         ARUtRateOfReturn = new LinkedList<Double>();
         
@@ -232,11 +232,9 @@ public class timeARMA extends timeAlgorithm{
             // Ut Value Recursion Calculations
             Ut = ZtVolume + modelARUtVolume(aValue, t, 1);  
             ARUtVolume.add(Ut);
-            //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
             
             Ut = ZtRateOfReturn + modelARUtRateOfReturn(aValue, t, 1);  
             ARUtRateOfReturn.add(Ut);
-            //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
         }
     }
     
@@ -249,6 +247,10 @@ public class timeARMA extends timeAlgorithm{
          * @return              Calculated Zt value.
          */
         
+        /**
+         * If there is another iteration to go, call the recursive function,
+         * Else return the calculation
+         */
         if (pValueOrder < pValue && (t - pValueOrder) > 1)
         {
             return (modelARUtRateOfReturn(aValue, t, ++pValueOrder) + (Math.pow((aValue), pValueOrder) 
@@ -270,6 +272,10 @@ public class timeARMA extends timeAlgorithm{
          * @return              Calculated Zt value.
          */
         
+        /**
+         * If there is another iteration to go, call the recursive function,
+         * Else return the calculation
+         */
         if (pValueOrder < pValue && (t - pValueOrder) > 1)
         {
             return (modelARUtVolume(aValue, t, ++pValueOrder) + (Math.pow((aValue), pValueOrder) 
@@ -292,26 +298,22 @@ public class timeARMA extends timeAlgorithm{
         double x = 0.0;
         double Ut = 0.0;
         
+        // Creates a new LinkedList
         MAUtVolume = new LinkedList<Double>();
         MAUtRateOfReturn = new LinkedList<Double>();
         
-        
-        
         // Set first value of Zt as 0
-        // x(t) = sum (q, i = 0) (b(i) * x(t-i))
         MAUtVolume.add(0.0);
         MAUtRateOfReturn.add(0.0);
         
+        // Gets Ut value for each StockPoint.
         for(int t = 1; t < stock.getStockElements(); t++)
         {
             Ut = modelMAUtVolume(bValue, t, 0);
             MAUtVolume.add(Ut);
-            //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + ut);
             
             Ut = modelMAUtRateOfReturn(bValue, t, 0);
-            MAUtRateOfReturn.add(Ut);
-            //System.out.println(t + " - " + stock.getStockElement(t).getRateOfReturn() + "," + ut);
-            
+            MAUtRateOfReturn.add(Ut);            
         }
         
     }
@@ -325,8 +327,10 @@ public class timeARMA extends timeAlgorithm{
          * @return              Calculated Zt value.
          */
         
-        // Make the order go up by 1.
-        
+        /**
+         * If there is another iteration to go, call the recursive function,
+         * Else return the calculation
+         */
         if (qValueOrder < qValue && (t - qValueOrder) > 0)
         {
             return (modelMAUtVolume(bValue, t, ++qValueOrder) + (Math.pow((1 - bValue), qValueOrder) 
@@ -348,9 +352,10 @@ public class timeARMA extends timeAlgorithm{
          * @return              Calculated Zt value.
          */
         
-        // Make the order go up by 1.
-        //qValueOrder++;
-        
+        /**
+         * If there is another iteration to go, call the recursive function,
+         * Else return the calculation
+         */
         if (qValueOrder < qValue && (t - ++qValueOrder) > 0)
         {
             return (modelMAUtRateOfReturn(bValue, t, qValueOrder) + (Math.pow((1 - bValue), qValueOrder) 
@@ -376,12 +381,13 @@ public class timeARMA extends timeAlgorithm{
            
             bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
             
-            
+            // Prints Header
             bufferedWriter.write("date,symbol,open,close,low,high,volume,rateofreturn,bestUTVolume,"
                     + "bestUtTypeVolume,ARUtVolume,MAUtVolume,ARMAUtVolume,bestUTRateOfReturn,"
                     + "bestUtTypeRateOfReturn,ARUtRateOfReturn,MAUtRateOfReturn,ARMAUtRateOfReturn");
             bufferedWriter.newLine();
             
+            // Prints each line
             for(int i = 0; i < stock.getStockElements(); i++)
             {
                 bufferedWriter.write(stock.getStockElement(i).toString() + "," + 
