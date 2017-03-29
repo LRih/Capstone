@@ -38,6 +38,8 @@ public class timeARMA extends timeAlgorithm{
     
     LinkedList<Double> MAUtVolume;
     LinkedList<Double> MAUtRateOfReturn;
+    LinkedList<Double> ARUtVolume;
+    LinkedList<Double> ARUtRateOfReturn;
     
     public timeARMA(Stock stock)
     {
@@ -89,6 +91,8 @@ public class timeARMA extends timeAlgorithm{
         /**
          * @return  returns all anomalies found in the calculations.
          */
+        double XtVolume = 0.0;
+        double XtRateOfReturn = 0.0;
         
         /**
          * Steps: 
@@ -103,8 +107,12 @@ public class timeARMA extends timeAlgorithm{
         modelMA();
         
         // TODO - AR Modelling
+        modelAR();
         
         // TODO - Combine AR + MA to get ARMA
+        // Work out best function to use by closest to actual value.
+        
+        
         System.out.println(stock.getStockElements());
         
         
@@ -119,6 +127,83 @@ public class timeARMA extends timeAlgorithm{
         this.qValue = qValue;
     }
     
+    private void modelAR()
+    {
+        /**
+         * Works out the expected values at a given point in time. Takes all values
+         * set within the class and returns them back to the class variables.
+         */
+        
+        double aValue = 0.05;
+        double ZtVolume = 0.0;
+        double ZtRateOfReturn = 0.0;
+        double Ut = 0.0;
+        
+        
+        ARUtVolume = new LinkedList<Double>();
+        ARUtRateOfReturn = new LinkedList<Double>();
+        
+        // Due to p is lag, the count must start at the 2nd element.
+        for (int t = 1; t < stock.getStockElements(); t++)
+        {
+            // Work out Zt for current value
+            ZtVolume = (aValue * stock.getStockElement(t).getVolume()) + ((1 - aValue) * 
+                    stock.getStockElement(t - 1).getVolume());
+            ZtRateOfReturn = (aValue * stock.getStockElement(t).getRateOfReturn()) 
+                    + ((1 - aValue) * stock.getStockElement(t - 1).getRateOfReturn());
+            
+            // Ut Value Recursion Calculations
+            Ut = ZtVolume + modelARUtVolume(aValue, t, 1);  
+            ARUtVolume.add(Ut);
+            System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
+            
+            Ut = ZtRateOfReturn + modelARUtRateOfReturn(aValue, t, 1);  
+            ARUtVolume.add(Ut);
+            System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
+        }
+    }
+    
+    private double modelARUtRateOfReturn(double aValue, int t, int pValueOrder)
+    {
+        /**
+         * @param   aValue      lag coeffient value in the AR model formula.
+         * @param   t           time point.
+         * @param   pValueOrder Order of the recursion currently up to.
+         * @return              Calculated Zt value.
+         */
+        
+        if (pValueOrder < pValue && (t - pValueOrder) > 1)
+        {
+            return (modelARUtRateOfReturn(aValue, t, ++pValueOrder) + (Math.pow((aValue), pValueOrder) 
+                * stock.getStockElement(t - pValueOrder).getRateOfReturn()));
+        }
+        else
+        {
+            return (Math.pow((aValue), pValueOrder) * stock.getStockElement(t 
+                    - pValueOrder).getRateOfReturn());
+        }
+    }
+    
+    private double modelARUtVolume(double aValue, int t, int pValueOrder)
+    {
+        /**
+         * @param   aValue      lag coeffient value in the AR model formula.
+         * @param   t           time point.
+         * @param   pValueOrder Order of the recursion currently up to.
+         * @return              Calculated Zt value.
+         */
+        
+        if (pValueOrder < pValue && (t - pValueOrder) > 1)
+        {
+            return (modelARUtVolume(aValue, t, ++pValueOrder) + (Math.pow((aValue), pValueOrder) 
+                * stock.getStockElement(t - pValueOrder).getVolume()));
+        }
+        else
+        {
+            return (Math.pow((aValue), pValueOrder) * stock.getStockElement(t - pValueOrder).getVolume());
+        }
+    }
+    
     private void modelMA()
     {
         /**
@@ -128,7 +213,7 @@ public class timeARMA extends timeAlgorithm{
         // B Value Calculation Unknown, assume 0.5
         double bValue = 0.5;
         double x = 0.0;
-        double z = 0.0;
+        double Ut = 0.0;
         
         MAUtVolume = new LinkedList<Double>();
         MAUtRateOfReturn = new LinkedList<Double>();
@@ -141,19 +226,19 @@ public class timeARMA extends timeAlgorithm{
         
         for(int t = 1; t < stock.getStockElements(); t++)
         {
-            z = modelMAZtVolume(bValue, t, 0);
-            MAUtVolume.add(z);
-            System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + z);
+            Ut = modelMAUtVolume(bValue, t, 0);
+            MAUtVolume.add(Ut);
+            //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + ut);
             
-            z = modelMAZtRateOfReturn(bValue, t, 0);
-            MAUtVolume.add(z);
-            System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + z);
+            Ut = modelMAUtRateOfReturn(bValue, t, 0);
+            MAUtVolume.add(Ut);
+            //System.out.println(t + " - " + stock.getStockElement(t).getRateOfReturn() + "," + ut);
             
         }
         
     }
     
-    private double modelMAZtVolume(double bValue, int t, int qValueOrder)
+    private double modelMAUtVolume(double bValue, int t, int qValueOrder)
     {
         /**
          * @param   bValue      weighted value in the MA model formula.
@@ -163,11 +248,10 @@ public class timeARMA extends timeAlgorithm{
          */
         
         // Make the order go up by 1.
-        qValueOrder++;
         
         if (qValueOrder < qValue && (t - qValueOrder) > 0)
         {
-            return (modelMAZtVolume(bValue, t, qValueOrder) + (Math.pow((1 - bValue), qValueOrder) 
+            return (modelMAUtVolume(bValue, t, ++qValueOrder) + (Math.pow((1 - bValue), qValueOrder) 
                 * stock.getStockElement(t - qValueOrder).getVolume()));
         }
         else
@@ -177,7 +261,7 @@ public class timeARMA extends timeAlgorithm{
         }
     }
     
-    private double modelMAZtRateOfReturn(double bValue, int t, int qValueOrder)
+    private double modelMAUtRateOfReturn(double bValue, int t, int qValueOrder)
     {
         /**
          * @param   bValue      weighted value in the MA model formula.
@@ -187,11 +271,11 @@ public class timeARMA extends timeAlgorithm{
          */
         
         // Make the order go up by 1.
-        qValueOrder++;
+        //qValueOrder++;
         
-        if (qValueOrder < qValue && (t - qValueOrder) > 0)
+        if (qValueOrder < qValue && (t - ++qValueOrder) > 0)
         {
-            return (modelMAZtRateOfReturn(bValue, t, qValueOrder) + (Math.pow((1 - bValue), qValueOrder) 
+            return (modelMAUtRateOfReturn(bValue, t, qValueOrder) + (Math.pow((1 - bValue), qValueOrder) 
                 * stock.getStockElement(t - qValueOrder).getRateOfReturn()));
         }
         else
