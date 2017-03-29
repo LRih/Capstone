@@ -94,6 +94,10 @@ public class timeARMA extends timeAlgorithm{
         double XtVolume = 0.0;
         double XtRateOfReturn = 0.0;
         
+        double varAR = 0.0;
+        double varMA = 0.0;
+        double varARMA = 0.0;
+        
         /**
          * Steps: 
          *  - Work out MA
@@ -111,7 +115,30 @@ public class timeARMA extends timeAlgorithm{
         
         // TODO - Combine AR + MA to get ARMA
         // Work out best function to use by closest to actual value.
-        
+        for(int t = 0; t < stock.getStockElements(); t++)
+        {
+            varAR = Math.sqrt(Math.pow((stock.getStockElement(t).getVolume() - ARUtVolume.get(t)), 2.0));
+            varMA = Math.sqrt(Math.pow((stock.getStockElement(t).getVolume() - MAUtVolume.get(t)), 2.0));
+            varARMA = Math.sqrt(Math.pow((stock.getStockElement(t).getVolume() - (ARUtVolume.get(t) + MAUtVolume.get(t))), 2.0));
+            
+            if(varAR < varMA && varAR < varARMA)
+            {
+                System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
+            }
+            else if (varMA < varARMA)
+            {
+                System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
+            }
+            else
+            {
+                System.out.println("Volume at time " + t + " varience is " + varARMA + " with formula ARMA");
+            }
+            System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
+                    ", var(MA): " + varMA + ", var(ARMA): " + varARMA);
+            System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", AR: " + ARUtVolume.get(t) + 
+                    ", MA: " + MAUtVolume.get(t) + ", ARMA: " + (ARUtVolume.get(t) + MAUtVolume.get(t)));
+            
+        }
         
         System.out.println(stock.getStockElements());
         
@@ -223,6 +250,7 @@ public class timeARMA extends timeAlgorithm{
         // Set first value of Zt as 0
         // x(t) = sum (q, i = 0) (b(i) * x(t-i))
         MAUtVolume.add(0.0);
+        MAUtRateOfReturn.add(0.0);
         
         for(int t = 1; t < stock.getStockElements(); t++)
         {
@@ -231,7 +259,7 @@ public class timeARMA extends timeAlgorithm{
             //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + ut);
             
             Ut = modelMAUtRateOfReturn(bValue, t, 0);
-            MAUtVolume.add(Ut);
+            MAUtRateOfReturn.add(Ut);
             //System.out.println(t + " - " + stock.getStockElement(t).getRateOfReturn() + "," + ut);
             
         }
