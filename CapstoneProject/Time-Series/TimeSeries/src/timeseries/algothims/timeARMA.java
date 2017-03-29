@@ -128,6 +128,7 @@ public class timeARMA extends timeAlgorithm{
         // Work out best function to use by closest to actual value.
         for(int t = 0; t < stock.getStockElements(); t++)
         {
+            // Volume
             varAR = Math.sqrt(Math.pow((stock.getStockElement(t).getVolume() - ARUtVolume.get(t)), 2.0));
             varMA = Math.sqrt(Math.pow((stock.getStockElement(t).getVolume() - MAUtVolume.get(t)), 2.0));
             varARMA = Math.sqrt(Math.pow((stock.getStockElement(t).getVolume() - (ARUtVolume.get(t) + MAUtVolume.get(t))), 2.0));
@@ -154,6 +155,34 @@ public class timeARMA extends timeAlgorithm{
                     ", var(MA): " + varMA + ", var(ARMA): " + varARMA);
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", AR: " + ARUtVolume.get(t) + 
                     ", MA: " + MAUtVolume.get(t) + ", ARMA: " + (ARUtVolume.get(t) + MAUtVolume.get(t)));
+            
+            // Rate of Return
+            varAR = Math.sqrt(Math.pow((stock.getStockElement(t).getRateOfReturn() - ARUtRateOfReturn.get(t)), 2.0));
+            varMA = Math.sqrt(Math.pow((stock.getStockElement(t).getRateOfReturn() - MAUtRateOfReturn.get(t)), 2.0));
+            varARMA = Math.sqrt(Math.pow((stock.getStockElement(t).getRateOfReturn() - (ARUtRateOfReturn.get(t) + MAUtRateOfReturn.get(t))), 2.0));
+
+            if(varAR < varMA && varAR < varARMA)
+            {
+                bestUtRateOfReturn.add(varAR);
+                bestUtRateOfReturnType.add("AR");
+                System.out.println("Rate of Return at time " + t + " varience is " + varAR + " with formula AR");
+            }
+            else if (varMA < varARMA)
+            {
+                bestUtRateOfReturn.add(varMA);
+                bestUtRateOfReturnType.add("MA");
+                System.out.println("Rate of Return at time " + t + " varience is " + varAR + " with formula AR");
+            }
+            else
+            {
+                bestUtRateOfReturn.add(varARMA);
+                bestUtRateOfReturnType.add("ARMA");
+                System.out.println("Rate of Return at time " + t + " varience is " + varARMA + " with formula ARMA");
+            }
+            System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
+                    ", var(MA): " + varMA + ", var(ARMA): " + varARMA);
+            System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", AR: " + ARUtRateOfReturn.get(t) + 
+                    ", MA: " + MAUtRateOfReturn.get(t) + ", ARMA: " + (ARUtRateOfReturn.get(t) + MAUtRateOfReturn.get(t)));
             
         }
         
@@ -187,6 +216,10 @@ public class timeARMA extends timeAlgorithm{
         ARUtVolume = new LinkedList<Double>();
         ARUtRateOfReturn = new LinkedList<Double>();
         
+        // Initial Values are 0.0
+        ARUtVolume.add(0.0);
+        ARUtRateOfReturn.add(0.0);
+                
         // Due to p is lag, the count must start at the 2nd element.
         for (int t = 1; t < stock.getStockElements(); t++)
         {
@@ -199,11 +232,11 @@ public class timeARMA extends timeAlgorithm{
             // Ut Value Recursion Calculations
             Ut = ZtVolume + modelARUtVolume(aValue, t, 1);  
             ARUtVolume.add(Ut);
-            System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
+            //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
             
             Ut = ZtRateOfReturn + modelARUtRateOfReturn(aValue, t, 1);  
-            ARUtVolume.add(Ut);
-            System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
+            ARUtRateOfReturn.add(Ut);
+            //System.out.println(t + " - " + stock.getStockElement(t).getVolume() + "," + Ut);
         }
     }
     
@@ -344,14 +377,19 @@ public class timeARMA extends timeAlgorithm{
             bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
             
             
-            bufferedWriter.write("date,symbol,open,close,low,high,volume,bestUTVolume,bestUtType,ARUtVolume,MAUtVolume,ARMAUtVolume");
+            bufferedWriter.write("date,symbol,open,close,low,high,volume,rateofreturn,bestUTVolume,"
+                    + "bestUtTypeVolume,ARUtVolume,MAUtVolume,ARMAUtVolume,bestUTRateOfReturn,"
+                    + "bestUtTypeRateOfReturn,ARUtRateOfReturn,MAUtRateOfReturn,ARMAUtRateOfReturn");
             bufferedWriter.newLine();
             
             for(int i = 0; i < stock.getStockElements(); i++)
             {
-                bufferedWriter.write(stock.getStockElement(i).toString() + "," + bestUtVolume.get(i) + "," + 
+                bufferedWriter.write(stock.getStockElement(i).toString() + "," + 
+                        stock.getStockElement(i).getRateOfReturn() + "," + bestUtVolume.get(i) + "," + 
                         bestUtVolumeType.get(i) + "," + ARUtVolume.get(i) + "," + MAUtVolume.get(i) + "," + 
-                        (ARUtVolume.get(i) + MAUtVolume.get(i)));
+                        (ARUtVolume.get(i) + MAUtVolume.get(i)) + "," + bestUtRateOfReturn.get(i) + "," + 
+                        bestUtRateOfReturnType.get(i) + "," + ARUtRateOfReturn.get(i) + "," + MAUtRateOfReturn.get(i) + "," + 
+                        (ARUtRateOfReturn.get(i) + MAUtRateOfReturn.get(i)));
                 bufferedWriter.newLine();
             }
         }
