@@ -52,6 +52,7 @@ public class MainClass {
         
         anomalies = algorithmARMA.findAnomalies();
         algorithmARMA.outputToFile("d:\\output.time.ARMA.csv");
+        algorithmARMA.outputToDebugFile("d:\\output.time.ARMA.debug.csv");
         System.out.println("Completed Algorithm: ARMA");
         
         

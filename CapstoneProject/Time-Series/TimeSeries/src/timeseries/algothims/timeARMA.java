@@ -41,6 +41,11 @@ public class timeARMA extends timeAlgorithm{
     LinkedList<Double> ARUtVolume;
     LinkedList<Double> ARUtRateOfReturn;
     
+    LinkedList<Double> bestUtVolume;
+    LinkedList<String> bestUtVolumeType;
+    LinkedList<Double> bestUtRateOfReturn;
+    LinkedList<String> bestUtRateOfReturnType;
+    
     public timeARMA(Stock stock)
     {
         /**
@@ -98,6 +103,12 @@ public class timeARMA extends timeAlgorithm{
         double varMA = 0.0;
         double varARMA = 0.0;
         
+        
+        bestUtVolume = new LinkedList<Double>();
+        bestUtVolumeType = new LinkedList<String>();
+        bestUtRateOfReturn = new LinkedList<Double>();
+        bestUtRateOfReturnType = new LinkedList<String>();
+        
         /**
          * Steps: 
          *  - Work out MA
@@ -123,14 +134,20 @@ public class timeARMA extends timeAlgorithm{
             
             if(varAR < varMA && varAR < varARMA)
             {
+                bestUtVolume.add(varAR);
+                bestUtVolumeType.add("AR");
                 System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
             }
             else if (varMA < varARMA)
             {
+                bestUtVolume.add(varMA);
+                bestUtVolumeType.add("MA");
                 System.out.println("Volume at time " + t + " varience is " + varAR + " with formula AR");
             }
             else
             {
+                bestUtVolume.add(varARMA);
+                bestUtVolumeType.add("ARMA");
                 System.out.println("Volume at time " + t + " varience is " + varARMA + " with formula ARMA");
             }
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
@@ -325,10 +342,16 @@ public class timeARMA extends timeAlgorithm{
         {
            
             bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
+            
+            
+            bufferedWriter.write("date,symbol,open,close,low,high,volume,bestUTVolume,bestUtType,ARUtVolume,MAUtVolume,ARMAUtVolume");
+            bufferedWriter.newLine();
+            
             for(int i = 0; i < stock.getStockElements(); i++)
             {
-                bufferedWriter.write(stock.getStockElement(i).toString() /*+ "," + varVolume.get(i) + "," + 
-                        varRateOfReturn.get(i) + "," + stock.getStockElement(i).getRateOfReturn()*/);
+                bufferedWriter.write(stock.getStockElement(i).toString() + "," + bestUtVolume.get(i) + "," + 
+                        bestUtVolumeType.get(i) + "," + ARUtVolume.get(i) + "," + MAUtVolume.get(i) + "," + 
+                        (ARUtVolume.get(i) + MAUtVolume.get(i)));
                 bufferedWriter.newLine();
             }
         }
