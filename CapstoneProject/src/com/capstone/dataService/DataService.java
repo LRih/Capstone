@@ -10,6 +10,7 @@
  **********************************************************************/
 package com.capstone.dataService;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -43,9 +44,15 @@ public class DataService
 	public static List<StockPoint> loadAllStockData()
 	{
 		//reference: https://sourceforge.net/projects/javacsv/files/
-		String myClassPath = DataService.class.getClassLoader().getResource("/").getPath();
+		File f = new File(DataService.class.getResource("/").getPath()); 
+		//System.out.println(f.toString()); 
+		String myClassPath = f.toString();
 		stockList.clear();
 		CsvReader r;
+		SimpleDateFormat dateFormatter1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormatter2 = new SimpleDateFormat("dd/MM/yyyy");
+		Date stockDate = new Date();
+		String strStockDate;
 		try
 		{
 			r = new CsvReader(myClassPath + "\\prices.csv", ',', Charset.forName("GBK"));
@@ -56,7 +63,11 @@ public class DataService
 			while (r.readRecord())
 			{
 				StockPoint p = new StockPoint();
-				p.setListedDate(r.get("date")+" 00:00:00");
+				//convert the stock date format to yyyy-MM-dd
+				stockDate = dateFormatter2.parse(r.get("date"));
+				strStockDate = dateFormatter1.format(stockDate);
+				p.setListedDate(strStockDate);//the format is yyyy-MM-dd
+				
 				p.setStockSymbol(r.get("symbol"));
 				p.setPriceOpen(Double.parseDouble(r.get("open")));
 				p.setPriceClose(Double.parseDouble(r.get("close")));
@@ -77,22 +88,30 @@ public class DataService
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return stockList;
 	}
 	
 	/**
 	 * load a day data
-	 * @param stringDate dd/MM/yyyy
+	 * @param stringDate yyyy-MM-dd
 	 */
 	public static List<StockPoint> loadDataByDay(String argDate)
 	{
-		String myClassPath = DataService.class.getClassLoader().getResource("/").getPath();
+		File f = new File(DataService.class.getResource("/").getPath()); 
+		//System.out.println(f.toString()); 
+		String myClassPath = f.toString();
 		stockList.clear();
 		CsvReader r;
-		SimpleDateFormat dateFormatter1 = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat dateFormatter1 = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat dateFormatter2 = new SimpleDateFormat("dd/MM/yyyy");
 		Date selectDate = new Date();
+		Date stockDate = new Date();
+		String strStockDate;
 		try
 		{
 			selectDate = dateFormatter1.parse(argDate);
@@ -101,7 +120,9 @@ public class DataService
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String stockDate=dateFormatter2.format(selectDate);
+		
+		//the argument format yyyy-MM-dd
+		String strSelectDate=dateFormatter1.format(selectDate);
 		try
 		{
 			r = new CsvReader(myClassPath+"\\prices.csv", ',', Charset.forName("GBK"));
@@ -112,12 +133,14 @@ public class DataService
 			while (r.readRecord())
 			{
 				StockPoint p = new StockPoint();
-				stockDate = r.get("date");
-				if (!stockDate.equals(argDate))
+				strStockDate = r.get("date");
+				stockDate    = dateFormatter2.parse(strStockDate);
+				strStockDate = dateFormatter1.format(stockDate);
+				if (!strStockDate.equals(strSelectDate))
 				{
 					continue;
 				}
-				p.setListedDate(stockDate + " 00:00:00");
+				p.setListedDate(strStockDate+" 00:00:00");
 				p.setStockSymbol(r.get("symbol"));
 				p.setPriceOpen(Double.parseDouble(r.get("open")));
 				p.setPriceClose(Double.parseDouble(r.get("close")));
@@ -138,8 +161,13 @@ public class DataService
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println("--------------------------");
+		//System.out.println("--------------------------");
+		
 		return stockList;
 	}
 	
@@ -148,7 +176,6 @@ public class DataService
 		return StockPoint.createRandomPoints(DataConstant.MIN_COORDINATE,
 				DataConstant.MAX_COORDINATE, DataConstant.NUM_POINTS);
 	}
-	
 	
 
 }

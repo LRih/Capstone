@@ -145,7 +145,7 @@ public class StockPoint
          * @param   strDate the string date to be converted into a date-time format and saved.
          * @return  a boolean that states if the operation was successful.
          */
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try
         {
             listedDate = dateFormatter.parse(strDate);

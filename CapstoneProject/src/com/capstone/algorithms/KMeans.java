@@ -157,7 +157,7 @@ public class KMeans
 				plotClusterGroup(cg);
 			}
 			
-			if (i_loop>=5000)
+			if (i_loop>=DataConstant.MAX_LOOP)
 			{
 				finish = true;
 			}
