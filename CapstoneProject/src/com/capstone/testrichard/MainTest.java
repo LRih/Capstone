@@ -32,7 +32,7 @@ public class MainTest
             public void actionPerformed(ActionEvent e)
             {
                 KMeans kmeans = new KMeans();
-                kmeans.init(4);
+                kmeans.init(4,"2016-12-30");
                 kmeans.calculate();
 
                 cPanel.setClusterer(kmeans);

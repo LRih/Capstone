@@ -10,16 +10,20 @@
  **********************************************************************/
 package com.capstone;
 
-import com.capstone.algorithms.KMeans;
+import com.capstone.dataService.DataService;
 
 public class MainRun
 {
 
 	public static void main(String[] args)
 	{
-		KMeans kmeans = new KMeans();
-		kmeans.init(3);
-		kmeans.calculate();
+//		KMeans kmeans = new KMeans();
+//		kmeans.init(3);
+//		kmeans.calculate();
+		
+		DataService ds = new DataService();
+		//ds.loadAllStockData();
+		ds.loadDataByDay("29/12/2016");
 
 	}
 

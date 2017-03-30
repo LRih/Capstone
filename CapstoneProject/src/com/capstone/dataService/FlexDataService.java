@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.capstone.algorithms.KMeans;
 import com.capstone.entities.StockPoint;
+import com.capstone.utils.DataConstant;
 
 import flex.messaging.io.ArrayCollection;
 import flex.messaging.io.amf.ASObject;
@@ -28,25 +29,25 @@ import flex.messaging.io.amf.ASObject;
  */
 public class FlexDataService
 {
-	KMeans k = new KMeans();
+	KMeans kmeans = new KMeans();
 
 	/**
 	 * Service for Flex to get all stock data points
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayCollection getPointsCollection()
+	public ArrayCollection getPointsCollection(String day)
 	{
 		ArrayCollection retCollection =	new ArrayCollection();
-		k.init(3);
-		k.calculate();
-		List<StockPoint> points = KMeans.getPoints();
+		kmeans.init(DataConstant.NUM_GROUPS,day);
+		kmeans.calculate();
+		List<StockPoint> points = kmeans.getPoints();
 		for (Iterator<StockPoint> iterator = points.iterator(); iterator.hasNext();)
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
-			asObject.put("rr", stockPoint.getpX());
-			asObject.put("vl", stockPoint.getpY());
+			asObject.put("rr", stockPoint.getRateOfReturn());
+			asObject.put("vl", stockPoint.getVolume());
 			asObject.put("gp", stockPoint.getpGroup_number());
 			retCollection.add(asObject);
 		}
@@ -62,14 +63,14 @@ public class FlexDataService
 	public ArrayCollection getKmeansPointsCollection1()
 	{
 		ArrayCollection retCollection =	new ArrayCollection();
-		List<StockPoint> points = k.getGroups().get(0).getPoints();
+		List<StockPoint> points = kmeans.getGroups().get(0).getPoints();
 		for (Iterator<StockPoint> iterator = points.iterator(); iterator.hasNext();)
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
 
-			asObject.put("rr", stockPoint.getpX());
-			asObject.put("vl", stockPoint.getpY());
+			asObject.put("rr", stockPoint.getRateOfReturn());
+			asObject.put("vl", stockPoint.getVolume());
 			asObject.put("gp", stockPoint.getpGroup_number());
 
 			retCollection.add(asObject);
@@ -86,14 +87,14 @@ public class FlexDataService
 	public ArrayCollection getKmeansPointsCollection2()
 	{
 		ArrayCollection retCollection =	new ArrayCollection();
-		List<StockPoint> points = k.getGroups().get(1).getPoints();
+		List<StockPoint> points = kmeans.getGroups().get(1).getPoints();
 		for (Iterator<StockPoint> iterator = points.iterator(); iterator.hasNext();)
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
 
-			asObject.put("rr", stockPoint.getpX());
-			asObject.put("vl", stockPoint.getpY());
+			asObject.put("rr", stockPoint.getRateOfReturn());
+			asObject.put("vl", stockPoint.getVolume());
 			asObject.put("gp", stockPoint.getpGroup_number());
 			retCollection.add(asObject);
 		}
@@ -109,14 +110,14 @@ public class FlexDataService
 	public ArrayCollection getKmeansPointsCollection3()
 	{
 		ArrayCollection retCollection =	new ArrayCollection();
-		List<StockPoint> points = k.getGroups().get(2).getPoints();
+		List<StockPoint> points = kmeans.getGroups().get(2).getPoints();
 		for (Iterator<StockPoint> iterator = points.iterator(); iterator.hasNext();)
 		{
 			StockPoint stockPoint = (StockPoint) iterator.next();
 			ASObject asObject = new ASObject();
 
-			asObject.put("rr", stockPoint.getpX());
-			asObject.put("vl", stockPoint.getpY());
+			asObject.put("rr", stockPoint.getRateOfReturn());
+			asObject.put("vl", stockPoint.getVolume());
 			asObject.put("gp", stockPoint.getpGroup_number());
 			retCollection.add(asObject);
 		}
