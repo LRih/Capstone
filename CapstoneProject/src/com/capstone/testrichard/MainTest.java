@@ -11,6 +11,7 @@
 package com.capstone.testrichard;
 
 import com.capstone.algorithms.KMeans;
+import com.capstone.dataService.DataPreprocessService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,11 +23,16 @@ public class MainTest
 
 	public static void main(String[] args)
 	{
-		// panels
-		final CPanel cPanel = new CPanel();
+	    testPreprocess();
+	}
 
-		JButton btn = new JButton("New");
-		btn.addActionListener(new ActionListener()
+	private static void testClustering()
+	{
+        // panels
+        final CPanel cPanel = new CPanel();
+
+        JButton btn = new JButton("New");
+        btn.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -40,17 +46,21 @@ public class MainTest
         });
 
 
-		// window
-		JFrame frame = new JFrame("Clustering");
+        // window
+        JFrame frame = new JFrame("Clustering");
 
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.add(cPanel);
-		frame.add(btn, BorderLayout.SOUTH);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(cPanel);
+        frame.add(btn, BorderLayout.SOUTH);
 
-		frame.setSize(800, 600);
-		frame.setLocationRelativeTo(null);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
 
-		frame.setVisible(true);
+        frame.setVisible(true);
 	}
 
+	private static void testPreprocess()
+	{
+        new DataPreprocessService().preprocess();
+	}
 }

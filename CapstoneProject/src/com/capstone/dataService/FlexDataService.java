@@ -48,7 +48,7 @@ public class FlexDataService
 			ASObject asObject = new ASObject();
 			asObject.put("rr", stockPoint.getRateOfReturn());
 			asObject.put("vl", stockPoint.getVolume());
-			asObject.put("gp", stockPoint.getpGroup_number());
+			asObject.put("gp", stockPoint.getGroupNumber());
 			retCollection.add(asObject);
 		}
 
@@ -71,7 +71,7 @@ public class FlexDataService
 
 			asObject.put("rr", stockPoint.getRateOfReturn());
 			asObject.put("vl", stockPoint.getVolume());
-			asObject.put("gp", stockPoint.getpGroup_number());
+			asObject.put("gp", stockPoint.getGroupNumber());
 
 			retCollection.add(asObject);
 		}
@@ -95,7 +95,7 @@ public class FlexDataService
 
 			asObject.put("rr", stockPoint.getRateOfReturn());
 			asObject.put("vl", stockPoint.getVolume());
-			asObject.put("gp", stockPoint.getpGroup_number());
+			asObject.put("gp", stockPoint.getGroupNumber());
 			retCollection.add(asObject);
 		}
 		System.out.println("22222222222222222222222222222222222222222222");
@@ -118,7 +118,7 @@ public class FlexDataService
 
 			asObject.put("rr", stockPoint.getRateOfReturn());
 			asObject.put("vl", stockPoint.getVolume());
-			asObject.put("gp", stockPoint.getpGroup_number());
+			asObject.put("gp", stockPoint.getGroupNumber());
 			retCollection.add(asObject);
 		}
 		System.out.println("333333333333333333333333333333333333333333333");

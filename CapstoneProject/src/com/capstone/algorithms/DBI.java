@@ -9,7 +9,7 @@ import com.capstone.entities.StockPoint;
  *
  * See: https://en.wikipedia.org/wiki/Davies%E2%80%93Bouldin_index
  *
- * Author: Richard Liu (s3168087)
+ * @author Richard Liu (s3168087)
  */
 public final class DBI
 {

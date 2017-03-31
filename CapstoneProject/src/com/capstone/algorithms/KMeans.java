@@ -67,7 +67,7 @@ public class KMeans
 			// initialise the central point for every group
 			StockPoint centroid = StockPoint.createRandomPoint(DataConstant.MIN_COORDINATE,DataConstant.MAX_COORDINATE);
 			
-			centroid.setpGroup_number(i);
+			centroid.setGroupNumber(i);
 			
 			group.setCentroid(centroid);
 
@@ -105,27 +105,27 @@ public class KMeans
 				StockPoint p = (StockPoint) itP.next();
 				//calculate the distance between p and the first group center point
 				distance_mini = StockPoint.distance(p, groups.get(0).getCentroid());
-				p.setpGroup_number(0);
+				p.setGroupNumber(0);
 
 				for (Iterator<ClusterGroup> itG = groups.iterator(); itG.hasNext();)
 				{
-					ClusterGroup group = (ClusterGroup) itG.next();
+					ClusterGroup group = itG.next();
 					distance_temp = StockPoint.distance(p, group.getCentroid());
 					
 					if (distance_temp < distance_mini)
 					{
-						p.setpGroup_number(group.getId());
+						p.setGroupNumber(group.getId());
 						distance_mini = distance_temp;
 					}
 				}
-				groups.get(p.getpGroup_number()).addPoint(p);
+				groups.get(p.getGroupNumber()).addPoint(p);
 			}
 
 			// save old central point
 			oldCentroids.clear();
 			for (Iterator<ClusterGroup> itg = groups.iterator(); itg.hasNext();)
 			{
-				ClusterGroup cg = (ClusterGroup) itg.next();
+				ClusterGroup cg = itg.next();
 				double x,y;
 				x = cg.getCentroid().getRateOfReturn();
 				y = cg.getCentroid().getVolume();
