@@ -16,60 +16,12 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataPreprocessService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataPreprocessService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="191" column="17" lean-forward="false" selection-start-line="191" selection-start-column="17" selection-end-line="191" selection-end-column="17" />
-              <folding>
-                <element signature="docComment;class#DataPreprocessService#0" expanded="false" />
-                <element signature="docComment;method#preprocess#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#preprocess#1;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#preprocess#2;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#loadData#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="docComment;method#writeData#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#writeData#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="docComment;method#normalizeClose#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#normalizeClose#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="docComment;method#normalizeVolume#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#normalizeVolume#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#calcVolumeSampleStdDev#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#calcVolumeSampleVariance#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="docComment;class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#Stock#0;class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="docComment;class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-                <element signature="method#compare#0;class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StockPoint.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3525">
-              <caret line="254" column="31" lean-forward="false" selection-start-line="254" selection-start-column="31" selection-end-line="254" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#7247#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="e#2418#2419#0" expanded="true" />
-                <element signature="e#2474#2475#0" expanded="true" />
-                <element signature="e#5551#5552#0" expanded="true" />
-                <element signature="e#5578#5579#0" expanded="true" />
-                <element signature="e#5631#5632#0" expanded="true" />
-                <element signature="e#5672#5673#0" expanded="true" />
-                <element signature="e#5706#5707#0" expanded="true" />
-                <element signature="e#5732#5733#0" expanded="true" />
-                <element signature="e#5783#5784#0" expanded="true" />
-                <element signature="e#5822#5823#0" expanded="true" />
-                <element signature="e#5876#5877#0" expanded="true" />
-                <element signature="e#5915#5916#0" expanded="true" />
-                <element signature="e#5952#5953#0" expanded="true" />
-                <element signature="e#5985#5986#0" expanded="true" />
-                <element signature="e#7115#7127#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-3363">
+              <caret line="108" column="49" lean-forward="false" selection-start-line="108" selection-start-column="49" selection-end-line="108" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,7 +59,6 @@
         <option value="$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/MainRun.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java" />
         <option value="$PROJECT_DIR$/Time-Series/TimeSeries/src/timeseries/utils/DataImport.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/IDataPoint.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/DataPoint.java" />
@@ -115,6 +66,7 @@
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/FlexDataService.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/algorithms/KMeans.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java" />
       </list>
     </option>
   </component>
@@ -140,6 +92,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -341,7 +294,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -583,7 +535,6 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -595,7 +546,6 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21074815" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -606,7 +556,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -619,29 +571,36 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4011">
+          <caret line="191" column="17" lean-forward="false" selection-start-line="191" selection-start-column="17" selection-end-line="191" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#7247#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1722">
           <caret line="189" column="7" lean-forward="false" selection-start-line="189" selection-start-column="7" selection-end-line="189" selection-end-column="7" />
-          <folding>
-            <element signature="docComment;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#preprocess#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#preprocess#1;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#preprocess#2;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#loadData#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#writeData#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#writeData#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#normalizeClose#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#normalizeClose#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#normalizeVolume#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#normalizeVolume#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#calcVolumeSampleStdDev#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#calcVolumeSampleVariance#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#Stock#0;class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#compare#0;class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -815,7 +774,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1218">
           <caret line="72" column="16" lean-forward="false" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -823,21 +781,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
           <caret line="53" column="16" lean-forward="false" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
-          <folding>
-            <element signature="e#1697#1698#0" expanded="false" />
-            <element signature="e#1753#1754#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/DataPoint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="42" column="25" lean-forward="false" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/DataPoint.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -860,34 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="191" column="17" lean-forward="false" selection-start-line="191" selection-start-column="17" selection-end-line="191" selection-end-column="17" />
-          <folding>
-            <element signature="docComment;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#preprocess#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#preprocess#1;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#preprocess#2;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#loadData#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#writeData#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#writeData#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#normalizeClose#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#normalizeClose#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;method#normalizeVolume#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#normalizeVolume#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#calcVolumeSampleStdDev#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#calcVolumeSampleVariance#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#Stock#0;class#Stock#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="docComment;class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-            <element signature="method#compare#0;class#DateSymbolComparator#0;class#DataPreprocessService#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/KMeans.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="640">
@@ -903,27 +822,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3525">
-          <caret line="254" column="31" lean-forward="false" selection-start-line="254" selection-start-column="31" selection-end-line="254" selection-end-column="31" />
+        <state relative-caret-position="585">
+          <caret line="236" column="0" lean-forward="true" selection-start-line="236" selection-start-column="0" selection-end-line="236" selection-end-column="0" />
           <folding>
             <element signature="e#0#7247#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#2418#2419#0" expanded="true" />
-            <element signature="e#2474#2475#0" expanded="true" />
-            <element signature="e#5551#5552#0" expanded="true" />
-            <element signature="e#5578#5579#0" expanded="true" />
-            <element signature="e#5631#5632#0" expanded="true" />
-            <element signature="e#5672#5673#0" expanded="true" />
-            <element signature="e#5706#5707#0" expanded="true" />
-            <element signature="e#5732#5733#0" expanded="true" />
-            <element signature="e#5783#5784#0" expanded="true" />
-            <element signature="e#5822#5823#0" expanded="true" />
-            <element signature="e#5876#5877#0" expanded="true" />
-            <element signature="e#5915#5916#0" expanded="true" />
-            <element signature="e#5952#5953#0" expanded="true" />
-            <element signature="e#5985#5986#0" expanded="true" />
-            <element signature="e#7115#7127#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3363">
+          <caret line="108" column="49" lean-forward="false" selection-start-line="108" selection-start-column="49" selection-end-line="108" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>

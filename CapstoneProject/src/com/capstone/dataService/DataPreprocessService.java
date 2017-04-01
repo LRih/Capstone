@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Takes raw stock data and performs the following normalization:
- *   close: [min, max] => [0, 1]
+ *   close: (P(t) - P(t-1)) / P(t) then [min, max] => [0, 1]
  *   volume: sigmoid function with translation = average volume
  *
  * @author Richard Liu
@@ -18,9 +18,10 @@ public class DataPreprocessService
     private static String NORMALIZED_DATA_FILENAME = "normalized.csv";
 
     private List<Stock> _data;
+    private Map<String, List<Stock>> _stocks;
 
-    private double _minClose;
-    private double _maxClose;
+    private double _minDeltaClose;
+    private double _maxDeltaClose;
     private double _meanVolume;
 
     private double _sigmoidBeta;
@@ -41,9 +42,10 @@ public class DataPreprocessService
     private void preprocess(boolean sigmoidBetaProvided)
     {
         loadData();
+        loadStocks();
 
-        // calculate min/max to obtain bounds
-        calcMinMaxClose();
+        calcDeltaClose();
+        calcMinMaxDeltaClose();
         calcVolumeMean();
 
         if (!sigmoidBetaProvided)
@@ -102,6 +104,18 @@ public class DataPreprocessService
 
         System.out.println(_data.size() + " data points loaded");
     }
+    private void loadStocks()
+    {
+        _stocks = new HashMap<String, List<Stock>>();
+
+        for (Stock s : _data)
+        {
+            if (!_stocks.containsKey(s.symbol))
+                _stocks.put(s.symbol, new ArrayList<Stock>());
+
+            _stocks.get(s.symbol).add(s);
+        }
+    }
 
     /**
      * Write preprocessed data to file.
@@ -111,13 +125,13 @@ public class DataPreprocessService
         try
         {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NORMALIZED_DATA_FILENAME)));
-            writer.write("date,symbol,close,volume\n"); // write header line
+            writer.write("date,symbol,closechange,volume\n"); // write header line
 
             DateFormat writeDf = new SimpleDateFormat("dd/MM/yyyy");
 
             for (Stock stock : _data)
             {
-                String str = writeDf.format(stock.date) + "," + stock.symbol + "," + stock.normalizedClose + "," + stock.normalizedVolume + "\n";
+                String str = writeDf.format(stock.date) + "," + stock.symbol + "," + stock.normalizedDeltaClose + "," + stock.normalizedVolume + "\n";
                 writer.write(str);
             }
 
@@ -130,12 +144,12 @@ public class DataPreprocessService
     }
 
     /**
-     * Normalize close values based on min/max.
+     * Normalize close change values based on min/max.
      */
     private void normalizeClose()
     {
         for (Stock s : _data)
-            s.normalizedClose = (s.close - _minClose) / (_maxClose - _minClose);
+            s.normalizedDeltaClose = (s.deltaClose - _minDeltaClose) / (_maxDeltaClose - _minDeltaClose);
     }
 
     /**
@@ -147,30 +161,43 @@ public class DataPreprocessService
             s.normalizedVolume = calcSigmoid(s.volume);
     }
 
-    private void calcMinMaxClose()
+    private void calcDeltaClose()
+    {
+        for (String name : _stocks.keySet())
+        {
+            for (int i = 1; i < _stocks.get(name).size(); i++)
+            {
+                Stock s0 = _stocks.get(name).get(i - 1);
+                Stock s1 = _stocks.get(name).get(i);
+
+                s1.deltaClose = s1.close - s0.close;
+            }
+        }
+    }
+    private void calcMinMaxDeltaClose()
     {
         boolean assigned = false;
-        _minClose = 0;
-        _maxClose = 0;
+        _minDeltaClose = 0;
+        _maxDeltaClose = 0;
 
         for (Stock stock : _data)
         {
             if (!assigned)
             {
                 assigned = true;
-                _minClose = stock.close;
-                _maxClose = stock.close;
+                _minDeltaClose = stock.deltaClose;
+                _maxDeltaClose = stock.deltaClose;
                 continue;
             }
 
-            if (stock.close < _minClose)
-                _minClose = stock.close;
+            if (stock.deltaClose < _minDeltaClose)
+                _minDeltaClose = stock.deltaClose;
 
-            if (stock.close > _maxClose)
-                _maxClose = stock.close;
+            if (stock.deltaClose > _maxDeltaClose)
+                _maxDeltaClose = stock.deltaClose;
         }
 
-        System.out.println("Min/max close: " + _minClose + " / " + _maxClose);
+        System.out.println("Min/max delta close: " + _minDeltaClose + " / " + _maxDeltaClose);
     }
     private void calcVolumeMean()
     {
@@ -251,7 +278,8 @@ public class DataPreprocessService
         public final double close;
         public final long volume;
 
-        public double normalizedClose;
+        public double deltaClose;
+        public double normalizedDeltaClose;
         public double normalizedVolume;
 
         public Stock(Date date, String symbol, double close, long volume)
