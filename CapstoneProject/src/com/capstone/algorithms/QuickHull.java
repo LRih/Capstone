@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  * See: https://en.wikipedia.org/wiki/Quickhull
  *
- * Author: Richard Liu (s3168087)
+ * @author Richard Liu (s3168087)
  */
 public final class QuickHull
 {

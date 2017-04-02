@@ -1,12 +1,12 @@
 /***********************************************************************
- * Semester 1 2017 
+ * Semester 1 2017
  * COSC2408_1710 (Programming Project 1)
  * Full Name        : Kaizhi.Zhuang
  * Student Number   : s3535252
  * Course Code      : COSC2408
  * Create Date      : March 2017
- * 
- * This is provided by Kaizhi.Zhuang 
+ *
+ * This is provided by Kaizhi.Zhuang
  **********************************************************************/
 package com.capstone.dataService;
 
@@ -33,19 +33,19 @@ import com.csvreader.CsvReader;
  */
 public class DataService
 {
-	
+
 	public static ArrayList<StockPoint> stockList = new ArrayList<StockPoint>();
-	
+
 	/**
 	 * load all stock data from prices.csv files
-	 * 
+	 *
 	 * @return
 	 */
 	public static List<StockPoint> loadAllStockData()
 	{
 		//reference: https://sourceforge.net/projects/javacsv/files/
-		File f = new File(DataService.class.getResource("/").getPath()); 
-		//System.out.println(f.toString()); 
+		File f = new File(DataService.class.getResource("/").getPath());
+		//System.out.println(f.toString());
 		String myClassPath = f.toString();
 		stockList.clear();
 		CsvReader r;
@@ -67,7 +67,7 @@ public class DataService
 				stockDate = dateFormatter2.parse(r.get("date"));
 				strStockDate = dateFormatter1.format(stockDate);
 				p.setListedDate(strStockDate);//the format is yyyy-MM-dd
-				
+
 				p.setStockSymbol(r.get("symbol"));
 				p.setPriceOpen(Double.parseDouble(r.get("open")));
 				p.setPriceClose(Double.parseDouble(r.get("close")));
@@ -95,15 +95,15 @@ public class DataService
 		}
 		return stockList;
 	}
-	
+
 	/**
 	 * load a day data
 	 * @param stringDate yyyy-MM-dd
 	 */
 	public static List<StockPoint> loadDataByDay(String argDate)
 	{
-		File f = new File(DataService.class.getResource("/").getPath()); 
-		//System.out.println(f.toString()); 
+		File f = new File(DataService.class.getResource("/").getPath());
+		//System.out.println(f.toString());
 		String myClassPath = f.toString();
 		stockList.clear();
 		CsvReader r;
@@ -120,7 +120,7 @@ public class DataService
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		//the argument format yyyy-MM-dd
 		String strSelectDate=dateFormatter1.format(selectDate);
 		try
@@ -167,15 +167,15 @@ public class DataService
 			e.printStackTrace();
 		}
 		//System.out.println("--------------------------");
-		
+
 		return stockList;
 	}
-	
+
 	public static List<StockPoint> getStockDataTest()
 	{
 		return StockPoint.createRandomPoints(DataConstant.MIN_COORDINATE,
 				DataConstant.MAX_COORDINATE, DataConstant.NUM_POINTS);
 	}
-	
+
 
 }

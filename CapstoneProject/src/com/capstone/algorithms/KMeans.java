@@ -110,7 +110,7 @@ public class KMeans
 
 				for (Iterator<ClusterGroup> itG = groups.iterator(); itG.hasNext();)
 				{
-					ClusterGroup group = (ClusterGroup) itG.next();
+					ClusterGroup group = itG.next();
 					distance_temp = StockPoint.distance(p, group.getCentroid());
 					
 					if (distance_temp < distance_mini)
@@ -126,7 +126,7 @@ public class KMeans
 			oldCentroids.clear();
 			for (Iterator<ClusterGroup> itg = groups.iterator(); itg.hasNext();)
 			{
-				ClusterGroup cg = (ClusterGroup) itg.next();
+				ClusterGroup cg = itg.next();
 				double x,y;
 				x = cg.getCentroid().getRateOfReturn();
 				y = cg.getCentroid().getVolume();
