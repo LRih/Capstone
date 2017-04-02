@@ -20,7 +20,7 @@ package com.capstone.utils;
 public class DataConstant
 {
 	// Number of Group, which means K value
-	public static final int NUM_GROUPS = 5;
+	public static final int NUM_GROUPS = 3;
 
 	// Number of stock points
 	public static final int NUM_POINTS = 1000;

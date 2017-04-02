@@ -53,9 +53,10 @@ public class KMeans
 	{
 	    this.k = k;
 
-		System.out.println("!!! initialise points and Group n !!!");
+		//System.out.println("!!! initialise points and Group n !!!");
 		// init stock Points
 		points.clear();
+		
 		points = DataService.loadDataByDay(day);
 
 		// init Cluster Group
@@ -76,10 +77,10 @@ public class KMeans
 			groups.add(group);
 			
 			//display Group information
-			plotClusterGroup(group);
+			//plotClusterGroup(group);
 		}
 		
-		System.out.println("===============================================");
+		//System.out.println("===============================================");
 
 	}
 
@@ -149,13 +150,14 @@ public class KMeans
 					break;
 				}
 			}
-			
+			/*
 			System.out.println("this is :"+i_loop+" loop:");
 			for (int i = 0; i < k; i++)
 			{
 				ClusterGroup cg = groups.get(i);
 				plotClusterGroup(cg);
 			}
+			*/
 			
 			if (i_loop>=DataConstant.MAX_LOOP)
 			{
