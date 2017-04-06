@@ -9,7 +9,7 @@ import com.capstone.entities.StockPoint;
  *
  * See: https://en.wikipedia.org/wiki/Davies%E2%80%93Bouldin_index
  *
- * Author: Richard Liu (s3168087)
+ * @author Richard Liu (s3168087)
  */
 public final class DBI
 {
@@ -69,8 +69,8 @@ public final class DBI
 
         for (StockPoint pt : cluster.getPoints())
         {
-            double xDist = pt.getpX() - cluster.getCentroid().getpX();
-            double yDist = pt.getpX() - cluster.getCentroid().getpY();
+            double xDist = pt.getRateOfReturn() - cluster.getCentroid().getRateOfReturn();
+            double yDist = pt.getVolume() - cluster.getCentroid().getVolume();
             s += Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
         }
 
@@ -83,8 +83,8 @@ public final class DBI
      */
     private double calcM(ClusterGroup cluster1, ClusterGroup cluster2)
     {
-        double xDist = cluster1.getCentroid().getpX() - cluster2.getCentroid().getpY();
-        double yDist = cluster1.getCentroid().getpY() - cluster2.getCentroid().getpY();
+        double xDist = cluster1.getCentroid().getRateOfReturn() - cluster2.getCentroid().getRateOfReturn();
+        double yDist = cluster1.getCentroid().getVolume() - cluster2.getCentroid().getVolume();
 
         return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
     }

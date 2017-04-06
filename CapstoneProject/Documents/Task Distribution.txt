@@ -1,5 +1,5 @@
 1. Jason
-This week should implement methods which is about loading the real stock data from cvs file.
+This week I should implement methods which is about loading the real stock data from cvs file.
 Work in package com.capstone.dataService
 
 2. Richard

@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  * See: https://en.wikipedia.org/wiki/Quickhull
  *
- * Author: Richard Liu (s3168087)
+ * @author Richard Liu (s3168087)
  */
 public final class QuickHull
 {
@@ -109,7 +109,7 @@ public final class QuickHull
         StockPoint min = null;
 
         for (StockPoint pt : pts)
-            if (min == null || pt.getpX() < min.getpX())
+            if (min == null || pt.getRateOfReturn() < min.getRateOfReturn())
                 min = pt;
 
         return min;
@@ -120,7 +120,7 @@ public final class QuickHull
         StockPoint max = null;
 
         for (StockPoint pt : pts)
-            if (max == null || pt.getpX() > max.getpX())
+            if (max == null || pt.getRateOfReturn() > max.getRateOfReturn())
                 max = pt;
 
         return max;
@@ -132,7 +132,7 @@ public final class QuickHull
      */
     private static boolean isLeftSide(StockPoint linePt1, StockPoint linePt2, StockPoint pt)
     {
-        double val = (linePt2.getpX() - linePt1.getpX()) * (pt.getpY() - linePt1.getpY()) - (linePt2.getpY() - linePt1.getpY()) * (pt.getpX() - linePt1.getpX());
+        double val = (linePt2.getRateOfReturn() - linePt1.getRateOfReturn()) * (pt.getVolume() - linePt1.getVolume()) - (linePt2.getVolume() - linePt1.getVolume()) * (pt.getRateOfReturn() - linePt1.getRateOfReturn());
         return val > 0;
     }
     
@@ -162,9 +162,9 @@ public final class QuickHull
      */
     private static double getDistance(StockPoint linePt1, StockPoint linePt2, StockPoint pt)
     {
-        double lineX = linePt2.getpX() - linePt1.getpX();
-        double lineY = linePt2.getpY() - linePt1.getpY();
-        double val = lineX * (linePt1.getpY() - pt.getpY()) - lineY * (linePt1.getpX() - pt.getpX());
+        double lineX = linePt2.getRateOfReturn() - linePt1.getRateOfReturn();
+        double lineY = linePt2.getVolume() - linePt1.getVolume();
+        double val = lineX * (linePt1.getVolume() - pt.getVolume()) - lineY * (linePt1.getRateOfReturn() - pt.getRateOfReturn());
         return Math.abs(val);
     }
 }

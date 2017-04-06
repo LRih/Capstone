@@ -1,15 +1,19 @@
 package com.capstone.testrichard;
 
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
+import java.util.List;
+
+import javax.swing.JPanel;
+
 import com.capstone.algorithms.KMeans;
 import com.capstone.algorithms.QuickHull;
 import com.capstone.entities.ClusterGroup;
 import com.capstone.entities.StockPoint;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Path2D;
-import java.util.List;
 
 /**
  * A panel for drawing points with clusters.
@@ -68,8 +72,8 @@ public class CPanel extends JPanel
 
             for (StockPoint s : cluster.getPoints())
             {
-                int x = (int)(s.getpX() / (float)MAX_COORDINATE * getWidth()) - DOT_RADIUS;
-                int y = (int)(s.getpY() / (float)MAX_COORDINATE * getHeight()) - DOT_RADIUS;
+                int x = (int)(s.getRateOfReturn() / (float)MAX_COORDINATE * getWidth()) - DOT_RADIUS;
+                int y = (int)(s.getVolume() / (float)MAX_COORDINATE * getHeight()) - DOT_RADIUS;
 
                 g.fillOval(x, y, DOT_RADIUS * 2, DOT_RADIUS * 2);
             }
@@ -85,8 +89,8 @@ public class CPanel extends JPanel
             ClusterGroup cluster = _clusterer.getGroups().get(i);
             g.setColor(COLORS[i]);
 
-            int x = (int)(cluster.getCentroid().getpX() / (float)MAX_COORDINATE * getWidth());
-            int y = (int)(cluster.getCentroid().getpY() / (float)MAX_COORDINATE * getHeight());
+            int x = (int)(cluster.getCentroid().getRateOfReturn() / (float)MAX_COORDINATE * getWidth());
+            int y = (int)(cluster.getCentroid().getVolume() / (float)MAX_COORDINATE * getHeight());
 
             g.drawLine(x - DOT_RADIUS, y - DOT_RADIUS, x + DOT_RADIUS, y + DOT_RADIUS);
             g.drawLine(x + DOT_RADIUS, y - DOT_RADIUS, x - DOT_RADIUS, y + DOT_RADIUS);
@@ -110,15 +114,15 @@ public class CPanel extends JPanel
             Path2D path = new Path2D.Double();
 
             StockPoint s0 = hull.get(0);
-            int x0 = (int)(s0.getpX() / (float)MAX_COORDINATE * getWidth());
-            int y0 = (int)(s0.getpY() / (float)MAX_COORDINATE * getHeight());
+            int x0 = (int)(s0.getRateOfReturn() / (float)MAX_COORDINATE * getWidth());
+            int y0 = (int)(s0.getVolume() / (float)MAX_COORDINATE * getHeight());
             path.moveTo(x0, y0);
 
             for (int j = 1; j < hull.size(); j++)
             {
                 StockPoint s = hull.get(j);
-                int x = (int)(s.getpX() / (float)MAX_COORDINATE * getWidth());
-                int y = (int)(s.getpY() / (float)MAX_COORDINATE * getHeight());
+                int x = (int)(s.getRateOfReturn() / (float)MAX_COORDINATE * getWidth());
+                int y = (int)(s.getVolume() / (float)MAX_COORDINATE * getHeight());
                 path.lineTo(x, y);
             }
 
