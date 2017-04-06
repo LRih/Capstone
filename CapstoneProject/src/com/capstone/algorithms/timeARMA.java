@@ -391,7 +391,7 @@ public class timeARMA extends timeAlgorithm{
             for(int i = 0; i < stock.getStockElements(); i++)
             {
                 bufferedWriter.write(stock.getStockElement(i).toString() + "," + 
-                        stock.getStockElement(i).getRateOfReturn() + "," + bestUtVolume.get(i) + "," + 
+                        /*stock.getStockElement(i).getRateOfReturn() + "," +*/ bestUtVolume.get(i) + "," + 
                         bestUtVolumeType.get(i) + "," + ARUtVolume.get(i) + "," + MAUtVolume.get(i) + "," + 
                         (ARUtVolume.get(i) + MAUtVolume.get(i)) + "," + bestUtRateOfReturn.get(i) + "," + 
                         bestUtRateOfReturnType.get(i) + "," + ARUtRateOfReturn.get(i) + "," + MAUtRateOfReturn.get(i) + "," + 
