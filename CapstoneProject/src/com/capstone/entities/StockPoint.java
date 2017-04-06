@@ -67,6 +67,22 @@ public class StockPoint
         this.volume = volume;
     }
     
+    public StockPoint (String listedDate, String stockSymbol, double rateOfReturn, 
+            double volume)
+    {
+        /**
+         * @param   strDate         the string date to be converted into a date-time format and saved.
+         * @param   rateOfReturn    the rate of return pre-calculated.
+         * @param   stockSymbol     the symbol of stock.
+         * @param   volume          the volume of stock sold.
+         */
+        
+        this.setListedDate(listedDate);
+        this.stockSymbol = stockSymbol;
+        this.rateOfReturn = rateOfReturn;
+        this.volume = volume;
+    }
+    
     /**
      * this is for test,which just create random points
      * @param rateOfReturn
@@ -81,6 +97,7 @@ public class StockPoint
     public void calculateRateOfReturn()
     {
         this.rateOfReturn = priceHigh - priceLow;
+        System.out.println("asdas");
     }
     
     public double getPriceClose()
@@ -191,6 +208,14 @@ public class StockPoint
         this.priceOpen = priceOpen;
     }
     
+    public void setRateofReturn(double rateOfReturn)
+    {
+        /** 
+         * @param priceOpen the opening price of the stock.
+         */
+        this.rateOfReturn = rateOfReturn;
+    }
+    
     public void setStockSymbol(String stockSymbol)
     {
         /** 
@@ -211,7 +236,7 @@ public class StockPoint
     {
         return this.listedDate + "," + this.stockSymbol + "," + this.priceOpen + 
                 "," + this.priceClose + "," + this.priceLow + "," + this.priceHigh +
-                "," + this.volume;                
+                "," + this.volume + "," + this.rateOfReturn;                
     }
     
     //added by Jason

@@ -74,12 +74,12 @@ public class timeStdDev extends timeAlgorithm {
         calculateStandardDeviations();
         calculateAnomalyThreasholds();
         
-        //System.out.println("Mean: " + meanRateOfReturn + "," + meanVolume);
+        System.out.println("Mean: " + meanRateOfReturn + "," + meanVolume);
         
-        //System.out.printf("Varience: %.4f, %.4f \n", varSumRateOfReturn, varSumVolume);
-        //System.out.printf("StdDev: %.4f, %.4f \n", stdRateOfReturn, stdVolume);
-        //System.out.println("Volume Anomaly Levels: " + anomalyCoeffientVolume + "," + anomalyThreasholdVolume);
-        //System.out.println("Rate of Return Anomaly Levels: " + anomalyCoeffientRateOfReturn + "," + anomalyThreasholdRateOfReturn);
+        System.out.printf("Varience: %.4f, %.4f \n", varSumRateOfReturn, varSumVolume);
+        System.out.printf("StdDev: %.4f, %.4f \n", stdRateOfReturn, stdVolume);
+        System.out.println("Volume Anomaly Levels: " + anomalyCoeffientVolume + "," + anomalyThreasholdVolume);
+        System.out.println("Rate of Return Anomaly Levels: " + anomalyCoeffientRateOfReturn + "," + anomalyThreasholdRateOfReturn);
         
         
         for (int i = 0; i < stock.getStockElements(); i++)
@@ -87,14 +87,14 @@ public class timeStdDev extends timeAlgorithm {
             if(stock.getStockElement(i).getVolume() > (meanVolume + anomalyThreasholdVolume) || 
                     stock.getStockElement(i).getVolume() < (meanVolume - anomalyThreasholdVolume))
             {
-                //System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
+                System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
                 anomalies.add(stock.getStockElement(i));
                 
             }
             else if(stock.getStockElement(i).getRateOfReturn() > (meanRateOfReturn + anomalyThreasholdRateOfReturn) || 
                     stock.getStockElement(i).getRateOfReturn() < (meanRateOfReturn - anomalyThreasholdRateOfReturn))
             {
-                //System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
+                System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
                 anomalies.add(stock.getStockElement(i));
                 
             }
@@ -115,6 +115,7 @@ public class timeStdDev extends timeAlgorithm {
     {
         anomalyThreasholdRateOfReturn = anomalyCoeffientRateOfReturn * stdRateOfReturn;
         anomalyThreasholdVolume = anomalyCoeffientVolume * stdVolume;
+        System.out.println(anomalyThreasholdVolume + " = " + anomalyCoeffientVolume + " - " + stdVolume);
     }
     
     private void calculateMeans ()
@@ -124,8 +125,8 @@ public class timeStdDev extends timeAlgorithm {
         
         for (int i = 0; i < stock.getStockElements(); i++)
         {
-            stock.getStockElement(i).calculateRateOfReturn();
-            meanVolume += stock.getStockElement(i). getVolume();
+            //stock.getStockElement(i).calculateRateOfReturn();
+            meanVolume += stock.getStockElement(i).getVolume();
             meanRateOfReturn += stock.getStockElement(i).getRateOfReturn();
         }
         
@@ -168,10 +169,12 @@ public class timeStdDev extends timeAlgorithm {
         {
            
             bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
+            bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,varienceVolume,varienceRateOfReturn");
+            bufferedWriter.newLine();
             for(int i = 0; i < stock.getStockElements(); i++)
             {
                 bufferedWriter.write(stock.getStockElement(i).toString() + "," + varVolume.get(i) + "," + 
-                        varRateOfReturn.get(i) + "," + stock.getStockElement(i).getRateOfReturn());
+                        varRateOfReturn.get(i) + "," /*+ stock.getStockElement(i).getRateOfReturn()*/);
                 bufferedWriter.newLine();
             }
         }

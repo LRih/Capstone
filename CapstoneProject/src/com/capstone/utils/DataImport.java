@@ -95,4 +95,67 @@ public class DataImport {
                 
         return stock;
     }
+    
+    public Stock importNormalizedData (String fileLocation)
+    {
+        // http://crunchify.com/how-to-read-convert-csv-comma-separated-values-file-to-arraylist-in-java-using-split-operation/
+        //LinkedList<Stock> stock = new LinkedList<Stock>();
+        Stock stock = new Stock();
+        
+        BufferedReader bufferedReader = null;
+        String readLine = null;
+        
+        try 
+        {
+            bufferedReader = new BufferedReader(new FileReader(new File(fileLocation)));
+            //bufferedReader = new BufferedReader(fileLocation);
+            // Firstline are headers
+            bufferedReader.readLine();
+            
+            while ((readLine = bufferedReader.readLine()) != null)
+            {
+                String[] splitLine = readLine.split("\\s*,\\s*");
+                
+                /*for (int i = 0; i < splitLine.length; i++)
+                {
+                    
+                    /*if(!(splitData[i] == null) || !(splitData[i].length()) == 0)) 
+                    {
+                        
+                    }
+                } */
+                
+                // String listedDate, String stockSymbol, double priceOpen, double priceClose, double priceHigh, double priceLow, long volume)
+                StockPoint stockPoint = new StockPoint();
+                
+                // Sets variables
+                stockPoint.setListedDate(splitLine[0]);
+                stockPoint.setStockSymbol(splitLine[1]);
+
+                stockPoint.setRateOfReturn(Double.parseDouble(splitLine[2]));
+                stockPoint.setVolume(Double.parseDouble(splitLine[3]));
+                
+                stock.addStock(stockPoint);
+            }
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try {
+                if(bufferedReader != null) 
+                {
+                    bufferedReader.close();
+                }
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+                
+        return stock;
+    }
 }

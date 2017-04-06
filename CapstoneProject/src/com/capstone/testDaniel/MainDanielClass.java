@@ -31,22 +31,26 @@ public class MainDanielClass {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Initialize the class
+        // Pre-Process the data to normalize it.
         new DataPreprocessService().preprocess();
-        DataImport dataImport = new DataImport();
         
+        
+        // Initialize the class
+        DataImport dataImport = new DataImport();
         
         Stock testStock = new Stock();
         LinkedList<StockPoint> anomalies;
         
         // Load data into system
-        testStock = dataImport.importData("prices.csv");
+        testStock = dataImport.importNormalizedData("normalized.csv");
         
         // Setups and runs algorithms
+        System.out.printf("\n\n=========================\n\n");
         System.out.println("Running Algorithm: Standard Deviation");
         timeStdDev algorithmStdDev = new timeStdDev(testStock);
         anomalies = algorithmStdDev.findAnomalies();
         algorithmStdDev.outputToFile("output.time.StdDev.csv");
+        algorithmStdDev.outputToDebugFile("output.time.StdDev.debug.csv");
         System.out.println("Completed Algorithm: Standard Deviation");
         
         System.out.println("Running Algorithm: ARMA");
