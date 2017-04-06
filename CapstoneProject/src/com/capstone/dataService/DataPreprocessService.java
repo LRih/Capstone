@@ -125,7 +125,7 @@ public class DataPreprocessService
         try
         {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NORMALIZED_DATA_FILENAME)));
-            writer.write("date,symbol,closechange,volume\n"); // write header line
+            writer.write("date,symbol,rateOfReturn,volume\n"); // write header line
 
             DateFormat writeDf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
