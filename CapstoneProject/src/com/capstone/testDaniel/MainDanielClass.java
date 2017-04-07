@@ -19,6 +19,9 @@ import com.capstone.algorithms.timeAlgorithm;
 import com.capstone.algorithms.timeStdDev;
 import com.capstone.algorithms.timeARMA;
 import com.capstone.dataService.DataPreprocessService;
+
+import com.capstone.entities.Anomalies;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -41,28 +44,28 @@ public class MainDanielClass {
     public static void main(String[] args) {
         
         Map<String, List<StockPoint>> _stocks;
-        Map<String, List<StockPoint>> _anomalies;
         
         // Pre-Process the data to normalize it.
-        new DataPreprocessService().preprocess();
+        //new DataPreprocessService().preprocess();
         
         // Post-Process it so can be used directly.
         _stocks = new DataPreprocessService().processPost();
         
         // Initialize the class
-        DataImport dataImport = new DataImport();
+        //DataImport dataImport = new DataImport();
         
         // StockPoints of anomalies.
         // Needs a re-work to allow different stock items. ********************
         Stock testStock = new Stock();
         LinkedList<StockPoint> anomalies;
-        _anomalies = new HashMap<String, List<StockPoint>>();
         
-        _anomalies.put("STDDEV", new LinkedList<StockPoint>());
-        _anomalies.put("ARMA", new LinkedList<StockPoint>());
+        Anomalies _anomalies = new Anomalies();
+        _anomalies.addAnomalyType("STDDEV");
+        _anomalies.addAnomalyType("ARMA");
+        
         
         // Load data into system
-        testStock = dataImport.importNormalizedData("normalized.csv");
+        //testStock = dataImport.importNormalizedData("normalized.csv");
         
         
         /**
@@ -92,7 +95,7 @@ public class MainDanielClass {
             anomalies = algorithmStdDev.findAnomalies();
             for (StockPoint stockPoint : anomalies)
             {
-                _anomalies.get("STDDEV").add(stockPoint);
+                _anomalies.addAnomaly("STDDEV", stockPoint);
             }
             System.out.println("Running Algorithm: Standard Deviation");
             //algorithmStdDev.outputToFile("output." + key + ".time.StdDev.csv");
@@ -107,94 +110,17 @@ public class MainDanielClass {
             anomalies = algorithmARMA.findAnomalies();
             for (StockPoint stockPoint : anomalies)
             {
-                _anomalies.get("ARMA").add(stockPoint);
+                //_anomalies.get("STDDEV").add(stockPoint);
+                _anomalies.addAnomaly("ARMA", stockPoint);
             }
             //algorithmARMA.outputToFile("output." + key + ".time.ARMA.csv");
             //algorithmARMA.outputToDebugFile("output." + key + ".time.ARMA.debug.csv");
             System.out.println("Completed Algorithm: ARMA");
         }
         
+        // Outputs to file
+        _anomalies.outputToFile("anomalies.csv");
         
-        
-        /**
-         * Runs the test stock values being derived directly from standard stock.
-         */
-        // Setups and runs algorithms
-        /*System.out.printf("\n\n=========================\n\n");
-        System.out.println("Running Algorithm: Standard Deviation");
-        timeStdDev algorithmStdDev = new timeStdDev(testStock);
-        anomalies = algorithmStdDev.findAnomalies();
-        algorithmStdDev.outputToFile("output.time.StdDev.csv");
-        algorithmStdDev.outputToDebugFile("output.time.StdDev.debug.csv");
-        System.out.println("Completed Algorithm: Standard Deviation");
-        
-        System.out.println("Running Algorithm: ARMA");
-        timeARMA algorithmARMA = new timeARMA(testStock);
-        algorithmARMA.setPValue(2);
-        algorithmARMA.setQValue(3);
-        
-        anomalies = algorithmARMA.findAnomalies();
-        algorithmARMA.outputToFile("output.time.ARMA.csv");
-        algorithmARMA.outputToDebugFile("output.time.ARMA.debug.csv");
-        System.out.println("Completed Algorithm: ARMA");*/
-        
-        
-        // For Debug of Data Only
-        //algorithmStdDev.outputToDebugFile("d:\\debug.csv");
-        
-        
-        /*for (int i = 0; i < testStock.getStockElements(); i++)
-        {
-            System.out.println(testStock.getStockElement(i).getListedDate() + " " + 
-                    testStock.getStockElement(i).getPriceHigh());
-        }*/
-        // Run analysis tools in sequence
-        
-        // Output to file(s)
-        /**
-         * @param   filename    filename to output anomalies to.
-         */
-        BufferedWriter bufferedWriter = null;
-        String filename = "anomalies.csv";
-        
-        try
-        {
-           
-            bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
-            
-            bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,anomalytype");
-            bufferedWriter.newLine();
-            
-            for ( String key : _anomalies.keySet() ) 
-            {
-                // Adds all stock that are relevant to stock class.
-                for (int i = 0; i < _anomalies.get(key).size(); i++)
-                {
-                    
-                    bufferedWriter.write(_anomalies.get(key).get(i).toString() + "," + key);
-                    bufferedWriter.newLine();
-                }
-
-            }
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                if (bufferedWriter != null)
-                {
-                    bufferedWriter.close();
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
     
     
