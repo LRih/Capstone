@@ -77,7 +77,7 @@ public abstract class timeAlgorithm {
            
             bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
             
-            bufferedWriter.write("date,symbol,volume,rateOfReturn");
+            bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn");
             bufferedWriter.newLine();
             for(int i = 0; i < anomalies.size(); i++)
             {

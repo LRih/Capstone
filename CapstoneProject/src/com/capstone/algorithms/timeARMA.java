@@ -46,6 +46,16 @@ public class timeARMA extends timeAlgorithm{
     LinkedList<Double> bestUtRateOfReturn;
     LinkedList<String> bestUtRateOfReturnType;
     
+    
+    protected double stdRateOfReturn;
+    protected double stdVolume;
+    
+    protected double anomalyCoeffientRateOfReturn;
+    protected double anomalyCoeffientVolume;
+    
+    protected double anomalyThreasholdRateOfReturn;
+    protected double anomalyThreasholdVolume;
+    
     public timeARMA(Stock stock)
     {
         /**
@@ -56,6 +66,9 @@ public class timeARMA extends timeAlgorithm{
         pValue = 1;
         qValue = 1;
         
+        anomalyCoeffientRateOfReturn = 2.0;
+        anomalyCoeffientVolume = 2.0;
+        
     }
     
     public timeARMA()
@@ -64,6 +77,9 @@ public class timeARMA extends timeAlgorithm{
         
         pValue = 1;
         qValue = 1;
+        
+        anomalyCoeffientRateOfReturn = 2.0;
+        anomalyCoeffientVolume = 2.0;
         
     }
     
@@ -150,8 +166,9 @@ public class timeARMA extends timeAlgorithm{
                 bestUtVolumeType.add("ARMA");
                 //System.out.println("Volume at time " + t + " varience is " + varARMA + " with formula ARMA");
             }
-            /* Debug readouts
-            System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
+            
+            /* Debug readouts*/
+            /*System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", var(AR): " + varAR + 
                     ", var(MA): " + varMA + ", var(ARMA): " + varARMA);
             System.out.println("Xt: " + stock.getStockElement(t).getVolume() + ", AR: " + ARUtVolume.get(t) + 
                     ", MA: " + MAUtVolume.get(t) + ", ARMA: " + (ARUtVolume.get(t) + MAUtVolume.get(t)));
@@ -188,9 +205,76 @@ public class timeARMA extends timeAlgorithm{
             */
         }
         
+        // Work out stdDev of movement
+        
+        /* Calc Means */
+        double meanRateOfReturn = 0.0;
+        double meanVolume = 0.0;
+        double varSumVolume = 0.0;
+        double varSumRateOfReturn = 0.0;
+        double varRateOfReturn = 0.0;
+        double varVolume = 0.0;
+        
+        for (int i = 0; i < bestUtRateOfReturn.size(); i++)
+        {
+            //stock.getStockElement(i).calculateRateOfReturn();
+            meanVolume += bestUtVolume.get(i).doubleValue();
+            meanRateOfReturn += bestUtRateOfReturn.get(i).doubleValue();
+        }
+        
+        meanRateOfReturn = meanRateOfReturn / bestUtRateOfReturn.size();
+        meanVolume = meanVolume / bestUtVolume.size();
+        
+        /* Get Variences */
+        
+        varSumRateOfReturn = 0.0;
+        varSumVolume = 0.0;
+        
+        for (int i = 0; i < bestUtRateOfReturn.size(); i++)
+        {
+            varRateOfReturn = bestUtRateOfReturn.get(i) - meanRateOfReturn;
+            varSumRateOfReturn += varRateOfReturn * varRateOfReturn;
+            
+            varVolume = bestUtVolume.get(i) - meanVolume;
+            varSumVolume += varVolume * varVolume;
+        }
+        
+        varSumRateOfReturn = Math.sqrt(varSumRateOfReturn);
+        varSumVolume = Math.sqrt(varSumVolume);
+        
+        /* Standard Dev */
+        
+        stdRateOfReturn = Math.sqrt(Math.pow((varSumRateOfReturn - meanRateOfReturn), 2.0) / bestUtRateOfReturn.size());
+        stdVolume = Math.sqrt(Math.pow((varSumVolume - meanVolume) , 2.0) / bestUtVolume.size());
+        
+       
+        
+        /* Calculate Threasholds */
+        anomalyThreasholdRateOfReturn = anomalyCoeffientRateOfReturn * stdRateOfReturn;
+        anomalyThreasholdVolume = anomalyCoeffientVolume * stdVolume;
+        
+        for (int i = 0; i < bestUtRateOfReturn.size(); i++)
+        {
+            if(bestUtVolume.get(i).doubleValue() > (meanVolume + anomalyThreasholdVolume) || 
+                    bestUtVolume.get(i).doubleValue() < (meanVolume - anomalyThreasholdVolume))
+            {
+                //System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
+                anomalies.add(stock.getStockElement(i));
+                
+            }
+            else if(bestUtRateOfReturn.get(i).doubleValue() > (meanRateOfReturn + anomalyThreasholdRateOfReturn) || 
+                    bestUtRateOfReturn.get(i).doubleValue() < (meanRateOfReturn - anomalyThreasholdRateOfReturn))
+            {
+                //System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
+                anomalies.add(stock.getStockElement(i));
+                
+            }
+        }
+        
         // Returns the detected anomalies
         return anomalies;
     }
+    
     
     public void setQValue(double qValue)
     {
@@ -418,4 +502,5 @@ public class timeARMA extends timeAlgorithm{
             }
         }
     }
+    
 }
