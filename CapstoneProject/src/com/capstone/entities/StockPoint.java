@@ -34,6 +34,10 @@ public class StockPoint
     //Volume (y value).
     protected double volume;
     
+    protected double deltaClose;
+    protected double normalizedDeltaClose;
+    protected double normalizedVolume;
+    
     private int    pGroup_number = 0;
     private int    flag_anomaly=0;
     
@@ -98,6 +102,30 @@ public class StockPoint
     {
         this.rateOfReturn = priceHigh - priceLow;
         System.out.println("asdas");
+    }
+    
+    public double getDeltaClose()
+    {
+        /** 
+         * @return the delta closing price of the stock.
+         */
+        return deltaClose;
+    }
+    
+    public double getNormalizedDeltaClose()
+    {
+        /** 
+         * @return the normalized closing price of the stock.
+         */
+        return normalizedDeltaClose;
+    }
+    
+    public double getNormalizedVolume()
+    {
+        /** 
+         * @return the closing price of the stock.
+         */
+        return normalizedVolume;
     }
     
     public double getPriceClose()
@@ -174,6 +202,30 @@ public class StockPoint
         }
         
         return true;
+    }
+    
+    public void setDeltaClose(double deltaClose)
+    {
+        /** 
+         * @param deltaClose the delta closing price of the stock.
+         */
+        this.deltaClose = deltaClose;
+    }
+    
+    public void setNormalizedDeltaClose(double normalizedDeltaClose)
+    {
+        /** 
+         * @param normalizedDeltaClose the normalized delta closing price of the stock.
+         */
+        this.normalizedDeltaClose = normalizedDeltaClose;
+    }
+    
+    public void setNormalizedVolume (double normalizedVolume)
+    {
+        /** 
+         * @param normalizedVolume the normalized volume of trade of the stock.
+         */
+        this.deltaClose = deltaClose;
     }
     
     public void setPriceClose(double priceClose)

@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.text.SimpleDateFormat;
 
 import com.capstone.entities.StockPoint;
+import java.util.List;
 
 /**
  *
@@ -18,7 +19,7 @@ import com.capstone.entities.StockPoint;
  */
 public class Stock {
 
-    LinkedList<StockPoint> stockPoints;
+    List<StockPoint> stockPoints;
     protected String stockSymbol;
             
     public Stock ()

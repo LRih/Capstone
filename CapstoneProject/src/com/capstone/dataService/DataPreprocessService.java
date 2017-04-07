@@ -5,6 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.capstone.entities.Stock;
+import com.capstone.entities.StockPoint;
+
 /**
  * Takes raw stock data and performs the following normalization:
  *   close: (P(t) - P(t-1)) / P(t) then [min, max] => [0, 1]
@@ -17,8 +20,8 @@ public class DataPreprocessService
     private static String RAW_DATA_FILENAME = "prices.csv";
     private static String NORMALIZED_DATA_FILENAME = "normalized.csv";
 
-    private List<Stock> _data;
-    private Map<String, List<Stock>> _stocks;
+    private List<StockPoint> _data;
+    private Map<String, List<StockPoint>> _stocks;
 
     private double _minDeltaClose;
     private double _maxDeltaClose;
@@ -58,11 +61,47 @@ public class DataPreprocessService
 
         writeData();
     }
+    
+    public final Map<String, List<StockPoint>> processPost()
+    {
+        return processPost(false);
+    }
+    
+    public final Map<String, List<StockPoint>> processPost(double sigmoidBeta)
+    {
+        _sigmoidBeta = sigmoidBeta;
+        return processPost(true);
+    }
+    
+    private Map<String, List<StockPoint>> processPost(boolean sigmoidBetaProvided)
+    {
+        // Loads Data Into System (Not Needed for a live system, or returns data set)
+        loadData();
+        loadStocks();
+
+        // Needs to calculate each of these per stock set
+        calcDeltaClose();
+        calcMinMaxDeltaClose();
+        calcVolumeMean();
+
+        if (!sigmoidBetaProvided)
+            calcSigmoidBeta();
+
+        System.out.println("Sigmoid beta: " + _sigmoidBeta);
+
+        // Normalizes the data
+        normalizeClose();
+        normalizeVolume();
+
+        // Output changed to a return data type.
+        writeData();
+        return _stocks;
+    }
 
 
     private void loadData()
     {
-        _data = new ArrayList<Stock>();
+        _data = new ArrayList<StockPoint>();
 
         try
         {
@@ -83,14 +122,28 @@ public class DataPreprocessService
                     continue;
                 }
 
-                split[0] = split[0].split(" ")[0]; // remove time
+                /*split[0] = split[0].split(" ")[0]; // remove time
                 Date date = readDf.parse(split[0]);
 
-                String name = split[1];
+                /*String name = split[1];
                 double close = Double.parseDouble(split[3]);
-                long volume = (long)Double.parseDouble(split[6]);
+                long volume = (long)Double.parseDouble(split[6]);*/
+                
+                StockPoint stockPoint = new StockPoint();
+                
+                // Sets variables
+                stockPoint.setListedDate(split[0]);
+                stockPoint.setStockSymbol(split[1]);
 
-                _data.add(new Stock(date, name, close, volume));
+                stockPoint.setPriceOpen(Double.parseDouble(split[2]));
+                stockPoint.setPriceClose(Double.parseDouble(split[3]));
+                stockPoint.setPriceLow(Double.parseDouble(split[4]));
+                stockPoint.setPriceHigh(Double.parseDouble(split[5]));
+                stockPoint.setVolume(Double.parseDouble(split[6]));
+                
+
+                //_data.add(new Stock(date, name, close, volume));
+                _data.add(stockPoint);
             }
 
             reader.close();
@@ -106,14 +159,14 @@ public class DataPreprocessService
     }
     private void loadStocks()
     {
-        _stocks = new HashMap<String, List<Stock>>();
+        _stocks = new HashMap<String, List<StockPoint>>();
 
-        for (Stock s : _data)
+        for (StockPoint s : _data)
         {
-            if (!_stocks.containsKey(s.symbol))
-                _stocks.put(s.symbol, new ArrayList<Stock>());
+            if (!_stocks.containsKey(s.getStockSymbol()))
+                _stocks.put(s.getStockSymbol(), new ArrayList<StockPoint>());
 
-            _stocks.get(s.symbol).add(s);
+            _stocks.get(s.getStockSymbol()).add(s);
         }
     }
 
@@ -129,9 +182,9 @@ public class DataPreprocessService
 
             DateFormat writeDf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-            for (Stock stock : _data)
+            for (StockPoint stock : _data)
             {
-                String str = writeDf.format(stock.date) + "," + stock.symbol + "," + stock.normalizedDeltaClose + "," + stock.normalizedVolume + "\n";
+                String str = writeDf.format(stock.getListedDate()) + "," + stock.getStockSymbol() + "," + stock.getNormalizedDeltaClose() + "," + stock.getNormalizedVolume() + "\n";
                 writer.write(str);
             }
 
@@ -148,8 +201,10 @@ public class DataPreprocessService
      */
     private void normalizeClose()
     {
-        for (Stock s : _data)
-            s.normalizedDeltaClose = (s.deltaClose - _minDeltaClose) / (_maxDeltaClose - _minDeltaClose);
+        for (StockPoint s : _data)
+        {
+            s.setNormalizedDeltaClose(((s.getDeltaClose() - _minDeltaClose) / (_maxDeltaClose - _minDeltaClose)));
+        }
     }
 
     /**
@@ -157,8 +212,8 @@ public class DataPreprocessService
      */
     private void normalizeVolume()
     {
-        for (Stock s : _data)
-            s.normalizedVolume = calcSigmoid(s.volume);
+        for (StockPoint s : _data)
+            s.setNormalizedVolume(calcSigmoid(s.getVolume()));
     }
 
     private void calcDeltaClose()
@@ -167,10 +222,10 @@ public class DataPreprocessService
         {
             for (int i = 1; i < _stocks.get(name).size(); i++)
             {
-                Stock s0 = _stocks.get(name).get(i - 1);
-                Stock s1 = _stocks.get(name).get(i);
+                StockPoint s0 = _stocks.get(name).get(i - 1);
+                StockPoint s1 = _stocks.get(name).get(i);
 
-                s1.deltaClose = s1.close - s0.close;
+                s1.setDeltaClose(s1.getPriceClose() - s0.getPriceClose());
             }
         }
     }
@@ -180,21 +235,21 @@ public class DataPreprocessService
         _minDeltaClose = 0;
         _maxDeltaClose = 0;
 
-        for (Stock stock : _data)
+        for (StockPoint stock : _data)
         {
             if (!assigned)
             {
                 assigned = true;
-                _minDeltaClose = stock.deltaClose;
-                _maxDeltaClose = stock.deltaClose;
+                _minDeltaClose = stock.getDeltaClose();
+                _maxDeltaClose = stock.getDeltaClose();
                 continue;
             }
 
-            if (stock.deltaClose < _minDeltaClose)
-                _minDeltaClose = stock.deltaClose;
+            if (stock.getDeltaClose() < _minDeltaClose)
+                _minDeltaClose = stock.getDeltaClose();
 
-            if (stock.deltaClose > _maxDeltaClose)
-                _maxDeltaClose = stock.deltaClose;
+            if (stock.getDeltaClose() > _maxDeltaClose)
+                _maxDeltaClose = stock.getDeltaClose();
         }
 
         System.out.println("Min/max delta close: " + _minDeltaClose + " / " + _maxDeltaClose);
@@ -203,8 +258,8 @@ public class DataPreprocessService
     {
         _meanVolume = 0;
 
-        for (Stock s : _data)
-            _meanVolume += s.volume;
+        for (StockPoint s : _data)
+            _meanVolume += s.getVolume();
 
         _meanVolume /= _data.size();
 
@@ -233,8 +288,8 @@ public class DataPreprocessService
     {
         double variance = 0;
 
-        for (Stock s : _data)
-            variance += Math.pow(s.volume - _meanVolume, 2);
+        for (StockPoint s : _data)
+            variance += Math.pow(s.getVolume() - _meanVolume, 2);
 
         return variance / (_data.size() - 1);
     }
@@ -244,17 +299,17 @@ public class DataPreprocessService
         boolean assigned = false;
         double min = 0;
 
-        for (Stock stock : _data)
+        for (StockPoint stock : _data)
         {
             if (!assigned)
             {
                 assigned = true;
-                min = stock.volume;
+                min = stock.getVolume();
                 continue;
             }
 
-            if (stock.volume < min)
-                min = stock.volume;
+            if (stock.getVolume() < min)
+                min = stock.getVolume();
         }
 
         System.out.println("Min volumne: " + min);
@@ -270,8 +325,8 @@ public class DataPreprocessService
 
     /**
      * Represents a data point in the preprocessing.
-     */
-    private static class Stock
+     *//*
+    private static class Stock extends StockPoint
     {
         public final Date date;
         public final String symbol;
@@ -294,20 +349,20 @@ public class DataPreprocessService
         {
             return date + ", " + symbol + ", " + close + ", " + volume;
         }
-    }
+    }*/
 
     /**
      * For sorting stocks based on date then symbol.
      */
-    private static final class DateSymbolComparator implements Comparator<Stock>
+    private static final class DateSymbolComparator implements Comparator<StockPoint>
     {
-        public final int compare(Stock s1, Stock s2)
+        public final int compare(StockPoint s1, StockPoint s2)
         {
-            int dateCmp = s1.date.compareTo(s2.date);
+            int dateCmp = s1.getListedDate().compareTo(s2.getListedDate());
             if (dateCmp != 0)
                 return dateCmp;
 
-            return s1.symbol.compareTo(s2.symbol);
+            return s1.getStockSymbol().compareTo(s2.getStockSymbol());
         }
     }
 }

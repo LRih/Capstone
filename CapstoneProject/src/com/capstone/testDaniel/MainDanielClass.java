@@ -19,6 +19,8 @@ import com.capstone.algorithms.timeAlgorithm;
 import com.capstone.algorithms.timeStdDev;
 import com.capstone.algorithms.timeARMA;
 import com.capstone.dataService.DataPreprocessService;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -31,9 +33,13 @@ public class MainDanielClass {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        List<StockPoint> _data;
+        Map<String, List<StockPoint>> _stocks;
+        
         // Pre-Process the data to normalize it.
         new DataPreprocessService().preprocess();
-        
+        _stocks = new DataPreprocessService().processPost();
         
         // Initialize the class
         DataImport dataImport = new DataImport();
