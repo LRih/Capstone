@@ -34,6 +34,10 @@ public class StockPoint
     //Volume (y value).
     protected double volume;
     
+    protected double deltaClose;
+    protected double normalizedDeltaClose;
+    protected double normalizedVolume;
+    
     private int    pGroup_number = 0;
     private int    flag_anomaly=0;
     
@@ -67,6 +71,22 @@ public class StockPoint
         this.volume = volume;
     }
     
+    public StockPoint (String listedDate, String stockSymbol, double rateOfReturn, 
+            double volume)
+    {
+        /**
+         * @param   strDate         the string date to be converted into a date-time format and saved.
+         * @param   rateOfReturn    the rate of return pre-calculated.
+         * @param   stockSymbol     the symbol of stock.
+         * @param   volume          the volume of stock sold.
+         */
+        
+        this.setListedDate(listedDate);
+        this.stockSymbol = stockSymbol;
+        this.rateOfReturn = rateOfReturn;
+        this.volume = volume;
+    }
+    
     /**
      * this is for test,which just create random points
      * @param rateOfReturn
@@ -81,6 +101,31 @@ public class StockPoint
     public void calculateRateOfReturn()
     {
         this.rateOfReturn = priceHigh - priceLow;
+        System.out.println("asdas");
+    }
+    
+    public double getDeltaClose()
+    {
+        /** 
+         * @return the delta closing price of the stock.
+         */
+        return deltaClose;
+    }
+    
+    public double getNormalizedDeltaClose()
+    {
+        /** 
+         * @return the normalized closing price of the stock.
+         */
+        return normalizedDeltaClose;
+    }
+    
+    public double getNormalizedVolume()
+    {
+        /** 
+         * @return the closing price of the stock.
+         */
+        return normalizedVolume;
     }
     
     public double getPriceClose()
@@ -159,6 +204,30 @@ public class StockPoint
         return true;
     }
     
+    public void setDeltaClose(double deltaClose)
+    {
+        /** 
+         * @param deltaClose the delta closing price of the stock.
+         */
+        this.deltaClose = deltaClose;
+    }
+    
+    public void setNormalizedDeltaClose(double normalizedDeltaClose)
+    {
+        /** 
+         * @param normalizedDeltaClose the normalized delta closing price of the stock.
+         */
+        this.normalizedDeltaClose = normalizedDeltaClose;
+    }
+    
+    public void setNormalizedVolume (double normalizedVolume)
+    {
+        /** 
+         * @param normalizedVolume the normalized volume of trade of the stock.
+         */
+        this.deltaClose = deltaClose;
+    }
+    
     public void setPriceClose(double priceClose)
     {
         /** 
@@ -191,6 +260,14 @@ public class StockPoint
         this.priceOpen = priceOpen;
     }
     
+    public void setRateofReturn(double rateOfReturn)
+    {
+        /** 
+         * @param priceOpen the opening price of the stock.
+         */
+        this.rateOfReturn = rateOfReturn;
+    }
+    
     public void setStockSymbol(String stockSymbol)
     {
         /** 
@@ -211,7 +288,7 @@ public class StockPoint
     {
         return this.listedDate + "," + this.stockSymbol + "," + this.priceOpen + 
                 "," + this.priceClose + "," + this.priceLow + "," + this.priceHigh +
-                "," + this.volume;                
+                "," + this.volume + "," + this.rateOfReturn;                
     }
     
     //added by Jason
