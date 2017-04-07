@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.capstone.entities.Stock;
 import com.capstone.entities.StockPoint;
 
 /**
@@ -15,7 +14,7 @@ import com.capstone.entities.StockPoint;
  *
  * @author Richard Liu
  */
-public class DataPreprocessService
+public class LinearSigmoidPreprocessor
 {
     private static String RAW_DATA_FILENAME = "prices.csv";
     private static String NORMALIZED_DATA_FILENAME = "normalized.csv";
@@ -31,7 +30,7 @@ public class DataPreprocessService
 
 
     /**
-     * Performs preprocessing on data and saves it to file.
+     * Performs preprocessing on data.
      */
     public final void preprocess()
     {
@@ -58,43 +57,42 @@ public class DataPreprocessService
 
         normalizeClose();
         normalizeVolume();
-
-        writeData();
     }
-    
-    public final Map<String, List<StockPoint>> processPost()
+
+
+    /**
+     * Write preprocessed data to file.
+     */
+    public final void writeData()
     {
-        return processPost(false);
+        if (_stocks == null)
+            throw new RuntimeException("Preprocess function must first be called");
+
+        try
+        {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NORMALIZED_DATA_FILENAME)));
+            writer.write("date,symbol,rateOfReturn,volume\n"); // write header line
+
+            DateFormat writeDf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+            for (StockPoint stock : _data)
+            {
+                String str = writeDf.format(stock.getListedDate()) + "," + stock.getStockSymbol() + "," + stock.getNormalizedDeltaClose() + "," + stock.getNormalizedVolume() + "\n";
+                writer.write(str);
+            }
+
+            writer.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
-    
-    public final Map<String, List<StockPoint>> processPost(double sigmoidBeta)
+    public final Map<String, List<StockPoint>> stocks()
     {
-        _sigmoidBeta = sigmoidBeta;
-        return processPost(true);
-    }
-    
-    private Map<String, List<StockPoint>> processPost(boolean sigmoidBetaProvided)
-    {
-        // Loads Data Into System (Not Needed for a live system, or returns data set)
-        loadData();
-        loadStocks();
+        if (_stocks == null)
+            throw new RuntimeException("Preprocess function must first be called");
 
-        // Needs to calculate each of these per stock set
-        calcDeltaClose();
-        calcMinMaxDeltaClose();
-        calcVolumeMean();
-
-        if (!sigmoidBetaProvided)
-            calcSigmoidBeta();
-
-        System.out.println("Sigmoid beta: " + _sigmoidBeta);
-
-        // Normalizes the data
-        normalizeClose();
-        normalizeVolume();
-
-        // Output changed to a return data type.
-        writeData();
         return _stocks;
     }
 
@@ -108,8 +106,6 @@ public class DataPreprocessService
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(RAW_DATA_FILENAME)));
             reader.readLine(); // skip reading header line
 
-            DateFormat readDf = new SimpleDateFormat("yyyy-MM-dd");
-
             String line;
             while ((line = reader.readLine()) != null)
             {
@@ -122,13 +118,6 @@ public class DataPreprocessService
                     continue;
                 }
 
-                /*split[0] = split[0].split(" ")[0]; // remove time
-                Date date = readDf.parse(split[0]);
-
-                /*String name = split[1];
-                double close = Double.parseDouble(split[3]);
-                long volume = (long)Double.parseDouble(split[6]);*/
-                
                 StockPoint stockPoint = new StockPoint();
                 
                 // Sets variables
@@ -140,9 +129,7 @@ public class DataPreprocessService
                 stockPoint.setPriceLow(Double.parseDouble(split[4]));
                 stockPoint.setPriceHigh(Double.parseDouble(split[5]));
                 stockPoint.setVolume(Double.parseDouble(split[6]));
-                
 
-                //_data.add(new Stock(date, name, close, volume));
                 _data.add(stockPoint);
             }
 
@@ -167,32 +154,6 @@ public class DataPreprocessService
                 _stocks.put(s.getStockSymbol(), new ArrayList<StockPoint>());
 
             _stocks.get(s.getStockSymbol()).add(s);
-        }
-    }
-
-    /**
-     * Write preprocessed data to file.
-     */
-    private void writeData()
-    {
-        try
-        {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NORMALIZED_DATA_FILENAME)));
-            writer.write("date,symbol,rateOfReturn,volume\n"); // write header line
-
-            DateFormat writeDf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-            for (StockPoint stock : _data)
-            {
-                String str = writeDf.format(stock.getListedDate()) + "," + stock.getStockSymbol() + "," + stock.getNormalizedDeltaClose() + "," + stock.getNormalizedVolume() + "\n";
-                writer.write(str);
-            }
-
-            writer.close();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 
@@ -268,8 +229,8 @@ public class DataPreprocessService
 
     /**
      * Current default is to take beta such that the min volume is normalized
-     * to normalized as 0.01. To do this we plug in values to the sigmoid
-     * function and solve for beta.
+     * as 0.01. To do this we plug in values to the sigmoid function and solve
+     * for beta.
      */
     private void calcSigmoidBeta()
     {
@@ -322,34 +283,6 @@ public class DataPreprocessService
         return 1 / (1 + Math.exp(-_sigmoidBeta * (value - _meanVolume)));
     }
 
-
-    /**
-     * Represents a data point in the preprocessing.
-     *//*
-    private static class Stock extends StockPoint
-    {
-        public final Date date;
-        public final String symbol;
-        public final double close;
-        public final long volume;
-
-        public double deltaClose;
-        public double normalizedDeltaClose;
-        public double normalizedVolume;
-
-        public Stock(Date date, String symbol, double close, long volume)
-        {
-            this.date = date;
-            this.symbol = symbol;
-            this.close = close;
-            this.volume = volume;
-        }
-
-        public final String toString()
-        {
-            return date + ", " + symbol + ", " + close + ", " + volume;
-        }
-    }*/
 
     /**
      * For sorting stocks based on date then symbol.

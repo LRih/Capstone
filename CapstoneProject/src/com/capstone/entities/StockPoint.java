@@ -186,11 +186,13 @@ public class StockPoint
     
     public boolean setListedDate (String strDate)
     {
+        strDate = strDate.split(" ")[0]; // remove time
+
         /**
          * @param   strDate the string date to be converted into a date-time format and saved.
          * @return  a boolean that states if the operation was successful.
          */
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         try
         {
             listedDate = dateFormatter.parse(strDate);
@@ -225,7 +227,7 @@ public class StockPoint
         /** 
          * @param normalizedVolume the normalized volume of trade of the stock.
          */
-        this.deltaClose = deltaClose;
+        this.normalizedVolume = normalizedVolume;
     }
     
     public void setPriceClose(double priceClose)

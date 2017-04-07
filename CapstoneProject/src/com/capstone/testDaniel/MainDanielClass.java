@@ -13,21 +13,12 @@ import java.util.LinkedList;
 import com.capstone.entities.Stock;
 import com.capstone.entities.StockPoint;
 
-import com.capstone.utils.DataImport;
-
-import com.capstone.algorithms.timeAlgorithm;
 import com.capstone.algorithms.timeStdDev;
 import com.capstone.algorithms.timeARMA;
-import com.capstone.dataService.DataPreprocessService;
+import com.capstone.dataService.LinearSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +40,9 @@ public class MainDanielClass {
         //new DataPreprocessService().preprocess();
         
         // Post-Process it so can be used directly.
-        _stocks = new DataPreprocessService().processPost();
+        LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
+        preprocessor.preprocess();
+        _stocks = preprocessor.stocks();
         
         // Initialize the class
         //DataImport dataImport = new DataImport();
