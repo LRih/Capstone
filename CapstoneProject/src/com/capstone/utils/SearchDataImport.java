@@ -8,6 +8,8 @@
 package com.capstone.utils;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.lang.String;
 
 import java.text.SimpleDateFormat;
 
@@ -22,6 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import com.capstone.entities.SearchItem;
+import com.capstone.entities.SearchStocks;
 
 /**
  *
@@ -29,7 +32,7 @@ import com.capstone.entities.SearchItem;
  */
 public class SearchDataImport {
     private boolean debugMode;
-    private String folder;
+    private File folder;
     
     public SearchDataImport ()
     {
@@ -43,18 +46,30 @@ public class SearchDataImport {
     
     public void setSearchFolder (String folder)
     {
-        this.folder = folder;
+        this.folder = new File(folder);
     }
     
     public String getSearchFolder ()
     {
-        return folder;
+        return folder.getPath();
     }
     
-    public void importData()
+    
+    
+    public SearchStocks importData()
     {
         File inputFile;
+        SearchStocks _searchStocks = new SearchStocks();
         
+        ArrayList<String> xmlFiles = new ArrayList<String>();
+        for (File file : folder.listFiles()) 
+        {
+            if (file.getName().endsWith((".xml"))) {
+                System.out.println(file.getAbsolutePath());
+                _searchStocks.addSearchItemsList(importFileData (file, "WTWL"));
+        
+            }
+        }
         
         // If folder set, set folder parameter, else ignore.
         if (this.folder != null)
@@ -67,7 +82,7 @@ public class SearchDataImport {
             inputFile = new File("single.xml");
         }
         
-        importFileData (inputFile, "WTWL");
+        return _searchStocks;
     }
     
     private ArrayList<SearchItem> importFileData (File inputFile, String stockSymbol)
@@ -93,8 +108,7 @@ public class SearchDataImport {
 
             for (int record = 0; record < records; record++)
             {
-                System.out.println(record);
-
+                //System.out.println(record);
                 Node nNode = nList.item(record);
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) 
@@ -104,7 +118,8 @@ public class SearchDataImport {
 
 
                     searchItem.setLongName(eElement.getElementsByTagName("atl").item(0).getTextContent());
-                    searchItem.setShortName(eElement.getElementsByTagName("au").item(0).getTextContent());
+                    
+                    //searchItem.setShortName(eElement.getElementsByTagName("au").item(0).getTextContent());
                     searchItem.setNewsSource(eElement.getElementsByTagName("jtl").item(0).getTextContent());
                     searchItem.setStockSymbol(stockSymbol);
                     searchItem.setURL(eElement.getElementsByTagName("url").item(0).getTextContent());

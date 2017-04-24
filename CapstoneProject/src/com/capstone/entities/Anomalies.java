@@ -46,6 +46,7 @@ public class Anomalies {
         anomalies.get(type).add(stockPoint);
     }
     
+    
     public void outputToFile(String filename)
     {
         // Output to file(s)

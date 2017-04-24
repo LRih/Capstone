@@ -19,6 +19,8 @@ import com.capstone.dataService.LinearSigmoidPreprocessor;
 import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
+import com.capstone.entities.SearchStocks;
+import com.capstone.utils.SearchDataImport;
 
 import java.util.List;
 import java.util.Map;
@@ -115,6 +117,13 @@ public class MainDanielClass {
         
         // Outputs to file
         _anomalies.outputToFile("anomalies.csv");
+        
+        // Search Functionality
+        SearchDataImport data = new SearchDataImport();
+        data.setSearchFolder(".\\searchData");
+        SearchStocks searchStocks = data.importData();
+        
+        
         
     }
     
