@@ -5,6 +5,7 @@
  */
 package com.capstone.testDaniel;
 
+import com.capstone.utils.SearchDataImport;
 /**
  *
  * @author Shadow
@@ -15,7 +16,7 @@ public class SearchDanielClass {
      */
     public static void main(String[] args) 
     {
-        
-        
+        SearchDataImport data = new SearchDataImport();
+        data.importData();
     }
 }

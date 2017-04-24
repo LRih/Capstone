@@ -65,7 +65,7 @@ public class SearchItem {
         return articleShortName;
     }
     
-    public String getSymbol ()
+    public String getStockSymbol ()
     {
         /**
          * @return  the symbol associated with the search made.
@@ -114,7 +114,7 @@ public class SearchItem {
         this.articleShortName = name;
     }
     
-    public void setSymbol (String symbol)
+    public void setStockSymbol (String symbol)
     {
         /**
          * @param   symbol  the symbol associated with the search made.
