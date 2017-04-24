@@ -67,20 +67,20 @@ public class SearchStocks {
     {
         ArrayList<SearchItem> _searchResults = new ArrayList<SearchItem>();
         
-        for ( String key : _searchItems.keySet() ) 
+        // Adds all stock that are relevant to stock class.
+        if(_searchItems.containsKey(symbol))
         {
-            // Adds all stock that are relevant to stock class.
-            for (SearchItem item : _searchItems.get(key))
-            //for (int i = 0; i < anomalies.get(key).size(); i++)
+            for (SearchItem item : _searchItems.get(symbol))
             {
+
                 Date itemDate = item.getDate();
-                if(itemDate.after(modifiedDate(itemDate, searchDaysBack - 1)) && 
-                        itemDate.before(modifiedDate(itemDate, searchDaysForward + 1)))
+                if(itemDate.after(modifiedDate(date, searchDaysBack - 1)) && 
+                        itemDate.before(modifiedDate(date, searchDaysForward + 1)))
                 {
-                    System.out.println(item.getLongName());
+                    System.out.println(symbol + ": " + item.getLongName());
+                    _searchResults.add(item);
                 }
             }
-
         }
 
         return _searchResults;

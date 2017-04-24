@@ -9,10 +9,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -46,6 +48,15 @@ public class Anomalies {
         anomalies.get(type).add(stockPoint);
     }
     
+    public Set<String> getKeySet ()
+    {
+        return anomalies.keySet();
+    }
+    
+    public List<StockPoint> getStockList (String key)
+    {
+        return anomalies.get(key);
+    }
     
     public void outputToFile(String filename)
     {

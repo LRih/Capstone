@@ -65,21 +65,12 @@ public class SearchDataImport {
         for (File file : folder.listFiles()) 
         {
             if (file.getName().endsWith((".xml"))) {
-                System.out.println(file.getAbsolutePath());
-                _searchStocks.addSearchItemsList(importFileData (file, "WTWL"));
+                String filename = file.getName();
+                filename = filename.substring(0, filename.lastIndexOf("."));
+                
+                _searchStocks.addSearchItemsList(importFileData (file, filename));
         
             }
-        }
-        
-        // If folder set, set folder parameter, else ignore.
-        if (this.folder != null)
-        {
-            inputFile = new File(folder + "\\" + "single.xml");
-        }
-        else
-        {
-            // Testing Only
-            inputFile = new File("single.xml");
         }
         
         return _searchStocks;

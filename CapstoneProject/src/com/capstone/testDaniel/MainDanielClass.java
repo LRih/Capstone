@@ -123,7 +123,15 @@ public class MainDanielClass {
         data.setSearchFolder(".\\searchData");
         SearchStocks searchStocks = data.importData();
         
-        
+        for (String key : _anomalies.getKeySet())
+        {
+            List<StockPoint> list = _anomalies.getStockList(key); 
+            for (StockPoint stock : list)
+            {
+                searchStocks.getAnomaliesSearchResults(stock.getStockSymbol(), 
+                        stock.getListedDate());
+            }
+        }
         
     }
     
