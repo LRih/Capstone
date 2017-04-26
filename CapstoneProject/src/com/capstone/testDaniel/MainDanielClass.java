@@ -20,7 +20,11 @@ import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
 import com.capstone.entities.SearchStocks;
+
+import com.capstone.utils.SearchDataCSV;
 import com.capstone.utils.SearchDataImport;
+
+import java.io.File;
 
 import java.util.List;
 import java.util.Map;
@@ -123,7 +127,7 @@ public class MainDanielClass {
         data.setSearchFolder(".\\searchData");
         SearchStocks searchStocks = data.importData();
         
-        for (String key : _anomalies.getKeySet())
+        /*for (String key : _anomalies.getKeySet())
         {
             List<StockPoint> list = _anomalies.getStockList(key); 
             for (StockPoint stock : list)
@@ -131,7 +135,10 @@ public class MainDanielClass {
                 searchStocks.getAnomaliesSearchResults(stock.getStockSymbol(), 
                         stock.getListedDate());
             }
-        }
+        }*/
+        
+        SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"));
+        outputCSV.outputToFile(searchStocks, _anomalies);
         
     }
     

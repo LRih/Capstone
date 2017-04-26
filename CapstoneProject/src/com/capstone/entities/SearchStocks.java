@@ -65,6 +65,11 @@ public class SearchStocks {
     
     public List<SearchItem> getAnomaliesSearchResults (String symbol, Date date)
     {
+        /**
+         * @param   symbol  the symbol to get the search results for.
+         * @param   date    the date to specify the search results for.
+         * @return          an arraylist of search items within the database.
+         */
         ArrayList<SearchItem> _searchResults = new ArrayList<SearchItem>();
         
         // Adds all stock that are relevant to stock class.
