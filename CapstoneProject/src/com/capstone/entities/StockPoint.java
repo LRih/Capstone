@@ -101,7 +101,7 @@ public class StockPoint
     public void calculateRateOfReturn()
     {
         this.rateOfReturn = priceHigh - priceLow;
-        System.out.println("asdas");
+        //System.out.println("asdas");
     }
     
     public double getDeltaClose()
@@ -372,4 +372,14 @@ public class StockPoint
 		return points;
 	}
 
+	
+	public boolean sameStock(StockPoint arg)
+	{
+		if ( this.stockSymbol.equals(arg.stockSymbol))
+		{
+			return true;
+		}
+		
+		return false;
+	}
 }

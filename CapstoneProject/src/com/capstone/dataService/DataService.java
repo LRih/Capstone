@@ -55,7 +55,7 @@ public class DataService
 		String strStockDate;
 		try
 		{
-			r = new CsvReader(myClassPath + "\\prices.csv", ',', Charset.forName("GBK"));
+			r = new CsvReader(myClassPath + "\\prices-small.csv", ',', Charset.forName("GBK"));
 			r.readHeaders();
 			// Rate of Return (x value) = Highest Transaction - Lowest
 			// Transaction
@@ -125,7 +125,7 @@ public class DataService
 		String strSelectDate=dateFormatter1.format(selectDate);
 		try
 		{
-			r = new CsvReader(myClassPath+"\\prices.csv", ',', Charset.forName("GBK"));
+			r = new CsvReader(myClassPath+"\\prices-small.csv", ',', Charset.forName("GBK"));
 			r.readHeaders();
 			// Rate of Return (x value) = Highest Transaction - Lowest
 			// Transaction
@@ -150,6 +150,10 @@ public class DataService
 				p.calculateRateOfReturn();
 			    //Volume (y value).
 				p.setVolume(Double.parseDouble(r.get("volume")));
+				if (p.getVolume()==69280900)
+				{
+					System.out.println(p.getStockSymbol());
+				}
 				stockList.add(p);
 			}
 			r.close();
@@ -171,6 +175,10 @@ public class DataService
 		return stockList;
 	}
 
+	/**
+	 * only use for testing
+	 * @return
+	 */
 	public static List<StockPoint> getStockDataTest()
 	{
 		return StockPoint.createRandomPoints(DataConstant.MIN_COORDINATE,

@@ -19,8 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.capstone.algorithms.KMeans;
-import com.capstone.dataService.LinearSigmoidPreprocessor;
-import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 public class MainTest
 {
@@ -65,9 +63,11 @@ public class MainTest
 
 	private static void testPreprocess()
 	{
-        SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
-//        LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
+        /*
+		SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
+        //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
         preprocessor.preprocess();
         preprocessor.writeData();
+        */
 	}
 }

@@ -39,12 +39,12 @@ public class KMeans
 	/**
 	 *  all stock points
 	 */
-	private static List<StockPoint> points = new ArrayList<StockPoint>();
+	private List<StockPoint> points = new ArrayList<StockPoint>();
 
 	/**
 	 * cluster groups
 	 */
-	private static List<ClusterGroup> groups = new ArrayList<ClusterGroup>();
+	private List<ClusterGroup> groups = new ArrayList<ClusterGroup>();
 
 	/**
 	 *  Initializes the process
@@ -53,7 +53,6 @@ public class KMeans
 	{
 	    this.k = k;
 
-		//System.out.println("!!! initialise points and Group n !!!");
 		// init stock Points
 		points.clear();
 		
@@ -76,12 +75,7 @@ public class KMeans
 
 			groups.add(group);
 			
-			//display Group information
-			//plotClusterGroup(group);
 		}
-		
-		//System.out.println("===============================================");
-
 	}
 
 	/**
@@ -150,14 +144,6 @@ public class KMeans
 					break;
 				}
 			}
-			/*
-			System.out.println("this is :"+i_loop+" loop:");
-			for (int i = 0; i < k; i++)
-			{
-				ClusterGroup cg = groups.get(i);
-				plotClusterGroup(cg);
-			}
-			*/
 			
 			if (i_loop>=DataConstant.MAX_LOOP)
 			{
