@@ -20,7 +20,9 @@ public class SigmoidSigmoidPreprocessor
     private static String NORMALIZED_DATA_FILENAME = "normalized.csv";
 
     private List<StockPoint> _data;
-    private Map<String, List<StockPoint>> _stocks;
+    private Map<String, List<StockPoint>> _nameIndex;
+    private Map<Date, List<StockPoint>> _dateIndex;
+    private Map<Date, Map<String, StockPoint>> _dateNameIndex;
 
     private double _meanDeltaClose;
     private double _meanVolume;
@@ -35,7 +37,10 @@ public class SigmoidSigmoidPreprocessor
     public void preprocess()
     {
         loadData();
-        loadStocks();
+
+        indexStocksByName();
+        indexStocksByDate();
+        indexStocksByDateName();
 
         calcDeltaClose();
 
@@ -58,7 +63,7 @@ public class SigmoidSigmoidPreprocessor
      */
     public final void writeData()
     {
-        if (_stocks == null)
+        if (_data == null)
             throw new RuntimeException("Preprocess function must first be called");
 
         try
@@ -83,43 +88,42 @@ public class SigmoidSigmoidPreprocessor
     }
     
     
-    public Map<String, List<StockPoint>> stocks()
+    public Map<String, List<StockPoint>> nameMap()
     {
-        if (_stocks == null)
+        if (_data == null)
             throw new RuntimeException("Preprocess function must first be called");
 
-        return _stocks;
+        return _nameIndex;
+    }
+    public Map<Date, List<StockPoint>> dateMap()
+    {
+        if (_data == null)
+            throw new RuntimeException("Preprocess function must first be called");
+
+        return _dateIndex;
+    }
+    public Map<String, List<StockPoint>> dateNameMap()
+    {
+        if (_data == null)
+            throw new RuntimeException("Preprocess function must first be called");
+
+        return _nameIndex;
+    }
+
+    public List<StockPoint> getStocksByName(String name)
+    {
+        return _nameIndex.get(name);
+    }
+    public List<StockPoint> getStocksByDate(Date date)
+    {
+        return _dateIndex.get(date);
+    }
+    public StockPoint getStocksByNameDate(String name, Date date)
+    {
+        return _dateNameIndex.get(date).get(name);
     }
 
 
-    public Map<Date, List<StockPoint>> stockDated()
-    {
-        /**
-         * Returns the hashmap as key'd to dates
-         */
-        if (_stocks == null)
-            throw new RuntimeException("Preprocess function must first be called");
-
-        HashMap<Date, List<StockPoint>> _sortedStocks = new HashMap<Date, List<StockPoint>>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        
-        for ( String key : _stocks.keySet()) 
-        {
-            //_stocks = new HashMap<String, List<StockPoint>>();
-            for (StockPoint stock : _stocks.get(key))
-            {
-                /*if (!_sortedAnomalies.containsKey(stock.getStockSymbol()))
-                    _sortedAnomalies.put(stock.getStockSymbol(), new ArrayList<StockPoint>());
-
-                    _sortedAnomalies.get(stock.getStockSymbol()).add(s);*/
-                if (!_sortedStocks.containsKey(stock.getListedDate()))
-                    _sortedStocks.put(stock.getListedDate(), new ArrayList<StockPoint>());
-
-                _sortedStocks.get(stock.getListedDate()).add(stock);
-            }
-        }
-        return _sortedStocks;
-    }
     private void loadData()
     {
         _data = new ArrayList<StockPoint>();
@@ -169,17 +173,47 @@ public class SigmoidSigmoidPreprocessor
 
         System.out.println(_data.size() + " data points loaded");
     }
-    private void loadStocks()
+    private void indexStocksByName()
     {
-        _stocks = new HashMap<String, List<StockPoint>>();
+        _nameIndex = new HashMap<String, List<StockPoint>>();
 
         for (StockPoint s : _data)
         {
-            if (!_stocks.containsKey(s.getStockSymbol()))
-                _stocks.put(s.getStockSymbol(), new ArrayList<StockPoint>());
+            if (!_nameIndex.containsKey(s.getStockSymbol()))
+                _nameIndex.put(s.getStockSymbol(), new ArrayList<StockPoint>());
 
-            _stocks.get(s.getStockSymbol()).add(s);
+            _nameIndex.get(s.getStockSymbol()).add(s);
         }
+
+        System.out.println(_nameIndex.size() + " symbols indexed");
+    }
+    private void indexStocksByDate()
+    {
+        _dateIndex = new TreeMap<Date, List<StockPoint>>();
+
+        for (StockPoint s : _data)
+        {
+            if (!_dateIndex.containsKey(s.getListedDate()))
+                _dateIndex.put(s.getListedDate(), new ArrayList<StockPoint>());
+
+            _dateIndex.get(s.getListedDate()).add(s);
+        }
+
+        System.out.println(_dateIndex.size() + " dates indexed");
+    }
+    private void indexStocksByDateName()
+    {
+        _dateNameIndex = new TreeMap<Date, Map<String, StockPoint>>();
+
+        for (StockPoint s : _data)
+        {
+            if (!_dateNameIndex.containsKey(s.getListedDate()))
+                _dateNameIndex.put(s.getListedDate(), new HashMap<String, StockPoint>());
+
+            _dateNameIndex.get(s.getListedDate()).put(s.getStockSymbol(), s);
+        }
+
+        System.out.println("Date-name index created");
     }
 
     /**
@@ -202,12 +236,12 @@ public class SigmoidSigmoidPreprocessor
 
     private void calcDeltaClose()
     {
-        for (String name : _stocks.keySet())
+        for (String name : _nameIndex.keySet())
         {
-            for (int i = 1; i < _stocks.get(name).size(); i++)
+            for (int i = 1; i < _nameIndex.get(name).size(); i++)
             {
-                StockPoint s0 = _stocks.get(name).get(i - 1);
-                StockPoint s1 = _stocks.get(name).get(i);
+                StockPoint s0 = _nameIndex.get(name).get(i - 1);
+                StockPoint s1 = _nameIndex.get(name).get(i);
 
                 s1.setDeltaClose(s1.getPriceClose() - s0.getPriceClose());
             }

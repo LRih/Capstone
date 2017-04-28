@@ -50,7 +50,7 @@ public class MainDanielClass {
         //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
         SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
         preprocessor.preprocess();
-        _stocks = preprocessor.stocks();
+        _stocks = preprocessor.nameMap();
         
         // Initialize the class
         //DataImport dataImport = new DataImport();
