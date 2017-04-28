@@ -156,7 +156,7 @@ public class SearchDataCSV extends SearchDataOutput {
                         for (SearchItem item : _searchResults)
                         {
 
-                            bufferedWriter.write(stock.toString() + "," + key + ",\"");
+                            bufferedWriter.write(stock.toString() + "," + item.getStockSymbol() + ",\"");
                             bufferedWriter.write(item.getShortName() + "\",\"" + item.getLongName() +
                                     "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
                                     "\",\"" + item.getURL() + "\"");
