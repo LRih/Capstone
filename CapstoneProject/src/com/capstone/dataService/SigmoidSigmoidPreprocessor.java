@@ -81,7 +81,9 @@ public class SigmoidSigmoidPreprocessor
             e.printStackTrace();
         }
     }
-    public final Map<String, List<StockPoint>> stocks()
+    
+    
+    public Map<String, List<StockPoint>> stocks()
     {
         if (_stocks == null)
             throw new RuntimeException("Preprocess function must first be called");
@@ -90,6 +92,34 @@ public class SigmoidSigmoidPreprocessor
     }
 
 
+    public Map<Date, List<StockPoint>> stockDated()
+    {
+        /**
+         * Returns the hashmap as key'd to dates
+         */
+        if (_stocks == null)
+            throw new RuntimeException("Preprocess function must first be called");
+
+        HashMap<Date, List<StockPoint>> _sortedStocks = new HashMap<Date, List<StockPoint>>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        
+        for ( String key : _stocks.keySet()) 
+        {
+            //_stocks = new HashMap<String, List<StockPoint>>();
+            for (StockPoint stock : _stocks.get(key))
+            {
+                /*if (!_sortedAnomalies.containsKey(stock.getStockSymbol()))
+                    _sortedAnomalies.put(stock.getStockSymbol(), new ArrayList<StockPoint>());
+
+                    _sortedAnomalies.get(stock.getStockSymbol()).add(s);*/
+                if (!_sortedStocks.containsKey(stock.getListedDate()))
+                    _sortedStocks.put(stock.getListedDate(), new ArrayList<StockPoint>());
+
+                _sortedStocks.get(stock.getListedDate()).add(stock);
+            }
+        }
+        return _sortedStocks;
+    }
     private void loadData()
     {
         _data = new ArrayList<StockPoint>();
