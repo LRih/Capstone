@@ -288,7 +288,10 @@ public class StockPoint
     
     public String toString ()
     {
-        return this.listedDate + "," + this.stockSymbol + "," + this.priceOpen + 
+        
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        
+        return df.format(this.listedDate) + "," + this.stockSymbol + "," + this.priceOpen + 
                 "," + this.priceClose + "," + this.priceLow + "," + this.priceHigh +
                 "," + this.volume + "," + this.rateOfReturn;                
     }

@@ -16,8 +16,15 @@ import com.capstone.entities.StockPoint;
 import com.capstone.algorithms.timeStdDev;
 import com.capstone.algorithms.timeARMA;
 import com.capstone.dataService.LinearSigmoidPreprocessor;
+import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
+import com.capstone.entities.SearchStocks;
+
+import com.capstone.utils.SearchDataCSV;
+import com.capstone.utils.SearchDataImport;
+
+import java.io.File;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +47,8 @@ public class MainDanielClass {
         //new DataPreprocessService().preprocess();
         
         // Post-Process it so can be used directly.
-        LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
+        //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
+        SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
         preprocessor.preprocess();
         _stocks = preprocessor.stocks();
         
@@ -67,7 +75,7 @@ public class MainDanielClass {
         for ( String key : _stocks.keySet() ) 
         {
             // Debug Keys
-            System.out.println( key );
+            //System.out.println( key );
             
             // Creates a new stock unit for each time-series
             Stock unitStock = new Stock();
@@ -90,12 +98,12 @@ public class MainDanielClass {
             {
                 _anomalies.addAnomaly("STDDEV", stockPoint);
             }
-            System.out.println("Running Algorithm: Standard Deviation");
+            //System.out.println("Running Algorithm: Standard Deviation");
             //algorithmStdDev.outputToFile("output." + key + ".time.StdDev.csv");
             //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
-            System.out.println("Completed Algorithm: Standard Deviation");
+            //System.out.println("Completed Algorithm: Standard Deviation");
         
-            System.out.println("Running Algorithm: ARMA");
+            //System.out.println("Running Algorithm: ARMA");
             timeARMA algorithmARMA = new timeARMA(unitStock);
             algorithmARMA.setPValue(2);
             algorithmARMA.setQValue(3);
@@ -108,11 +116,29 @@ public class MainDanielClass {
             }
             //algorithmARMA.outputToFile("output." + key + ".time.ARMA.csv");
             //algorithmARMA.outputToDebugFile("output." + key + ".time.ARMA.debug.csv");
-            System.out.println("Completed Algorithm: ARMA");
+            //System.out.println("Completed Algorithm: ARMA");
         }
         
         // Outputs to file
         _anomalies.outputToFile("anomalies.csv");
+        
+        // Search Functionality
+        SearchDataImport data = new SearchDataImport();
+        data.setSearchFolder(".\\searchData");
+        SearchStocks searchStocks = data.importData();
+        
+        /*for (String key : _anomalies.getKeySet())
+        {
+            List<StockPoint> list = _anomalies.getStockList(key); 
+            for (StockPoint stock : list)
+            {
+                searchStocks.getAnomaliesSearchResults(stock.getStockSymbol(), 
+                        stock.getListedDate());
+            }
+        }*/
+        
+        SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"));
+        outputCSV.outputToFile(searchStocks, _anomalies);
         
     }
     
