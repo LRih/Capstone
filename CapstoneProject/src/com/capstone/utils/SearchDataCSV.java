@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Date;
 
 /**
  *
@@ -35,10 +37,90 @@ public class SearchDataCSV extends SearchDataOutput {
     
     public void outputToFile (SearchStocks search, Anomalies anomalies)
     {
+        /*
+         * @param   search      set of searched news articles for stocks.
+         * @param   anomalies   set of anomalies detected.
+        */
+        outputToFile(search, anomalies, 'd');
+    }
+    
+    public void outputToFile (SearchStocks search, Anomalies anomalies, char sortType)
+    {
         // Output to file(s)
         /**
-         * @param   filename    filename to output anomalies to.
+         * @param   search      set of searched news articles for stocks.
+         * @param   anomalies   set of anomalies detected.
+         * @param   sortType    the type of output required for the csv.
          */
+        
+        /**
+         * Switchback notes:
+         * t - output by anomaly detection type.
+         * d - output by date.
+         * s - output by stock.
+         */
+        
+        
+        HashMap <String, List<StockPoint>> _sortedAnomalies = new HashMap<String, List<StockPoint>>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        
+        switch (sortType)
+        {
+            case 'd':
+                // Resorts the data in date format, then proceeds with the writing of data.
+                for ( String key : anomalies.getKeySet()) 
+                {
+                    //_stocks = new HashMap<String, List<StockPoint>>();
+                    for (StockPoint stock : anomalies.getStockList(key))
+                    {
+                        /*if (!_sortedAnomalies.containsKey(stock.getStockSymbol()))
+                            _sortedAnomalies.put(stock.getStockSymbol(), new ArrayList<StockPoint>());
+
+                            _sortedAnomalies.get(stock.getStockSymbol()).add(s);*/
+                        String stockDate = df.format(stock.getListedDate());
+                        if (!_sortedAnomalies.containsKey(stockDate))
+                            
+                            _sortedAnomalies.put(stockDate, new ArrayList<StockPoint>());
+
+                        _sortedAnomalies.get(stockDate).add(stock);
+                    }
+                }
+
+                
+                writeOutput (search, _sortedAnomalies);
+            break;
+
+            // Output type: Anomaly detection method, also the default output type.
+            case 't':
+            default:
+                
+            for ( String key : anomalies.getKeySet()) 
+            {
+                //_stocks = new HashMap<String, List<StockPoint>>();
+                for (StockPoint stock : anomalies.getStockList(key))
+                {
+                    /*if (!_sortedAnomalies.containsKey(stock.getStockSymbol()))
+                        _sortedAnomalies.put(stock.getStockSymbol(), new ArrayList<StockPoint>());
+
+                        _sortedAnomalies.get(stock.getStockSymbol()).add(s);*/
+                    String stockDate = df.format(stock.getListedDate());
+                    if (!_sortedAnomalies.containsKey(stockDate))
+
+                        _sortedAnomalies.put(stockDate, new ArrayList<StockPoint>());
+
+                    _sortedAnomalies.get(stockDate).add(stock);
+                }
+            }    
+            
+        }
+                writeOutput (search, _sortedAnomalies);
+        
+        
+    }
+    
+    private void writeOutput (SearchStocks search, HashMap <String, List<StockPoint>> sortedAnomalies)
+    {
+        
         List<SearchItem> _searchResults; 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
@@ -53,20 +135,19 @@ public class SearchDataCSV extends SearchDataOutput {
                     "rateOfReturn,anomalytype,articleShortName,articleLongName,articleDate,newsSource,URL");
             bufferedWriter.newLine();
             
-            for ( String key : anomalies.getKeySet()) 
+            
+            for ( String key : sortedAnomalies.keySet()) 
             {
                 // Adds all stock that are relevant to stock class.
-                for (StockPoint stock : anomalies.getStockList(key))
-                {
-                    //List<StockPoint> list = anomalies.getStockList(key); 
-                    //List<SearchItem> _searchResults; 
+                for (StockPoint stock : sortedAnomalies.get(key))
+                { 
                     _searchResults = search.getAnomaliesSearchResults(stock.getStockSymbol(), stock.getListedDate());
 
                     if(_searchResults.isEmpty())
                     {
                         // Write the anomaly only and format for search results.
                         bufferedWriter.write(stock.toString() + "," + key + ",,,,,");
-                        
+
                         bufferedWriter.newLine();
                     }
                     else
@@ -74,7 +155,7 @@ public class SearchDataCSV extends SearchDataOutput {
                         // Writes anomaly stock and search data
                         for (SearchItem item : _searchResults)
                         {
-                            
+
                             bufferedWriter.write(stock.toString() + "," + key + ",\"");
                             bufferedWriter.write(item.getShortName() + "\",\"" + item.getLongName() +
                                     "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
@@ -84,8 +165,8 @@ public class SearchDataCSV extends SearchDataOutput {
                     }
                     //bufferedWriter.write(anomalies.get(key).get(i).toString() + "," + key);
                 }
-
             }
+
         }
         catch(IOException e)
         {
