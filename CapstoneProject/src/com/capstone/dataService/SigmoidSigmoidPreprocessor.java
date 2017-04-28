@@ -118,7 +118,7 @@ public class SigmoidSigmoidPreprocessor
     {
         return _dateIndex.get(date);
     }
-    public StockPoint getStocksByNameDate(String name, Date date)
+    public StockPoint getStockByNameDate(String name, Date date)
     {
         return _dateNameIndex.get(date).get(name);
     }

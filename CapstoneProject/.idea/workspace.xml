@@ -19,8 +19,8 @@
       <file leaf-file-name="SigmoidSigmoidPreprocessor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="98" column="4" lean-forward="false" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
+            <state relative-caret-position="420">
+              <caret line="120" column="40" lean-forward="false" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="40" />
               <folding>
                 <element signature="docComment;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
                 <element signature="docComment;method#preprocess#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
@@ -98,19 +98,18 @@
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/LinearSigmoidPreprocessor.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/FlexDataService.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataService.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1066" />
+    <option name="x" value="960" />
+    <option name="width" value="960" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -587,7 +586,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="960" y="0" width="960" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -604,7 +603,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21074815" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43383947" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1139,8 +1138,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="98" column="4" lean-forward="false" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
+        <state relative-caret-position="420">
+          <caret line="120" column="40" lean-forward="false" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="40" />
           <folding>
             <element signature="docComment;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
             <element signature="docComment;method#preprocess#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
