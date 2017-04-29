@@ -68,7 +68,7 @@ public class SearchDataCSV extends SearchDataOutput {
         {
             case 'd':
                 // Resorts the data in date format, then proceeds with the writing of data.
-                for ( String key : anomalies.getKeySet()) 
+                for ( Anomalies.Type key : anomalies.getKeySet())
                 {
                     //_stocks = new HashMap<String, List<StockPoint>>();
                     for (StockPoint stock : anomalies.getStockList(key))
@@ -94,7 +94,7 @@ public class SearchDataCSV extends SearchDataOutput {
             case 't':
             default:
                 
-            for ( String key : anomalies.getKeySet()) 
+            for ( Anomalies.Type key : anomalies.getKeySet())
             {
                 //_stocks = new HashMap<String, List<StockPoint>>();
                 for (StockPoint stock : anomalies.getStockList(key))

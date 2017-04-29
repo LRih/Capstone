@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.capstone.entities;
 
 import java.io.BufferedWriter;
@@ -20,50 +15,51 @@ import java.util.Set;
  *
  * @author Shadow
  */
-public class Anomalies {
-    private Map<String, List<StockPoint>> anomalies;
-    
+public class Anomalies
+{
+    private Map<Type, List<StockPoint>> anomalies;
+
+    /**
+     *  Creates the HashMap used for the class.
+     */
     public Anomalies ()
     {
-        /**
-         *  Creates the HashMap used for the class.
-         */
-        anomalies = new HashMap<String, List<StockPoint>>();
+        anomalies = new HashMap<Type, List<StockPoint>>();
     }
-    
-    public void addAnomalyType (String type)
+
+    /**
+     * @param   type    Name of the key for the type of anomaly being used.
+     */
+    public void addAnomalyType (Type type)
     {
-        /**
-         * @param   type    Name of the key for the type of anomaly being used.
-         */
         anomalies.put(type, new LinkedList<StockPoint>());
     }
-    
-    public void addAnomaly(String type, StockPoint stockPoint)
+
+    /**
+     * @param   type        Name of the key for the type of anomaly being used.
+     * @param   stockPoint  Data point that is an anomaly.
+     */
+    public void addAnomaly(Type type, StockPoint stockPoint)
     {
-        /**
-         * @param   type        Name of the key for the type of anomaly being used.
-         * @param   stockPoint  Data point that is an anomaly.
-         */
         anomalies.get(type).add(stockPoint);
     }
     
-    public Set<String> getKeySet ()
+    public Set<Type> getKeySet ()
     {
         return anomalies.keySet();
     }
     
-    public List<StockPoint> getStockList (String key)
+    public List<StockPoint> getStockList (Type key)
     {
         return anomalies.get(key);
     }
-    
+
+    /**
+     * @param   filename    filename to output anomalies to.
+     */
     public void outputToFile(String filename)
     {
         // Output to file(s)
-        /**
-         * @param   filename    filename to output anomalies to.
-         */
         BufferedWriter bufferedWriter = null;
         
         try
@@ -74,7 +70,7 @@ public class Anomalies {
             bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,anomalytype");
             bufferedWriter.newLine();
             
-            for ( String key : anomalies.keySet() ) 
+            for ( Type key : anomalies.keySet() )
             {
                 // Adds all stock that are relevant to stock class.
                 for (StockPoint stockPoint : anomalies.get(key))
@@ -107,5 +103,9 @@ public class Anomalies {
             }
         }
     }
-            
+
+    public enum Type
+    {
+        STDDEV, ARMA, Jaccard
+    }
 }

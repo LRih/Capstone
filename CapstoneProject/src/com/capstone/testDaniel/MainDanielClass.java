@@ -61,8 +61,8 @@ public class MainDanielClass {
         LinkedList<StockPoint> anomalies;
         
         Anomalies _anomalies = new Anomalies();
-        _anomalies.addAnomalyType("STDDEV");
-        _anomalies.addAnomalyType("ARMA");
+        _anomalies.addAnomalyType(Anomalies.Type.STDDEV);
+        _anomalies.addAnomalyType(Anomalies.Type.ARMA);
         
         
         // Load data into system
@@ -96,7 +96,7 @@ public class MainDanielClass {
             anomalies = algorithmStdDev.findAnomalies();
             for (StockPoint stockPoint : anomalies)
             {
-                _anomalies.addAnomaly("STDDEV", stockPoint);
+                _anomalies.addAnomaly(Anomalies.Type.STDDEV, stockPoint);
             }
             //System.out.println("Running Algorithm: Standard Deviation");
             //algorithmStdDev.outputToFile("output." + key + ".time.StdDev.csv");
@@ -112,7 +112,7 @@ public class MainDanielClass {
             for (StockPoint stockPoint : anomalies)
             {
                 //_anomalies.get("STDDEV").add(stockPoint);
-                _anomalies.addAnomaly("ARMA", stockPoint);
+                _anomalies.addAnomaly(Anomalies.Type.ARMA, stockPoint);
             }
             //algorithmARMA.outputToFile("output." + key + ".time.ARMA.csv");
             //algorithmARMA.outputToDebugFile("output." + key + ".time.ARMA.debug.csv");
