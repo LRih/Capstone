@@ -41,131 +41,163 @@ public class SearchDataCSV extends SearchDataOutput {
          * @param   search      set of searched news articles for stocks.
          * @param   anomalies   set of anomalies detected.
         */
+        //oldOutputToFile(search, anomalies, 'd');
         outputToFile(search, anomalies, 'd');
     }
     
-    public void outputToFile (SearchStocks search, Anomalies anomalies, char sortType)
+    public void outputToFile (SearchStocks search, Anomalies anomalies, char parameterSwitch)
     {
-        // Output to file(s)
         /**
-         * @param   search      set of searched news articles for stocks.
-         * @param   anomalies   set of anomalies detected.
-         * @param   sortType    the type of output required for the csv.
+         * @param   search          set of searched news articles for stocks.
+         * @param   anomalies       set of anomalies detected.
+         * @param   parameterSwitch the type of output required for the csv.
          */
         
         /**
          * Switchback notes:
-         * t - output by anomaly detection type.
-         * d - output by date.
-         * s - output by stock.
+         * a - Article information outputted(implies -p in addition)
+         * d - Debug Mode, all information outputted
+         * p - Stock Price information outputted
+         * s - Statistics outputted .
          */
         
-        
-        HashMap <String, List<StockPoint>> _sortedAnomalies = new HashMap<String, List<StockPoint>>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        
-        switch (sortType)
-        {
-            case 'd':
-                // Resorts the data in date format, then proceeds with the writing of data.
-                for ( Anomalies.Type key : anomalies.getKeySet())
-                {
-                    //_stocks = new HashMap<String, List<StockPoint>>();
-                    for (StockPoint stock : anomalies.getStockList(key))
-                    {
-                        /*if (!_sortedAnomalies.containsKey(stock.getStockSymbol()))
-                            _sortedAnomalies.put(stock.getStockSymbol(), new ArrayList<StockPoint>());
-
-                            _sortedAnomalies.get(stock.getStockSymbol()).add(s);*/
-                        String stockDate = df.format(stock.getListedDate());
-                        if (!_sortedAnomalies.containsKey(stockDate))
-                            
-                            _sortedAnomalies.put(stockDate, new ArrayList<StockPoint>());
-
-                        _sortedAnomalies.get(stockDate).add(stock);
-                    }
-                }
-
-                
-                writeOutput (search, _sortedAnomalies);
-            break;
-
-            // Output type: Anomaly detection method, also the default output type.
-            case 't':
-            default:
-                
-            for ( Anomalies.Type key : anomalies.getKeySet())
-            {
-                //_stocks = new HashMap<String, List<StockPoint>>();
-                for (StockPoint stock : anomalies.getStockList(key))
-                {
-                    /*if (!_sortedAnomalies.containsKey(stock.getStockSymbol()))
-                        _sortedAnomalies.put(stock.getStockSymbol(), new ArrayList<StockPoint>());
-
-                        _sortedAnomalies.get(stock.getStockSymbol()).add(s);*/
-                    String stockDate = df.format(stock.getListedDate());
-                    if (!_sortedAnomalies.containsKey(stockDate))
-
-                        _sortedAnomalies.put(stockDate, new ArrayList<StockPoint>());
-
-                    _sortedAnomalies.get(stockDate).add(stock);
-                }
-            }    
-            
-        }
-                writeOutput (search, _sortedAnomalies);
-        
-        
-    }
-    
-    private void writeOutput (SearchStocks search, HashMap <String, List<StockPoint>> sortedAnomalies)
-    {
+        // Stock Date, Stock Symbol, <Anomaly Types>, Article Details
+        AnomalySorted anomaliesSorted = new AnomalySorted();
         
         List<SearchItem> _searchResults; 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
         BufferedWriter bufferedWriter = null;
         
+        // Statistics to gather
+        int anomalyTypeHitsSize = anomalies.getKeySet().size();
+        long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 1];
+        long anomalyArticles = 0;
+        
+        // Get list of anomaly Types
+        for (Anomalies.Type key : anomalies.getKeySet())
+        {
+            anomaliesSorted.anomalyTypes.add(key.toString());
+        }
+        
+        // Puts it into easy to use hashmaps
+        for ( Anomalies.Type key : anomalies.getKeySet())
+        {
+            for (StockPoint stock : anomalies.getStockList(key))
+            {
+                anomaliesSorted.addAnomaly(stock, key.toString());
+            }
+        }
+        
+        
         try
         {
            
             bufferedWriter = new BufferedWriter(new FileWriter(file)); 
+            bufferedWriter.write("date,symbol,");
             
-            bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume," + 
-                    "rateOfReturn,anomalytype,articleShortName,articleLongName,articleDate,newsSource,URL");
+             // Stock Details
+            if(parameterSwitch == 'd' || parameterSwitch == 'a' || parameterSwitch == 'p')
+            {
+                bufferedWriter.write("priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,");
+            }
+            
+            // For each type, make a new column
+            for(String aTypes : anomaliesSorted.anomalyTypes)
+                bufferedWriter.write(aTypes + ",");
+            bufferedWriter.write("anomalyHits,");
+            
+            // Article Details if required
+            if(parameterSwitch == 'd' || parameterSwitch == 'a')
+            {
+                bufferedWriter.write("articleShortName,articleLongName,articleDate,newsSource,URL");
+            }
             bufferedWriter.newLine();
             
-            
-            for ( String key : sortedAnomalies.keySet()) 
+            // for each symbol and date combo output the anomalies and any articles.
+            for (String anomalySymbol : anomaliesSorted.stockAnomalies.keySet())
             {
-                // Adds all stock that are relevant to stock class.
-                for (StockPoint stock : sortedAnomalies.get(key))
-                { 
-                    _searchResults = search.getAnomaliesSearchResults(stock.getStockSymbol(), stock.getListedDate());
-
-                    if(_searchResults.isEmpty())
+                for (Date anomalyDate : anomaliesSorted.stockAnomalies.get(anomalySymbol).keySet())
+                {
+                    StockPoint stockPoint = anomaliesSorted.stockPoints.get(anomalySymbol).get(anomalyDate);
+                    System.out.println(stockPoint.toString());
+                    ArrayList<String> anomalyTypes = anomaliesSorted.stockAnomalies.get(anomalySymbol).get(anomalyDate);
+                    String toOutput;
+                    
+                    // Default identifiers (forced inclusions)
+                    toOutput = anomalySymbol + "," + df.format(anomalyDate) + ",";
+                    
+                     // Stock Details
+                    if(parameterSwitch == 'd' || parameterSwitch == 'a' || parameterSwitch == 'p')
                     {
-                        // Write the anomaly only and format for search results.
-                        bufferedWriter.write(stock.toString() + "," + key + ",,,,,");
+                        toOutput = toOutput + stockPoint.getPriceOpen() + "," + 
+                                stockPoint.getPriceClose() + "," + 
+                                stockPoint.getPriceLow() + "," + 
+                                stockPoint.getPriceHigh() + "," + 
+                                stockPoint.getVolume() + "," +
+                                stockPoint.getRateOfReturn() + ",";
+                    }
+                    
+                    int aHits = 0;
+                    for(String knownAType : anomaliesSorted.anomalyTypes)
+                    {
+                        if(anomalyTypes.contains(knownAType))
+                        {
+                            toOutput = toOutput + "true,";
+                            aHits++;
+                        }
+                        else
+                        {
+                            toOutput = toOutput + "false,";
+                        }
+                        
+                    }
+                    // Anomaly type hit counter.
+                    toOutput = toOutput + aHits + ",";
+                    anomalyTypeHits[aHits] = anomalyTypeHits[aHits] + 1;
+                    
+                    // retrived search results
+                    
+                    _searchResults = search.getAnomaliesSearchResults(anomalySymbol, anomalyDate);
+                    
+                    if(parameterSwitch == 'd' || parameterSwitch == 'a')
+                    {
+                        
+                        if(_searchResults.isEmpty())
+                        {
+                            // Write the anomaly only and format for search results.
+                            bufferedWriter.write(toOutput + ",,,,");
+                            bufferedWriter.newLine();
+                        }
+                        else
+                        {
+                            anomalyArticles++;
+                            // Writes anomaly stock and search data
+                            for (SearchItem item : _searchResults)
+                            {
 
-                        bufferedWriter.newLine();
+                                bufferedWriter.write(toOutput + "\"");
+                                bufferedWriter.write(item.getShortName() + "\",\"" + item.getLongName() +
+                                        "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
+                                        "\",\"" + item.getURL() + "\"");
+                                bufferedWriter.newLine();
+                            }
+                        }
                     }
                     else
                     {
-                        // Writes anomaly stock and search data
-                        for (SearchItem item : _searchResults)
-                        {
-
-                            bufferedWriter.write(stock.toString() + "," + item.getStockSymbol() + ",\"");
-                            bufferedWriter.write(item.getShortName() + "\",\"" + item.getLongName() +
-                                    "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
-                                    "\",\"" + item.getURL() + "\"");
-                            bufferedWriter.newLine();
-                        }
+                        bufferedWriter.write(toOutput);
+                        bufferedWriter.newLine();
                     }
-                    //bufferedWriter.write(anomalies.get(key).get(i).toString() + "," + key);
+                    
                 }
             }
+            
+            for (long hits : anomalyTypeHits)
+            {
+                System.out.println(hits);
+            }
+            System.out.println("Articles: " + anomalyArticles);
 
         }
         catch(IOException e)
@@ -187,4 +219,42 @@ public class SearchDataCSV extends SearchDataOutput {
             }
         }
     }
+    
+    
+    
+    private class AnomalySorted
+    {
+        public ArrayList<String> anomalyTypes;
+        public HashMap<String, HashMap<Date, StockPoint>> stockPoints;
+        public HashMap<String, HashMap<Date, ArrayList<String>>> stockAnomalies;
+        
+        public AnomalySorted()
+        {
+            anomalyTypes = new ArrayList<String>();
+            stockPoints = new HashMap<>();
+            stockAnomalies = new HashMap<>();
+                    
+        }
+        
+        public void addAnomaly (StockPoint stock, String type)
+        {
+            if(!stockPoints.containsKey(stock.getStockSymbol()))
+            {
+                stockPoints.put(stock.getStockSymbol(), new HashMap<Date, StockPoint>());
+                stockAnomalies.put(stock.getStockSymbol(), new HashMap<Date, ArrayList<String>>());
+            }
+            
+            if(!stockPoints.get(stock.getStockSymbol()).containsKey(stock.getListedDate()))
+            {
+                stockPoints.get(stock.getStockSymbol()).put(stock.getListedDate(), stock);
+                stockAnomalies.get(stock.getStockSymbol()).put(stock.getListedDate(), new ArrayList<String>());
+            }
+            
+            if(!stockAnomalies.get(stock.getStockSymbol()).get(stock.getListedDate()).contains(type))
+            {
+                stockAnomalies.get(stock.getStockSymbol()).get(stock.getListedDate()).add(type);
+            }
+        }
+    }
 }
+

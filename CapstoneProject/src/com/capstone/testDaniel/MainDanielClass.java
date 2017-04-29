@@ -88,9 +88,9 @@ public class MainDanielClass {
             
             // Runs each time-series algorithm to find anomalies.
             //. Time Series
-            System.out.printf("\n\n=========================\n");
-            System.out.println("Stock ID: " + key);
-            System.out.printf("=========================\n\n");
+            //System.out.printf("\n\n=========================\n");
+            //System.out.println("Stock ID: " + key);
+            //System.out.printf("=========================\n\n");
             
             timeStdDev algorithmStdDev = new timeStdDev(unitStock);
             anomalies = algorithmStdDev.findAnomalies();
