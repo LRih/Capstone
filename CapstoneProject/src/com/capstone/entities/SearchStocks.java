@@ -82,7 +82,7 @@ public class SearchStocks {
                 if(itemDate.after(modifiedDate(date, searchDaysBack - 1)) && 
                         itemDate.before(modifiedDate(date, searchDaysForward + 1)))
                 {
-                    System.out.println(symbol + ": " + item.getLongName());
+                    
                     _searchResults.add(item);
                 }
             }

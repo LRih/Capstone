@@ -9,6 +9,7 @@ import com.capstone.entities.Anomalies;
 import com.capstone.entities.SearchStocks;
 import com.capstone.entities.SearchItem;
 import com.capstone.entities.StockPoint;
+import com.capstone.entities.Stock;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,21 +19,40 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
+import java.util.Map;
 
 /**
  *
  * @author Shadow
  */
 public class SearchDataCSV extends SearchDataOutput {
+    protected Map<String, List<StockPoint>> _stocks;
+    protected File statsFile;
+    
     public SearchDataCSV ()
     {
         super();
+        this.statsFile = new File("stats.txt");
     }
     
     public SearchDataCSV(File file)
     {
         super();
         this.file = file;
+        this.statsFile = new File("stats.txt");
+    }
+    
+    public SearchDataCSV(File file, Map<String, List<StockPoint>> stocks)
+    {
+        super();
+        this.file = file;
+        this._stocks = stocks;
+        this.statsFile = new File("stats.txt");
+    }
+    
+    public void setStatsFile(File file)
+    {
+        this.statsFile = file;
     }
     
     public void outputToFile (SearchStocks search, Anomalies anomalies)
@@ -41,7 +61,6 @@ public class SearchDataCSV extends SearchDataOutput {
          * @param   search      set of searched news articles for stocks.
          * @param   anomalies   set of anomalies detected.
         */
-        //oldOutputToFile(search, anomalies, 'd');
         outputToFile(search, anomalies, 'd');
     }
     
@@ -72,6 +91,7 @@ public class SearchDataCSV extends SearchDataOutput {
         // Statistics to gather
         int anomalyTypeHitsSize = anomalies.getKeySet().size();
         long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 1];
+        long anomalyTypesCount[] = new long[anomalyTypeHitsSize + 1];
         long anomalyArticles = 0;
         
         // Get list of anomaly Types
@@ -120,7 +140,7 @@ public class SearchDataCSV extends SearchDataOutput {
                 for (Date anomalyDate : anomaliesSorted.stockAnomalies.get(anomalySymbol).keySet())
                 {
                     StockPoint stockPoint = anomaliesSorted.stockPoints.get(anomalySymbol).get(anomalyDate);
-                    System.out.println(stockPoint.toString());
+                    
                     ArrayList<String> anomalyTypes = anomaliesSorted.stockAnomalies.get(anomalySymbol).get(anomalyDate);
                     String toOutput;
                     
@@ -144,6 +164,7 @@ public class SearchDataCSV extends SearchDataOutput {
                         if(anomalyTypes.contains(knownAType))
                         {
                             toOutput = toOutput + "true,";
+                            anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(knownAType)]++;
                             aHits++;
                         }
                         else
@@ -186,18 +207,113 @@ public class SearchDataCSV extends SearchDataOutput {
                     }
                     else
                     {
+                        // This gathers stats only but no output
+                        if (parameterSwitch == 's')
+                        {
+                            if(_searchResults.isEmpty())
+                            {
+
+                            }
+                            else
+                            {
+                                anomalyArticles++;
+                            }
+                        }
                         bufferedWriter.write(toOutput);
                         bufferedWriter.newLine();
                     }
                     
                 }
             }
+            bufferedWriter.close();
             
-            for (long hits : anomalyTypeHits)
+            
+            // Data Statistics output
+            if (parameterSwitch == 's' || parameterSwitch == 'd')
             {
-                System.out.println(hits);
+                bufferedWriter = new BufferedWriter(new FileWriter(statsFile)); 
+                /**
+                 * This section outputs the stats from the run into a seperate file. 
+                 * 
+                 */
+                
+                
+                // Stock Information
+                long stockPointCount = 0;
+                long stockSymbolCount = 0;
+                long stockDateCount = 0;
+                ArrayList<Date> stockDates = new ArrayList<Date>();
+                
+                for (String key : _stocks.keySet()) 
+                {
+                    for (StockPoint stocks : _stocks.get(key))
+                    {
+                        // Collects all known dates for the run.
+                        if(!stockDates.contains(stocks.getListedDate()))
+                        {
+                            stockDates.add(stocks.getListedDate());
+                            stockDateCount++;
+                        }
+                        
+                        // Counts stock points
+                        stockPointCount++;
+                    }
+                }
+                
+                // Outputs Stock Stats
+                bufferedWriter.write("Stock Information:");
+                bufferedWriter.newLine();
+                bufferedWriter.write("Stock Points: " + stockPointCount);
+                bufferedWriter.newLine();
+                bufferedWriter.write("Stock Types: " + _stocks.size());
+                bufferedWriter.newLine();
+                bufferedWriter.write("Stock Dates: " + stockDateCount);
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+                
+                // Anomaly Data
+                anomalyTypeHits[0] = stockPointCount;
+                for (int hits = 1; hits <= anomalyTypeHitsSize; hits++)
+                {
+                    anomalyTypeHits[0] -= anomalyTypeHits[hits];
+                }
+                
+                // Summary of amount of hits
+                bufferedWriter.write("Anomaly Hits:");
+                bufferedWriter.newLine();
+                for (int hits = 0; hits <= anomalyTypeHitsSize; hits++)
+                {
+                    bufferedWriter.write("StockPoints with " + hits + " hit(s): " + anomalyTypeHits[hits]);
+                    bufferedWriter.newLine();
+                }
+                
+                bufferedWriter.write("Anomalies Total: " + (stockPointCount - anomalyTypeHits[0]));
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+                
+                
+                for (String anomalyType : anomaliesSorted.anomalyTypes)
+                {
+                    
+                    bufferedWriter.write("Anomaly Type " + anomalyType + ": " + 
+                            anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)] );
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.newLine();
+                
+                // Summary Data
+                bufferedWriter.write("Dates with Anomalies: " + anomaliesSorted.anomalyDates.size() );
+                bufferedWriter.newLine();
+                bufferedWriter.write("Stocks with Anomalies: " + anomaliesSorted.stockPoints.size() );
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+                
+                // Search Article Data
+                bufferedWriter.write("Anomalies with Articles: " + anomalyArticles);
+                
+                bufferedWriter.newLine();
+                bufferedWriter.close();
             }
-            System.out.println("Articles: " + anomalyArticles);
 
         }
         catch(IOException e)
@@ -225,12 +341,14 @@ public class SearchDataCSV extends SearchDataOutput {
     private class AnomalySorted
     {
         public ArrayList<String> anomalyTypes;
+        public ArrayList<Date> anomalyDates;
         public HashMap<String, HashMap<Date, StockPoint>> stockPoints;
         public HashMap<String, HashMap<Date, ArrayList<String>>> stockAnomalies;
         
         public AnomalySorted()
         {
             anomalyTypes = new ArrayList<String>();
+            anomalyDates = new ArrayList<Date>();
             stockPoints = new HashMap<>();
             stockAnomalies = new HashMap<>();
                     
@@ -240,20 +358,25 @@ public class SearchDataCSV extends SearchDataOutput {
         {
             if(!stockPoints.containsKey(stock.getStockSymbol()))
             {
+                
                 stockPoints.put(stock.getStockSymbol(), new HashMap<Date, StockPoint>());
                 stockAnomalies.put(stock.getStockSymbol(), new HashMap<Date, ArrayList<String>>());
             }
             
             if(!stockPoints.get(stock.getStockSymbol()).containsKey(stock.getListedDate()))
             {
+                if(!anomalyDates.contains(stock.getListedDate()))
+                    anomalyDates.add(stock.getListedDate());
                 stockPoints.get(stock.getStockSymbol()).put(stock.getListedDate(), stock);
                 stockAnomalies.get(stock.getStockSymbol()).put(stock.getListedDate(), new ArrayList<String>());
             }
             
             if(!stockAnomalies.get(stock.getStockSymbol()).get(stock.getListedDate()).contains(type))
             {
+                
                 stockAnomalies.get(stock.getStockSymbol()).get(stock.getListedDate()).add(type);
             }
+            
         }
     }
 }

@@ -57,7 +57,6 @@ public class MainDanielClass {
         
         // StockPoints of anomalies.
         // Needs a re-work to allow different stock items. ********************
-        Stock testStock = new Stock();
         LinkedList<StockPoint> anomalies;
         
         Anomalies _anomalies = new Anomalies();
@@ -137,7 +136,7 @@ public class MainDanielClass {
             }
         }*/
         
-        SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"));
+        SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"), _stocks);
         outputCSV.outputToFile(searchStocks, _anomalies);
         
     }
