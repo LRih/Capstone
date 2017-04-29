@@ -349,8 +349,8 @@ public class SearchDataCSV extends SearchDataOutput {
         {
             anomalyTypes = new ArrayList<String>();
             anomalyDates = new ArrayList<Date>();
-            stockPoints = new HashMap<>();
-            stockAnomalies = new HashMap<>();
+            stockPoints = new HashMap<String, HashMap<Date, StockPoint>>();
+            stockAnomalies = new HashMap<String, HashMap<Date, ArrayList<String>>>();
                     
         }
         

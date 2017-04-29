@@ -59,8 +59,12 @@
         <option value="$PROJECT_DIR$/src/com/capstone/entities/Anomalies.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataService.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/FlexDataService.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/testrichard/CLI.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/testrichard/cli/CLI.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/cli/NormalizeOption.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/cli/CLI.java" />
       </list>
     </option>
   </component>
@@ -85,8 +89,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -303,12 +305,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="cli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CapstoneProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CapstoneProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="capstone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="algorithms" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -320,10 +346,10 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.project" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/commons-cli-1.4.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -336,7 +362,7 @@
       <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.CLI">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -524,8 +550,24 @@
       <envs />
       <method />
     </configuration>
-    <list size="1">
+    <configuration default="false" name="CLI" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="com.capstone.cli.CLI" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="-search a" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="CapstoneProject" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+      <item index="1" class="java.lang.String" itemvalue="Application.CLI" />
     </list>
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -562,7 +604,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21548998" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21548998" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -585,6 +627,16 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/MainRun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#test#0;class#MainRun#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -764,6 +816,41 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#StockPoint#0" expanded="false" />
+            <element signature="method#StockPoint#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#StockPoint#2;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#StockPoint#3;class#StockPoint#0" expanded="false" />
+            <element signature="method#StockPoint#3;class#StockPoint#0" expanded="false" />
+            <element signature="method#calculateRateOfReturn#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getNormalizedDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getNormalizedVolume#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceHigh#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceLow#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceOpen#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getRateOfReturn#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getStockSymbol#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getVolume#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setListedDate#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setNormalizedDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceHigh#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceLow#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceOpen#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setRateofReturn#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setStockSymbol#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setVolume#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#toString#0;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#distance#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#distance#0;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#createRandomPoint#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#createRandomPoint#0;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#createRandomPoints#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#createRandomPoints#0;class#StockPoint#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -892,30 +979,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/ClusterDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/DataConstant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/MainRun.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding>
-            <element signature="method#main#0;class#MainRun#0" expanded="false" />
-            <element signature="method#test#0;class#MainRun#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1004,6 +1072,41 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="25" column="19" lean-forward="false" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
+          <folding>
+            <element signature="docComment;class#StockPoint#0" expanded="false" />
+            <element signature="method#StockPoint#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#StockPoint#2;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#StockPoint#3;class#StockPoint#0" expanded="false" />
+            <element signature="method#StockPoint#3;class#StockPoint#0" expanded="false" />
+            <element signature="method#calculateRateOfReturn#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getNormalizedDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getNormalizedVolume#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceHigh#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceLow#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getPriceOpen#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getRateOfReturn#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getStockSymbol#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#getVolume#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setListedDate#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setNormalizedDeltaClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceClose#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceHigh#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceLow#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setPriceOpen#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setRateofReturn#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setStockSymbol#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#setVolume#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#toString#0;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#distance#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#distance#0;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#createRandomPoint#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#createRandomPoint#0;class#StockPoint#0" expanded="false" />
+            <element signature="docComment;method#createRandomPoints#0;class#StockPoint#0" expanded="false" />
+            <element signature="method#createRandomPoints#0;class#StockPoint#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1056,22 +1159,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1236">
-          <caret line="114" column="57" lean-forward="false" selection-start-line="114" selection-start-column="57" selection-end-line="114" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="96" column="32" lean-forward="false" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
@@ -1095,16 +1182,71 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/ClusterDataService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2667">
+          <caret line="191" column="13" lean-forward="true" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/MainRun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
+          <folding>
+            <element signature="method#test#0;class#MainRun#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/NormalizeOption.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="1" lean-forward="false" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/CLI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+          <folding>
+            <element signature="docComment;class#CLI#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataImport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/Anomalies.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="774">
-          <caret line="72" column="22" lean-forward="false" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
-          <folding>
-            <element signature="e#668#669#0" expanded="true" />
-            <element signature="e#733#734#0" expanded="true" />
-            <element signature="e#956#957#0" expanded="true" />
-            <element signature="e#1007#1008#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="186">
+          <caret line="59" column="16" lean-forward="false" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-127">
+          <caret line="66" column="92" lean-forward="false" selection-start-line="66" selection-start-column="77" selection-end-line="66" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="42" column="8" lean-forward="true" selection-start-line="42" selection-start-column="8" selection-end-line="139" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
