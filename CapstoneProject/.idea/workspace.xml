@@ -15,7 +15,46 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="KMeansAnomalizer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/KMeansAnomalizer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="379">
+              <caret line="69" column="46" lean-forward="false" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+              <folding>
+                <element signature="e#363#377#0" expanded="true" />
+                <element signature="method#KMeansAnomalizer#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="method#initClusters#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="method#assignPointToNearestCluster#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="method#updateClusters#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="method#getClosestClusterIndex#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="e#3384#3425#0" expanded="false" />
+                <element signature="method#Cluster#0;class#Cluster#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="method#updateCenter#0;class#Cluster#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="class#ClusterPoint#0;class#KMeansAnomalizer#0" expanded="false" />
+                <element signature="method#ClusterPoint#0;class#ClusterPoint#0;class#KMeansAnomalizer#0" expanded="false" />
+                <marker date="1493515944382" expanded="false" signature="4468:5388" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="417">
+              <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+              <folding>
+                <element signature="e#510#511#0" expanded="true" />
+                <element signature="e#545#546#0" expanded="true" />
+                <element signature="method#testClustering#0;class#MainTest#0" expanded="false" />
+                <element signature="method#testPreprocess#0;class#MainTest#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -28,7 +67,11 @@
     <findStrings>
       <find>prices.cs</find>
       <find>rateof</find>
+      <find>Cluster</find>
     </findStrings>
+    <replaceStrings>
+      <replace>ClusterGroup</replace>
+    </replaceStrings>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -54,7 +97,6 @@
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataPreprocessService.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/LinearSigmoidPreprocessor.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/Anomalies.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/DataService.java" />
@@ -65,6 +107,9 @@
         <option value="$PROJECT_DIR$/src/com/capstone/cli/NormalizeOption.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/cli/CLI.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/utils/MathUtils.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/algorithms/KMeansAnomalizer.java" />
       </list>
     </option>
   </component>
@@ -173,73 +218,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="uiService" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="capstone" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="testrichard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="capstone" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="testDaniel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="capstone" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hiddenAnomalyBusiness" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -305,28 +284,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cli" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CapstoneProject" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="capstone" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="algorithms" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -353,6 +310,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.capstone.utils" />
+      <recent name="com.capstone.algorithms" />
       <recent name="com.capstone.dataService" />
       <recent name="com.capstone" />
     </key>
@@ -362,7 +321,7 @@
       <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CLI">
+  <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -588,7 +547,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -682,12 +641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
           <caret line="18" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-          <folding>
-            <marker date="1493428133556" expanded="false" signature="1059:1089" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="1818:1848" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="2600:2630" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="3377:3407" ph="/unchecked/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -884,12 +837,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="41" column="16" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-          <folding>
-            <marker date="1493428133556" expanded="false" signature="1059:1089" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="1818:1848" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="2600:2630" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="3377:3407" ph="/unchecked/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -924,12 +871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1493428133556" expanded="false" signature="1059:1089" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="1818:1848" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="2600:2630" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="3377:3407" ph="/unchecked/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -950,13 +891,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/Test.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/ClusterGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-234">
-          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/CPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1155">
@@ -1009,16 +943,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/DataPoint.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/KMeans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="127" column="34" lean-forward="false" selection-start-line="127" selection-start-column="34" selection-end-line="127" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/timeAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -1053,13 +977,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Jaccard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-126">
@@ -1068,10 +985,109 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/SearchItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1746">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/FlexDataService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="19" column="43" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/MainRun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
+          <folding>
+            <element signature="method#test#0;class#MainRun#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/NormalizeOption.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/CLI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataImport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-127">
+          <caret line="66" column="92" lean-forward="false" selection-start-line="66" selection-start-column="77" selection-end-line="66" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="42" column="8" lean-forward="true" selection-start-line="42" selection-start-column="8" selection-end-line="139" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/ClusterDataService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3717">
+          <caret line="191" column="13" lean-forward="true" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+          <folding>
+            <marker date="1493428133616" expanded="false" signature="1140:1152" ph="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/MathUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/KMeans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="67" column="53" lean-forward="true" selection-start-line="67" selection-start-column="53" selection-end-line="67" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/ClusterGroup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="25" column="19" lean-forward="false" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
+        <state relative-caret-position="3192">
+          <caret line="350" column="29" lean-forward="false" selection-start-line="350" selection-start-column="29" selection-end-line="350" selection-end-column="29" />
           <folding>
             <element signature="docComment;class#StockPoint#0" expanded="false" />
             <element signature="method#StockPoint#0;class#StockPoint#0" expanded="false" />
@@ -1110,143 +1126,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="189" column="36" lean-forward="false" selection-start-line="189" selection-start-column="36" selection-end-line="189" selection-end-column="36" />
-          <folding>
-            <element signature="docComment;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;method#preprocess#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#preprocess#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;method#writeData#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#writeData#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#nameMap#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#dateMap#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#dateNameMap#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#loadData#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#indexStocksByName#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#indexStocksByDate#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#indexStocksByDateName#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;method#normalizeDeltaClose#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#normalizeDeltaClose#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;method#normalizeVolume#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#normalizeVolume#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcDeltaClose#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcDeltaCloseMean#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcVolumeMean#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;method#calcDeltaCloseSigmoidBeta#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcDeltaCloseSigmoidBeta#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;method#calcVolumeSigmoidBeta#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcVolumeSigmoidBeta#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcDeltaCloseSampleStdDev#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcDeltaCloseSampleVariance#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcMaxDeltaClose#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcMinVolume#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcDeltaCloseSigmoid#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#calcSigmoid#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="docComment;class#DateSymbolComparator#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="class#DateSymbolComparator#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-            <element signature="method#compare#0;class#DateSymbolComparator#0;class#SigmoidSigmoidPreprocessor#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/SearchItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1746">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="56" column="9" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-          <folding>
-            <marker date="1493428133616" expanded="false" signature="1140:1152" ph="&lt;~&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/FlexDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="19" column="43" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-          <folding>
-            <marker date="1493428133556" expanded="false" signature="1059:1089" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="1818:1848" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="2600:2630" ph="/unchecked/" />
-            <marker date="1493428133556" expanded="false" signature="3377:3407" ph="/unchecked/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/ClusterDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2667">
-          <caret line="191" column="13" lean-forward="true" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/MainRun.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
-          <folding>
-            <element signature="method#test#0;class#MainRun#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/NormalizeOption.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="1" lean-forward="false" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/CLI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
-          <folding>
-            <element signature="docComment;class#CLI#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataImport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/Anomalies.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
+        <state relative-caret-position="735">
           <caret line="59" column="16" lean-forward="false" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/SearchDataCSV.java">
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/SigmoidSigmoidPreprocessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-127">
-          <caret line="66" column="92" lean-forward="false" selection-start-line="66" selection-start-column="77" selection-end-line="66" selection-end-column="92" />
+        <state relative-caret-position="-1403">
+          <caret line="279" column="43" lean-forward="false" selection-start-line="279" selection-start-column="43" selection-end-line="279" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/KMeansAnomalizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="42" column="8" lean-forward="true" selection-start-line="42" selection-start-column="8" selection-end-line="139" selection-end-column="57" />
-          <folding />
+        <state relative-caret-position="379">
+          <caret line="69" column="46" lean-forward="false" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+          <folding>
+            <element signature="e#363#377#0" expanded="true" />
+            <element signature="method#KMeansAnomalizer#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="method#initClusters#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="method#assignPointToNearestCluster#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="method#updateClusters#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="method#getClosestClusterIndex#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="e#3384#3425#0" expanded="false" />
+            <element signature="method#Cluster#0;class#Cluster#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="method#updateCenter#0;class#Cluster#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="class#ClusterPoint#0;class#KMeansAnomalizer#0" expanded="false" />
+            <element signature="method#ClusterPoint#0;class#ClusterPoint#0;class#KMeansAnomalizer#0" expanded="false" />
+            <marker date="1493515944382" expanded="false" signature="4468:5388" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+          <folding>
+            <element signature="e#510#511#0" expanded="true" />
+            <element signature="e#545#546#0" expanded="true" />
+            <element signature="method#testClustering#0;class#MainTest#0" expanded="false" />
+            <element signature="method#testPreprocess#0;class#MainTest#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
