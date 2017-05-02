@@ -138,7 +138,7 @@ public class MainDanielClass {
         
         SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"), _stocks);
         outputCSV.outputToFile(searchStocks, _anomalies);
-        
+        //http://search.ebscohost.com.ezproxy.lib.rmit.edu.au/login.aspx?direct=true&db=bwh&db=bth&db=ufh&bquery=Willis+Towers+Watson&type=1&site=ehost-live&scope=site
     }
     
     
