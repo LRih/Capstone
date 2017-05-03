@@ -37,6 +37,7 @@ public class StockPoint
     protected double deltaClose;
     protected double normalizedDeltaClose;
     protected double normalizedVolume;
+    private double jIndex;
     
     private int    pGroup_number = 0;
     private int    flag_anomaly=0;
@@ -69,6 +70,7 @@ public class StockPoint
         this.priceLow = priceLow;
         this.rateOfReturn = priceHigh - priceLow;
         this.volume = volume;
+        this.jIndex = 0.0;
     }
     
     public StockPoint (String listedDate, String stockSymbol, double rateOfReturn, 
@@ -110,6 +112,14 @@ public class StockPoint
          * @return the delta closing price of the stock.
          */
         return deltaClose;
+    }
+    
+    public double getJIndex ()
+    {
+        /**
+         * @return  the jaccard index of the stock that has been calculated;
+         */
+        return jIndex;
     }
     
     public double getNormalizedDeltaClose()
@@ -213,6 +223,16 @@ public class StockPoint
          */
         this.deltaClose = deltaClose;
     }
+    
+    
+    public void setJIndex (double jIndex)
+    {
+        /**
+         * @param   jIndex  sets the Jaccard index
+         */
+        this.jIndex = jIndex;
+    }
+    
     
     public void setNormalizedDeltaClose(double normalizedDeltaClose)
     {

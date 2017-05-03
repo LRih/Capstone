@@ -8,6 +8,8 @@
  */
 package com.capstone.testDaniel;
 
+import com.capstone.algorithms.Jaccard;
+import com.capstone.algorithms.KMeans;
 import java.util.LinkedList;
 
 import com.capstone.entities.Stock;
@@ -19,12 +21,14 @@ import com.capstone.dataService.LinearSigmoidPreprocessor;
 import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
+import com.capstone.entities.ClusterGroup;
 import com.capstone.entities.SearchStocks;
 
 import com.capstone.utils.SearchDataCSV;
 import com.capstone.utils.SearchDataImport;
 
 import java.io.File;
+import java.util.Date;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +46,9 @@ public class MainDanielClass {
     public static void main(String[] args) {
         
         Map<String, List<StockPoint>> _stocks;
+        Map<Date, List<StockPoint>> _datestocks;
+        Map<Date, List<ClusterGroup>> _groups;
+        int k = 7;
         
         // Pre-Process the data to normalize it.
         //new DataPreprocessService().preprocess();
@@ -50,7 +57,16 @@ public class MainDanielClass {
         //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
         SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
         preprocessor.preprocess();
+        
+        // load stocks by means... optimize later
         _stocks = preprocessor.nameMap();
+        _datestocks = preprocessor.dateMap();
+        
+        KMeans kMeans = new KMeans(k, _datestocks);
+        kMeans.clusterGroups();
+        kMeans.calculate();
+        _datestocks = kMeans.getPoints();
+        _groups = kMeans.getGroups();
         
         // Initialize the class
         //DataImport dataImport = new DataImport();
@@ -62,7 +78,12 @@ public class MainDanielClass {
         Anomalies _anomalies = new Anomalies();
         _anomalies.addAnomalyType(Anomalies.Type.STDDEV);
         _anomalies.addAnomalyType(Anomalies.Type.ARMA);
+        _anomalies.addAnomalyType(Anomalies.Type.Jaccard);
         
+        
+        // Jaccard Index
+        Jaccard jaccard = new Jaccard(_datestocks, _groups, 3);
+        jaccard.calculate();
         
         // Load data into system
         //testStock = dataImport.importNormalizedData("normalized.csv");
@@ -116,7 +137,11 @@ public class MainDanielClass {
             //algorithmARMA.outputToFile("output." + key + ".time.ARMA.csv");
             //algorithmARMA.outputToDebugFile("output." + key + ".time.ARMA.debug.csv");
             //System.out.println("Completed Algorithm: ARMA");
+            
+            
         }
+        
+        
         
         // Outputs to file
         _anomalies.outputToFile("anomalies.csv");

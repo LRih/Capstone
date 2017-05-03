@@ -31,7 +31,7 @@ import java.util.Date;
  * @studentId s3535252
  * Mar 25, 2017
  * KMeans.java
- * Describe: This class implements the K-Means algrithim
+ * Describe: This class implements the K-Means algorithm
  */
 public class KMeans
 {
@@ -70,7 +70,7 @@ public class KMeans
             this.k = k;
         }
         
-        public KMeans (int k, HashMap<Date, List<StockPoint>> stocks)
+        public KMeans (int k, Map<Date, List<StockPoint>> stocks)
         {
             // Deprecate once completed
             this.points = new ArrayList<StockPoint>();
@@ -114,94 +114,6 @@ public class KMeans
                 }
             }
         }
-        
-        public void oldinit (int k, Date date, List<StockPoint> stocks)
-        {
-            /**
-             * @param   k       k-value for k means calculation.
-             * @param   date    Date of k-means calculation.
-             * @param   stocks  All stocks for the date.
-             */
-            
-            // Set K Value to class
-            this.k = k;
-
-            // Set stocks that are relevant to class
-            this.points = stocks;
-            
-            // Pre-Process the data to normalize it.
-            //new DataPreprocessService().preprocess();
-
-            // Post-Process it so can be used directly.
-            //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
-            /*SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
-            preprocessor.preprocess();
-            _stocks = preprocessor.dateMap();
-            points = DataService.loadDataByDay(day);*/
-
-            // init Cluster Group
-            groups.clear();
-            for (int i = 0; i < k; i++)
-            {
-                ClusterGroup group = new ClusterGroup(i);
-
-                // initialise the central point for every group
-                StockPoint centroid = StockPoint.createRandomPoint(DataConstant.MIN_COORDINATE,DataConstant.MAX_COORDINATE);
-
-                centroid.setpGroup_number(i);
-
-                group.setCentroid(centroid);
-
-                group.setPoints(new ArrayList<StockPoint>());
-
-                groups.add(group);
-
-            }
-        }
-        
-	/**
-	 *  Initializes the process
-         * Old and deprecate it
-	 */
-	public void oldinit(int k,String day)
-	{
-	    this.k = k;
-
-		// init stock Points
-		points.clear();
-		
-                
-                Map<Date, List<StockPoint>> _stocks;
-
-                // Pre-Process the data to normalize it.
-                //new DataPreprocessService().preprocess();
-
-                // Post-Process it so can be used directly.
-                //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
-                SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
-                preprocessor.preprocess();
-                _stocks = preprocessor.dateMap();
-		points = DataService.loadDataByDay(day);
-
-		// init Cluster Group
-		groups.clear();
-		for (int i = 0; i < k; i++)
-		{
-			ClusterGroup group = new ClusterGroup(i);
-
-			// initialise the central point for every group
-			StockPoint centroid = StockPoint.createRandomPoint(DataConstant.MIN_COORDINATE,DataConstant.MAX_COORDINATE);
-			
-			centroid.setpGroup_number(i);
-			
-			group.setCentroid(centroid);
-
-			group.setPoints(new ArrayList<StockPoint>());
-
-			groups.add(group);
-			
-		}
-	}
 
         public void calculate()
         {
@@ -212,12 +124,19 @@ public class KMeans
             boolean finish = false;
             double distance_mini = 0;
             double distance_temp = 0;
+            double x,y;
             
             for (Date dateKey : _groups.keySet()) 
             {
                 groups = _groups.get(dateKey);
+                points = _stocks.get(dateKey);
+                System.out.println(dateKey);
                 //for (ClusterGroup groups : _groups.get(dateKey))
                 {
+                    finish = false;
+                    distance_mini = 0;
+                    distance_temp = 0;
+            
                     ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
                     int i_loop = 0;
 
@@ -225,186 +144,73 @@ public class KMeans
                     {
                         for (int i = 0; i < k; i++)
                         {
-                                groups.get(i).getPoints().clear();
+                            _groups.get(dateKey).get(i).getPoints().clear();
                         }
 
-
-                        //Iterator all the points
-                        for (Iterator<StockPoint> itP = points.iterator(); itP.hasNext();)
+                        for (StockPoint stock : _stocks.get(dateKey))
                         {
-                            StockPoint p = (StockPoint) itP.next();
-                            //calculate the distance between p and the first group center point
-                            distance_mini = StockPoint.distance(p, groups.get(0).getCentroid());
-                            p.setpGroup_number(0);
-
-                            for (Iterator<ClusterGroup> itG = groups.iterator(); itG.hasNext();)
+                            distance_mini = StockPoint.distance(stock, _groups.get(dateKey).get(0).getCentroid());
+                            stock.setpGroup_number(0);
+                            for (ClusterGroup group : _groups.get(dateKey))
                             {
-                                ClusterGroup group = itG.next();
-                                distance_temp = StockPoint.distance(p, group.getCentroid());
+                                distance_temp = StockPoint.distance(stock, group.getCentroid());
 
                                 if (distance_temp < distance_mini)
                                 {
-                                        p.setpGroup_number(group.getId());
+                                        stock.setpGroup_number(group.getId());
                                         distance_mini = distance_temp;
                                 }
                             }
-                            groups.get(p.getpGroup_number()).addPoint(p);
+                            _groups.get(dateKey).get(stock.getpGroup_number()).addPoint(stock);
                         }
-
-                            // save old central point
-                            oldCentroids.clear();
-                            for (Iterator<ClusterGroup> itg = groups.iterator(); itg.hasNext();)
-                            {
-                                    ClusterGroup cg = itg.next();
-                                    double x,y;
-                                    x = cg.getCentroid().getRateOfReturn();
-                                    y = cg.getCentroid().getVolume();
-                                    StockPoint old_central = new StockPoint(x, y);
-                                    oldCentroids.add(old_central);
-                            }
+                        
+                        oldCentroids.clear();
+                        for (ClusterGroup cg : _groups.get(dateKey))
+                        {
+                            x = cg.getCentroid().getRateOfReturn();
+                            y = cg.getCentroid().getVolume();
+                            StockPoint old_central = new StockPoint(x, y);
+                            oldCentroids.add(old_central);
+                            
+                        }
+                        
 
                             // calculate new central points
-                            groups = calculateNewCentroids(groups);
+                            groups = calculateNewCentroids(_groups.get(dateKey));
 
                             // compare all central point
                             finish = true;
                             for (int i = 0; i < k; i++)
                             {
-                                    ClusterGroup cg = groups.get(i);
+                                    ClusterGroup cg = _groups.get(dateKey).get(i);
                                     StockPoint point_new = cg.getCentroid();
                                     StockPoint point_old = oldCentroids.get(i);
                                     if (StockPoint.distance(point_new, point_old) != 0)
                                     {
-                                            finish = false;
-                                            break;
+                                        finish = false;
+                                        break;
                                     }
                             }
 
                             if (i_loop>=DataConstant.MAX_LOOP)
                             {
-                                    finish = true;
+                                finish = true;
                             }
 
                             i_loop ++;
+                          
                     }
                 }
                 
             }
         }
         
-	/**
-	 * The process to calculate the K Means, with iterating method.
-	 */
-	public void oldcalculate()
-	{
-		boolean finish = false;
-		double distance_mini = 0;
-		double distance_temp = 0;
-		ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
-		int i_loop = 0;
-		while (!finish)
-		{
-			for (int i = 0; i < k; i++)
-			{
-				groups.get(i).getPoints().clear();
-			}
-			//Iterator all the points
-			for (Iterator<StockPoint> itP = points.iterator(); itP.hasNext();)
-			{
-				StockPoint p = (StockPoint) itP.next();
-				//calculate the distance between p and the first group center point
-				distance_mini = StockPoint.distance(p, groups.get(0).getCentroid());
-				p.setpGroup_number(0);
-
-				for (Iterator<ClusterGroup> itG = groups.iterator(); itG.hasNext();)
-				{
-					ClusterGroup group = itG.next();
-					distance_temp = StockPoint.distance(p, group.getCentroid());
-					
-					if (distance_temp < distance_mini)
-					{
-						p.setpGroup_number(group.getId());
-						distance_mini = distance_temp;
-					}
-				}
-				groups.get(p.getpGroup_number()).addPoint(p);
-			}
-
-			// save old central point
-			oldCentroids.clear();
-			for (Iterator<ClusterGroup> itg = groups.iterator(); itg.hasNext();)
-			{
-				ClusterGroup cg = itg.next();
-				double x,y;
-				x = cg.getCentroid().getRateOfReturn();
-				y = cg.getCentroid().getVolume();
-				StockPoint old_central = new StockPoint(x, y);
-				oldCentroids.add(old_central);
-			}
-
-			// calculate new central points
-			calculateNewCentroids();
-
-			// compare all central point
-			finish = true;
-			for (int i = 0; i < k; i++)
-			{
-				ClusterGroup cg = groups.get(i);
-				StockPoint point_new = cg.getCentroid();
-				StockPoint point_old = oldCentroids.get(i);
-				if (StockPoint.distance(point_new, point_old) != 0)
-				{
-					finish = false;
-					break;
-				}
-			}
-			
-			if (i_loop>=DataConstant.MAX_LOOP)
-			{
-				finish = true;
-			}
-			
-			i_loop ++;
-		}
-	}
-
-	/**
-	 * reCalculate a new Centroid
-	 */
-	private void calculateNewCentroids()
-	{
-		for (ClusterGroup g : groups)
-		{
-			double sumX = 0;
-			double sumY = 0;
-			List<StockPoint> list = g.getPoints();
-			int num_points = list.size();
-
-			for (StockPoint point : list)
-			{
-				sumX += point.getRateOfReturn();
-				sumY += point.getVolume();
-			}
-
-			StockPoint centroid = g.getCentroid();
-			if (num_points > 0)
-			{
-				double newX = sumX / num_points;
-				double newY = sumY / num_points;
-				BigDecimal bgX = new BigDecimal(newX).setScale(2, RoundingMode.UP);
-				BigDecimal bgY = new BigDecimal(newY).setScale(2, RoundingMode.UP);
-				centroid.setRateOfReturn(bgX.doubleValue());
-				centroid.setVolume(bgY.doubleValue());
-			}
-		}
-	}
-        
         /**
 	 * reCalculate a new Centroid
 	 */
 	private List<ClusterGroup> calculateNewCentroids(List<ClusterGroup> groups)
 	{
-		for (ClusterGroup g : groups)
+		for(ClusterGroup g : groups)
 		{
 			double sumX = 0;
 			double sumY = 0;

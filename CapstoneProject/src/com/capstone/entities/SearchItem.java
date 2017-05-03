@@ -40,6 +40,7 @@ public class SearchItem {
         return articleDate;
     }
     
+    
     public String getLongName ()
     {
         /**
@@ -88,6 +89,7 @@ public class SearchItem {
          */
         this.articleDate = date;
     }
+    
     
     public void setLongName (String name)
     {

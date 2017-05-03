@@ -36,6 +36,8 @@ public class ClusterDataService
         {
             this.dayGroupListMap = new HashMap<String, List<ClusterGroup>>();
         }
+        
+        
 	public static HashMap<String, List<ClusterGroup>> getDayGroupListMap()
 	{
 		return dayGroupListMap;
