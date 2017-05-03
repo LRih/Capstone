@@ -126,6 +126,8 @@ public class KMeans
             double distance_temp = 0;
             double x,y;
             
+            ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
+            
             for (Date dateKey : _groups.keySet()) 
             {
                 groups = _groups.get(dateKey);
@@ -137,7 +139,7 @@ public class KMeans
                     distance_mini = 0;
                     distance_temp = 0;
             
-                    ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
+                    //ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
                     int i_loop = 0;
 
                     while (!finish)
