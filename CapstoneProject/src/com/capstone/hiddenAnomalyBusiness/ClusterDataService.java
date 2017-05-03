@@ -29,13 +29,18 @@ public class ClusterDataService
 	 * the key is date, and the value is the list of group
 	 */
 	private static HashMap<String, List<ClusterGroup>> dayGroupListMap
-	              = new HashMap<String, List<ClusterGroup>>();
+	              ;
 	
 	
+        public ClusterDataService ()
+        {
+            this.dayGroupListMap = new HashMap<String, List<ClusterGroup>>();
+        }
 	public static HashMap<String, List<ClusterGroup>> getDayGroupListMap()
 	{
 		return dayGroupListMap;
 	}
+        
 
 	/**
 	 * this is the main Entry of calculate Cluster Group 
