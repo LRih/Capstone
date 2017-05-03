@@ -175,29 +175,29 @@ public class KMeans
                         }
                         
 
-                            // calculate new central points
-                            groups = calculateNewCentroids(_groups.get(dateKey));
+                        // calculate new central points
+                        groups = calculateNewCentroids(_groups.get(dateKey));
 
-                            // compare all central point
+                        // compare all central point
+                        finish = true;
+                        for (int i = 0; i < k; i++)
+                        {
+                                ClusterGroup cg = _groups.get(dateKey).get(i);
+                                StockPoint point_new = cg.getCentroid();
+                                StockPoint point_old = oldCentroids.get(i);
+                                if (StockPoint.distance(point_new, point_old) != 0)
+                                {
+                                    finish = false;
+                                    break;
+                                }
+                        }
+
+                        if (i_loop>=DataConstant.MAX_LOOP)
+                        {
                             finish = true;
-                            for (int i = 0; i < k; i++)
-                            {
-                                    ClusterGroup cg = _groups.get(dateKey).get(i);
-                                    StockPoint point_new = cg.getCentroid();
-                                    StockPoint point_old = oldCentroids.get(i);
-                                    if (StockPoint.distance(point_new, point_old) != 0)
-                                    {
-                                        finish = false;
-                                        break;
-                                    }
-                            }
+                        }
 
-                            if (i_loop>=DataConstant.MAX_LOOP)
-                            {
-                                finish = true;
-                            }
-
-                            i_loop ++;
+                        i_loop ++;
                           
                     }
                 }
