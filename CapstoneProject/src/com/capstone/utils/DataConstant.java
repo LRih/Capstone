@@ -30,7 +30,7 @@ public class DataConstant
 	public static final int MAX_COORDINATE = 100;
 	
 	//Max loop number for recalculate central point
-	public static final int MAX_LOOP = 502;
+	public static final int MAX_LOOP = 50;
 	
 	
 	

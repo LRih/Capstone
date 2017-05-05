@@ -49,6 +49,7 @@ public class MainDanielClass {
         Map<Date, List<StockPoint>> _datestocks;
         Map<Date, List<ClusterGroup>> _groups;
         int k = 7;
+        int jDays = 30;
         
         // Pre-Process the data to normalize it.
         //new DataPreprocessService().preprocess();
@@ -82,9 +83,10 @@ public class MainDanielClass {
         
         
         // Jaccard Index
-        Jaccard jaccard = new Jaccard(_datestocks, _groups, 3);
+        Jaccard jaccard = new Jaccard(_datestocks, _groups, jDays);
         jaccard.calculate();
-        
+        _datestocks = jaccard.getStocks();
+            //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
         // Load data into system
         //testStock = dataImport.importNormalizedData("normalized.csv");
         
@@ -141,6 +143,14 @@ public class MainDanielClass {
             
         }
         
+        // jaccard index anomalies
+        anomalies = jaccard.findAnomalies();
+        for (StockPoint stockPoint : anomalies)
+        {
+            _anomalies.addAnomaly(Anomalies.Type.Jaccard, stockPoint);
+        }
+        jaccard.outputToDebugFile("output.jaccard.debug.csv");
+        
         
         
         // Outputs to file
@@ -151,15 +161,6 @@ public class MainDanielClass {
         data.setSearchFolder(".\\searchData");
         SearchStocks searchStocks = data.importData();
         
-        /*for (String key : _anomalies.getKeySet())
-        {
-            List<StockPoint> list = _anomalies.getStockList(key); 
-            for (StockPoint stock : list)
-            {
-                searchStocks.getAnomaliesSearchResults(stock.getStockSymbol(), 
-                        stock.getListedDate());
-            }
-        }*/
         
         SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"), _stocks);
         outputCSV.outputToFile(searchStocks, _anomalies);

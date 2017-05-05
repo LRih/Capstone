@@ -31,6 +31,7 @@ public class SearchDanielClass {
         Map<Date, List<StockPoint>> _stocks;
         Map<Date, List<ClusterGroup>> _groups;
         int k = 7;
+        int jDays = 30;
         
         // Post-Process it so can be used directly.
         SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
@@ -38,6 +39,7 @@ public class SearchDanielClass {
         _stocks = preprocessor.dateMap();
         
         KMeans kMeans = new KMeans(k, _stocks);
+        
         kMeans.clusterGroups();
         kMeans.calculate();
         _stocks = kMeans.getPoints();
@@ -72,14 +74,14 @@ public class SearchDanielClass {
         
         //define Jaccard service
         //Jaccard j = new Jaccard();
-        Jaccard jaccard = new Jaccard(_stocks, _groups, 3);
+        Jaccard jaccard = new Jaccard(_stocks, _groups, jDays);
         jaccard.calculate();
-        
+        _stocks = jaccard.getStocks();
         //Constructing data structure of dayGroupListMap before do anything
         //clusterDS.BuildDataStructure("2016-12-28", "2016-12-31");
 
         //Define a time Window string array
-        String[] timeWindows = new String[] {"2016-12-28","2016-12-29","2016-12-30"};
+        //String[] timeWindows = new String[] {"2016-12-28","2016-12-29","2016-12-30"};
 
         //This is an example about how to get Jaccard Index coefficient:
         //Get a stock(Symbol is GHK) point in specific time window 
