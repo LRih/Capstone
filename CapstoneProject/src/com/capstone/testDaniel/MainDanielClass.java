@@ -49,7 +49,7 @@ public class MainDanielClass {
         Map<Date, List<StockPoint>> _datestocks;
         Map<Date, List<ClusterGroup>> _groups;
         int k = 7;
-        int jDays = 30;
+        int jDays = 365;
         
         // Pre-Process the data to normalize it.
         //new DataPreprocessService().preprocess();

@@ -212,44 +212,11 @@ public class Jaccard
             }
         }
         System.out.println("Anomalies (Jaccard): " + anomalies.size());
-        /*
         
-        
-        for (int i = 0; i < stock.getStockElements(); i++)
-        {
-            if(stock.getStockElement(i).getVolume() > (meanVolume + anomalyThreasholdVolume) || 
-                    stock.getStockElement(i).getVolume() < (meanVolume - anomalyThreasholdVolume))
-            {
-                //System.out.println("Anomaly (Volume): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getVolume());
-                anomalies.add(stock.getStockElement(i));
-                
-            }
-            else if(stock.getStockElement(i).getRateOfReturn() > (meanRateOfReturn + anomalyThreasholdRateOfReturn) || 
-                    stock.getStockElement(i).getRateOfReturn() < (meanRateOfReturn - anomalyThreasholdRateOfReturn))
-            {
-                //System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
-                anomalies.add(stock.getStockElement(i));
-                
-            }
-        }*/
         
         return anomalies;
     } 
     
-    /*private void calculateStandardDeviations ()
-    {
-        int elements = 0;
-        for(Date dateKey : _stocks.keySet())
-        {
-            for(StockPoint stock : _stocks.get(dateKey))
-            {
-                elements++;
-            }
-            //elements += _stocks.get(dateKey).size();
-        }
-        //this.stdJaccard = Math.sqrt(Math.pow((varSumJaccard - meanJaccard), 2.0) / elements);
-        
-    }*/
      
     
     private void calculateAnomalyThreasholds ()
