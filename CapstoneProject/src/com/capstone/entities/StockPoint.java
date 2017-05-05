@@ -356,10 +356,12 @@ public class StockPoint
 	 */
 	public static double distance(StockPoint p1, StockPoint p2)
 	{
-		double retValue = Math.sqrt(Math.pow((p2.getVolume() - p1.getVolume()), 2)
-				+ Math.pow((p2.getRateOfReturn() - p1.getRateOfReturn()), 2));
-		BigDecimal bg = new BigDecimal(retValue).setScale(2, RoundingMode.UP);
-		return bg.doubleValue();
+		//double retValue = Math.sqrt(Math.pow((p2.getVolume() - p1.getVolume()), 2)
+		//		+ Math.pow((p2.getRateOfReturn() - p1.getRateOfReturn()), 2));
+		//BigDecimal bg = new BigDecimal(retValue).setScale(2, RoundingMode.UP);
+		//return bg.doubleValue();
+                
+                return (double) Math.sqrt(Math.pow((p2.getVolume() - p1.getVolume()), 2) + Math.pow((p2.getRateOfReturn() - p1.getRateOfReturn()), 2));
 	}
 
 	/**
@@ -371,11 +373,12 @@ public class StockPoint
 	public static StockPoint createRandomPoint(int min, int max)
 	{
 		Random r = new Random();
-		double x = min + (max - min) * r.nextDouble();
-		double y = min + (max - min) * r.nextDouble();
-		BigDecimal bgx = new BigDecimal(x).setScale(2, RoundingMode.UP);
-		BigDecimal bgy = new BigDecimal(y).setScale(2, RoundingMode.UP);
-		return new StockPoint(bgx.doubleValue(), bgy.doubleValue());
+		//double x = min + (max - min) * r.nextDouble();
+		//double y = min + (max - min) * r.nextDouble();
+		//BigDecimal bgx = new BigDecimal(x).setScale(2, RoundingMode.UP);
+		//BigDecimal bgy = new BigDecimal(y).setScale(2, RoundingMode.UP);
+		//return new StockPoint(bgx.doubleValue(), bgy.doubleValue());
+                return new StockPoint(min + (max - min) * r.nextDouble(), min + (max - min) * r.nextDouble());
 	}
 
 	/**

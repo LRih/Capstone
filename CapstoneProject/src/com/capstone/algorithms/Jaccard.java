@@ -134,13 +134,15 @@ public class Jaccard
     public void calculate()
     {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
+        int dayComplete = 0;
+        
         // ensure that days is above 0
         if(days > 0)
         {
             // Loops for all data known
             for (Date dateKey : _stocks.keySet()) 
             {
+                    System.out.println(dateKey + "(" + dayComplete++ + "/" + _stocks.size() + ")");
                 //groups = _groups.get(dateKey);
                 for (StockPoint stock : _stocks.get(dateKey))
                 {
@@ -193,20 +195,23 @@ public class Jaccard
         System.out.printf("StdDev: %.4f \n", stdJaccard);
         System.out.println("Jaccard Anomaly Levels: " + anomalyCoeffientJaccard + "," + anomalyThreasholdJaccard);
         //System.out.println("Rate of Return Anomaly Levels: " + anomalyCoeffientRateOfReturn + "," + anomalyThreasholdRateOfReturn);
-        
+        System.out.println((meanJaccard + anomalyThreasholdJaccard) + " " + (meanJaccard - anomalyThreasholdJaccard));
         for (Date dateKey : _stocks.keySet())
         {
             for (StockPoint stock : _stocks.get(dateKey))
             {
-                if(stock.getJIndex() > (meanJaccard + anomalyThreasholdJaccard) || 
-                    stock.getJIndex() < (meanJaccard - anomalyThreasholdJaccard))
+                
+                //double stockJVar = (stock.getJIndex() - meanJaccard);
+                if((stock.getJIndex() > (meanJaccard + anomalyThreasholdJaccard)) || 
+                    (stock.getJIndex() < (meanJaccard - anomalyThreasholdJaccard)))
                 {
                     //System.out.println("Anomaly (RateOfReturn): " + stock.getStockElement(i).getListedDate() + " - " + stock.getStockElement(i).getRateOfReturn());
                     anomalies.add(stock);
-                    System.out.println("Anomaly (" + dateKey + ")(" + stock.getStockSymbol() + ")" + stock.getJIndex());
+                    //System.out.println("Anomaly (" + dateKey + ")(" + stock.getStockSymbol() + ")" + stock.getJIndex());
                 }
             }
         }
+        System.out.println("Anomalies (Jaccard): " + anomalies.size());
         /*
         
         
@@ -231,7 +236,7 @@ public class Jaccard
         return anomalies;
     } 
     
-    private void calculateStandardDeviations ()
+    /*private void calculateStandardDeviations ()
     {
         int elements = 0;
         for(Date dateKey : _stocks.keySet())
@@ -242,9 +247,9 @@ public class Jaccard
             }
             //elements += _stocks.get(dateKey).size();
         }
-        this.stdJaccard = Math.sqrt(Math.pow((varSumJaccard - meanJaccard), 2.0) / elements);
+        //this.stdJaccard = Math.sqrt(Math.pow((varSumJaccard - meanJaccard), 2.0) / elements);
         
-    }
+    }*/
      
     
     private void calculateAnomalyThreasholds ()
@@ -272,9 +277,10 @@ public class Jaccard
         meanJaccard = meanJaccard / elements;
     }
     
-    private void calculateVariences ()
+    /*private void calculateVariences ()
     {
         double jaccard;
+        int elements = 0;
         
         varSumJaccard = 0.0;
         
@@ -282,16 +288,44 @@ public class Jaccard
         {
             for (StockPoint stock : _stocks.get(dateKey))
             {
+                elements++;
                 varSumJaccard += stock.getJIndex();
                 
-                jaccard = (stock.getJIndex() - meanJaccard);
+                // varience
+                jaccard = (stock.getJIndex()- meanJaccard);
                 this.varJaccard.add(jaccard);
-                this.varSumJaccard += jaccard * jaccard;
+                this.varSumJaccard += jaccard * jaccard;    
             }
         }
         
-        varSumJaccard = Math.sqrt(varSumJaccard);
+        varSumJaccard = Math.sqrt(varSumJaccard) / elements;
+        this.stdJaccard = Math.sqrt(Math.pow((varSumJaccard - meanJaccard), 2.0) / elements);
+        //this.stdJaccard = Math.sqrt(varSumJaccard / elements);
+    }*/
+    
+    private void calculateStandardDeviations()
+    {
+        stdJaccard = Math.sqrt(varSumJaccard);
+
+        
     }
+    
+    private void calculateVariences()
+    {
+        double variance = 0;
+        int elements = 0;
+        
+        for (Date dateKey : _stocks.keySet())
+        {
+            for (StockPoint stock : _stocks.get(dateKey))
+            {
+                elements++;
+                variance += Math.pow(stock.getJIndex() - meanJaccard, 2);
+            }
+        }
+
+        varSumJaccard =  variance / (elements - 1);
+    }  
     
     public double coefficient(StockPoint arg_sp, String[] timeWindows)
     {
@@ -376,13 +410,13 @@ public class Jaccard
         {
             
             bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
-            bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,jaccardIndex,varienceJaccard");
+            bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,jaccardIndex,clusterID");
             bufferedWriter.newLine();
             for (Date dateKey : _stocks.keySet())
             {
                 for (StockPoint stock : _stocks.get(dateKey))
                 {
-                    bufferedWriter.write(stock.toString() + "," + stock.getJIndex());
+                    bufferedWriter.write(stock.toString() + "," + stock.getJIndex() + "," + stock.getpGroup_number());
                         //varJaccard.get(i) + "," /*+ stock.getStockElement(i).getRateOfReturn()*/);
                     bufferedWriter.newLine();
                 }

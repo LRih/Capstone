@@ -210,7 +210,12 @@ public class KMeans
                             ClusterGroup cg = _groups.get(dateKey).get(i);
                             StockPoint point_new = cg.getCentroid();
                             StockPoint point_old = oldCentroids.get(i);
-                            if (StockPoint.distance(point_new, point_old) != 0)
+                            //if (StockPoint.distance(point_new, point_old) != 0)
+                            if (point_new.getNormalizedDeltaClose() != point_old.getNormalizedDeltaClose() || 
+                                    point_new.getVolume() != point_old.getVolume())
+                            
+                            //if (StockPoint.distance(point_new, point_old) != 0)
+                            
                             {
                                 finish = false;
                                 break;
@@ -223,7 +228,7 @@ public class KMeans
                     }
 
                     i_loop ++;
-                    System.out.println("Loop Number: " + i_loop);
+                    //System.out.println("Loop Number: " + i_loop);
 
                 }
             }
