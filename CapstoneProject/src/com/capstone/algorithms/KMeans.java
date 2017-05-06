@@ -1,315 +1,133 @@
-/***********************************************************************
- * Semester 1 2017 
- * COSC2408_1710 (Programming Project 1)
- * Full Name        : Kaizhi.Zhuang
- * Student Number   : s3535252
- * Course Code      : COSC2408
- * Create Date      : March 2017
- * This class implements the K-Means algrithim
- * This is provided by Kaizhi.Zhuang 
- **********************************************************************/
-
 package com.capstone.algorithms;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-//import com.capstone.dataService.DataService;
-import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 import com.capstone.entities.ClusterGroup;
 import com.capstone.entities.StockPoint;
-import com.capstone.utils.DataConstant;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Date;
+import com.capstone.utils.MathUtils;
 
-/**
- * @author Jason.Zhuang
- * @studentId s3535252
- * Mar 25, 2017
- * KMeans.java
- * Describe: This class implements the K-Means algorithm
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class KMeans
 {
-    /**
-     * The number of clusters
-     */
-    private int k;
+    private final int _k;
 
-    // Deprecate once completed
-    private List<StockPoint> points;
-    private List<ClusterGroup> groups;
+    private List<StockPoint> _data;
+    private List<ClusterGroup> _clusters = new ArrayList<ClusterGroup>();
 
-    private Map<Date, List<StockPoint>> _stocks;
-    private Map<Date, List<ClusterGroup>> _groups;
 
-    public KMeans ()
+    public KMeans(int k)
     {
-        // Deprecate once completed
-        this.points = new ArrayList<StockPoint>();
-        this.groups = new ArrayList<ClusterGroup>();
+        if (k <= 0)
+            throw new RuntimeException("k must be greater than 0");
 
-        this._stocks = new HashMap<Date, List<StockPoint>>();
-        this._groups = new HashMap<Date, List<ClusterGroup>>();
-
-        this.k = 1;
+        _k = k;
     }
 
-    public KMeans (int k)
-    {
-        // Deprecate once completed
-        this.points = new ArrayList<StockPoint>();
-        this.groups = new ArrayList<ClusterGroup>();
 
-        this._stocks = new HashMap<Date, List<StockPoint>>();
-        this._groups = new HashMap<Date, List<ClusterGroup>>();
-        this.k = k;
+    public final void clusterize(List<StockPoint> data)
+    {
+        clusterize(data, false);
     }
-
-    public KMeans (int k, Map<Date, List<StockPoint>> stocks)
+    public final void clusterize(List<StockPoint> data, boolean keepOldCenters)
     {
-        // Deprecate once completed
-        this.points = new ArrayList<StockPoint>();
-        this.groups = new ArrayList<ClusterGroup>();
+        _data = data;
 
-        this._stocks = stocks;
-        this._groups = new HashMap<Date, List<ClusterGroup>>();
-        this.k = k;
-    }
+        if (!keepOldCenters || _clusters.isEmpty())
+            initClusters();
 
-    public void clusterGroups ()
-    {
-        /**
-         * Clusters each day based off Kaizhi code. Re-written to work with the dataset by
-         * Richard.
-         */
-        
-        Date startDate = new Date();
-        Date endDate = new Date();
-        for (Date dateKey : _stocks.keySet())
+        do
         {
-            if(dateKey.before(startDate))
-            {
-                startDate = dateKey;
-            }
-            
-            if(dateKey.after(endDate))
-            {
-                endDate = dateKey;
-            }
-        }
-        
-        System.out.println("Start Date: " + startDate + ", End Date: " + endDate);
-        
-        //for (date)
-        for (Date dateKey : _stocks.keySet()) 
+            for (ClusterGroup cluster : _clusters)
+                cluster.data.clear();
+
+            for (StockPoint pt : _data)
+                assignPointToNearestCluster(pt);
+
+        } while (updateClusters()); // centers changed
+    }
+    public final void clusterize(List<StockPoint> data, List<ClusterGroup> centers)
+    {
+        _data = data;
+
+        if (centers != null)
+            _clusters = centers;
+        else
+            initClusters();
+
+        do
         {
-            for (StockPoint stock : _stocks.get(dateKey))
-            {
-                if(!_groups.containsKey(dateKey))
-                    _groups.put(dateKey, new ArrayList<ClusterGroup>());
+            for (ClusterGroup cluster : _clusters)
+                cluster.data.clear();
 
-                //groups = new ArrayList<ClusterGroup>();
+            for (StockPoint pt : _data)
+                assignPointToNearestCluster(pt);
 
-                for (int i = 0; i < k; i++)
-                {
-                    ClusterGroup group = new ClusterGroup(i);
+        } while (updateClusters()); // centers changed
+    }
 
-                    // initialise the central point for every group
-                    StockPoint centroid = StockPoint.createRandomPoint(DataConstant.MIN_COORDINATE,DataConstant.MAX_COORDINATE);
+    private void initClusters()
+    {
+        _clusters.clear();
 
-                    centroid.setpGroup_number(i);
-                    group.setCentroid(centroid);
-
-                    group.setPoints(new ArrayList<StockPoint>());
-
-                    _groups.get(dateKey).add(group);
-                }
-            }
+        for (int i = 0; i < _k; i++)
+        {
+            ClusterGroup cluster = new ClusterGroup(MathUtils.rand(0, 1), MathUtils.rand(0, 1));
+            _clusters.add(cluster);
         }
     }
 
-    public void calculate()
+    private void assignPointToNearestCluster(StockPoint pt)
     {
-        /**
-         * The process to calculate the K Means, with iterating method.
-         **/
+        int closestCenterIndex = getClosestClusterIndex(pt.getX(), pt.getY());
 
-        int dayCompleted = 0;
-        boolean finish = false;
-        double distance_mini = 0;
-        double distance_temp = 0;
-        double x,y;
-        int i_loop = 0;
-
-        ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
-
-        for (Date dateKey : _groups.keySet()) 
-        {
-            groups = _groups.get(dateKey);
-            points = _stocks.get(dateKey);
-
-            // Debug Output
-            System.out.println(dateKey + "(" + dayCompleted + "/" + _groups.size() + ")(Loops:" + i_loop + ")");
-            //for (ClusterGroup groups : _groups.get(dateKey))
-            {
-                finish = false;
-                distance_mini = 0;
-                distance_temp = 0;
-                i_loop = 0;
-
-                //ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
-
-                while (!finish)
-                {
-                    for (int i = 0; i < k; i++)
-                    {
-                        _groups.get(dateKey).get(i).getPoints().clear();
-                    }
-
-                    for (StockPoint stock : _stocks.get(dateKey))
-                    {
-                        distance_mini = StockPoint.distance(stock, _groups.get(dateKey).get(0).getCentroid());
-                        stock.setpGroup_number(0);
-                        for (ClusterGroup group : _groups.get(dateKey))
-                        {
-                            distance_temp = StockPoint.distance(stock, group.getCentroid());
-
-                            if (distance_temp < distance_mini)
-                            {
-                                    stock.setpGroup_number(group.getId());
-                                    distance_mini = distance_temp;
-                            }
-                        }
-                        _groups.get(dateKey).get(stock.getpGroup_number()).addPoint(stock);
-                    }
-
-                    oldCentroids.clear();
-                    for (ClusterGroup cg : _groups.get(dateKey))
-                    {
-                        x = cg.getCentroid().getRateOfReturn();
-                        y = cg.getCentroid().getVolume();
-                        StockPoint old_central = new StockPoint(x, y);
-                        oldCentroids.add(old_central);
-
-                    }
-
-
-                    // calculate new central points
-                    groups = calculateNewCentroids(_groups.get(dateKey));
-
-                    // compare all central point
-                    finish = true;
-                    for (int i = 0; i < k; i++)
-                    {
-                            ClusterGroup cg = _groups.get(dateKey).get(i);
-                            StockPoint point_new = cg.getCentroid();
-                            StockPoint point_old = oldCentroids.get(i);
-                            //if (StockPoint.distance(point_new, point_old) != 0)
-                            if (point_new.getNormalizedDeltaClose() != point_old.getNormalizedDeltaClose() || 
-                                    point_new.getVolume() != point_old.getVolume())
-                            
-                            //if (StockPoint.distance(point_new, point_old) != 0)
-                            
-                            {
-                                finish = false;
-                                break;
-                            }
-                    }
-
-                    if (i_loop>=DataConstant.MAX_LOOP)
-                    {
-                        finish = true;
-                    }
-
-                    i_loop ++;
-                    //System.out.println("Loop Number: " + i_loop);
-
-                }
-            }
-            dayCompleted++;
-
-        }
+        pt.setCluster(closestCenterIndex);
+        _clusters.get(closestCenterIndex).data.put(pt.getStockSymbol(), pt);
     }
 
-    /**
-     * reCalculate a new Centroid
-     */
-    private List<ClusterGroup> calculateNewCentroids(List<ClusterGroup> groups)
+    private boolean updateClusters()
     {
-        for(ClusterGroup g : groups)
+        boolean centersChanged = false;
+
+        for (ClusterGroup cluster : _clusters)
+            if (cluster.updateCenter())
+                centersChanged = true;
+
+        return centersChanged;
+    }
+
+    private int getClosestClusterIndex(double x, double y)
+    {
+        double closestDist = 0;
+        int closestCenterIndex = -1;
+
+        for (int i = 0; i < _clusters.size(); i++)
         {
-            double sumX = 0;
-            double sumY = 0;
-            List<StockPoint> list = g.getPoints();
-            int num_points = list.size();
+            double dist = Math.pow(x - _clusters.get(i).centerX, 2) + Math.pow(y - _clusters.get(i).centerY, 2);
 
-            for (StockPoint point : list)
+            // assign first checked center as closest
+            // otherwise check if new center is closer, update best distance if so
+            if (closestCenterIndex == -1 || dist < closestDist)
             {
-                    sumX += point.getRateOfReturn();
-                    sumY += point.getVolume();
-            }
-
-            StockPoint centroid = g.getCentroid();
-            if (num_points > 0)
-            {
-                    centroid.setRateOfReturn(sumX / num_points);
-                    centroid.setVolume(sumY / num_points);
-                    //double newX = sumX / num_points;
-                    //double newY = sumY / num_points;
-                    //centroid.setRateOfReturn(sumX / num_points);
-                    //centroid.setVolume(sumY / num_points);
-                    //BigDecimal bgX = new BigDecimal(newX).setScale(2, RoundingMode.UP);
-                    //BigDecimal bgY = new BigDecimal(newY).setScale(2, RoundingMode.UP);
-                    //centroid.setRateOfReturn(bgX.doubleValue());
-                    //centroid.setVolume(bgY.doubleValue());
+                closestDist = dist;
+                closestCenterIndex = i;
             }
         }
 
-        return groups;
+        return closestCenterIndex;
     }
 
-    /**
-     * display the detail of a cluster group
-     * @param cg
-     */
-    public void plotClusterGroup(ClusterGroup cg) 
+
+    public final int k()
     {
-            System.out.print("[ClusterGroupNo: " + cg.getId()+"]");
-            System.out.println("[Centroid: X=" + cg.getCentroid().getRateOfReturn()+",Y="+cg.getCentroid().getVolume() + "]");
+        return _k;
     }
 
-    // Old
-    /*public List<StockPoint> getPoints()
+    public final List<StockPoint> data()
     {
-            return points;
+        return _data;
     }
-
-    public List<ClusterGroup> getGroups()
+    public final List<ClusterGroup> clusters()
     {
-            return groups;
-    }*/
-
-    public Map<Date, List<StockPoint>> getPoints()
-    {
-            return _stocks;
-    }
-
-    public Map<Date,List<ClusterGroup>> getGroups()
-    {
-            return _groups;
-    }
-        
-    private Date modifiedDate (Date date, int days)
-    {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days);
-        return cal.getTime();
+        return _clusters;
     }
 }

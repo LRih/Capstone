@@ -5,19 +5,16 @@
  */
 package com.capstone.testDaniel;
 
-import com.capstone.algorithms.Jaccard;
+import com.capstone.algorithms.JI;
 import com.capstone.algorithms.KMeans;
 import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 import com.capstone.entities.Anomalies;
-import com.capstone.entities.SearchStocks;
 import com.capstone.entities.StockPoint;
-import com.capstone.utils.SearchDataImport;
 import com.capstone.entities.ClusterGroup;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
-import java.util.HashMap;
 /**
  *
  * @author Shadow
@@ -29,21 +26,12 @@ public class SearchDanielClass {
     public static void main(String[] args) 
     {
         Map<Date, List<StockPoint>> _stocks;
-        Map<Date, List<ClusterGroup>> _groups;
-        int k = 7;
-        int jDays = 30;
-        
+        int k = 4;
+
         // Post-Process it so can be used directly.
         SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
         preprocessor.preprocess();
         _stocks = preprocessor.dateMap();
-        
-        KMeans kMeans = new KMeans(k, _stocks);
-        
-        kMeans.clusterGroups();
-        kMeans.calculate();
-        _stocks = kMeans.getPoints();
-        _groups = kMeans.getGroups();
         
         for ( Date dateKey : _stocks.keySet() ) 
         {
@@ -65,7 +53,6 @@ public class SearchDanielClass {
         
         // StockPoints of anomalies.
         // Needs a re-work to allow different stock items. ********************
-        LinkedList<StockPoint> anomalies;
         
         Anomalies _anomalies = new Anomalies();
         _anomalies.addAnomalyType(Anomalies.Type.Jaccard);
@@ -74,9 +61,8 @@ public class SearchDanielClass {
         
         //define Jaccard service
         //Jaccard j = new Jaccard();
-        Jaccard jaccard = new Jaccard(_stocks, _groups, jDays);
-        jaccard.calculate();
-        _stocks = jaccard.getStocks();
+        JI jaccard = new JI(k);
+        jaccard.calculate(preprocessor);
         //Constructing data structure of dayGroupListMap before do anything
         //clusterDS.BuildDataStructure("2016-12-28", "2016-12-31");
 

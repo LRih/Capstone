@@ -1,11 +1,11 @@
 package com.capstone.testrichard;
 
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -21,7 +21,7 @@ import com.capstone.entities.StockPoint;
 public class CPanel extends JPanel
 {
     private static final int MIN_COORDINATE = 0;
-    private static final int MAX_COORDINATE = 100;
+    private static final int MAX_COORDINATE = 1;
 
     private static final int DOT_RADIUS = 5;
     private static final int CENTER_WIDTH = 3;
@@ -40,7 +40,7 @@ public class CPanel extends JPanel
         new Color(121, 85, 72),
     };
 
-    private KMeans _clusterer;
+    private List<ClusterGroup> _clusters;
 
 
     public CPanel()
@@ -53,7 +53,7 @@ public class CPanel extends JPanel
     {
         super.paintComponent(graphics);
 
-        if (_clusterer == null)
+        if (_clusters == null)
             return;
 
         Graphics2D g = (Graphics2D)graphics;
@@ -65,15 +65,15 @@ public class CPanel extends JPanel
 
     private void drawData(Graphics2D g)
     {
-        for (int i = 0; i < _clusterer.getGroups().size(); i++)
+        for (int i = 0; i < _clusters.size(); i++)
         {
-            ClusterGroup cluster = _clusterer.getGroups().get(i);
+            ClusterGroup cluster = _clusters.get(i);
             g.setColor(COLORS[i]);
 
-            for (StockPoint s : cluster.getPoints())
+            for (StockPoint s : cluster.data.values())
             {
-                int x = (int)(s.getRateOfReturn() / (float)MAX_COORDINATE * getWidth()) - DOT_RADIUS;
-                int y = (int)(s.getVolume() / (float)MAX_COORDINATE * getHeight()) - DOT_RADIUS;
+                int x = (int)(s.getX() / (float)MAX_COORDINATE * getWidth()) - DOT_RADIUS;
+                int y = (int)(s.getY() / (float)MAX_COORDINATE * getHeight()) - DOT_RADIUS;
 
                 g.fillOval(x, y, DOT_RADIUS * 2, DOT_RADIUS * 2);
             }
@@ -84,13 +84,13 @@ public class CPanel extends JPanel
     {
         g.setStroke(new BasicStroke(CENTER_WIDTH));
 
-        for (int i = 0; i < _clusterer.getGroups().size(); i++)
+        for (int i = 0; i < _clusters.size(); i++)
         {
-            ClusterGroup cluster = _clusterer.getGroups().get(i);
+            ClusterGroup cluster = _clusters.get(i);
             g.setColor(COLORS[i]);
 
-            int x = (int)(cluster.getCentroid().getRateOfReturn() / (float)MAX_COORDINATE * getWidth());
-            int y = (int)(cluster.getCentroid().getVolume() / (float)MAX_COORDINATE * getHeight());
+            int x = (int)(cluster.centerX / (float)MAX_COORDINATE * getWidth());
+            int y = (int)(cluster.centerY / (float)MAX_COORDINATE * getHeight());
 
             g.drawLine(x - DOT_RADIUS, y - DOT_RADIUS, x + DOT_RADIUS, y + DOT_RADIUS);
             g.drawLine(x + DOT_RADIUS, y - DOT_RADIUS, x - DOT_RADIUS, y + DOT_RADIUS);
@@ -102,11 +102,11 @@ public class CPanel extends JPanel
         g.setStroke(new BasicStroke(HULL_WIDTH));
         g.setColor(Color.BLACK);
 
-        for (int i = 0; i < _clusterer.getGroups().size(); i++)
+        for (int i = 0; i < _clusters.size(); i++)
         {
-            ClusterGroup cluster = _clusterer.getGroups().get(i);
+            ClusterGroup cluster = _clusters.get(i);
 
-            List<StockPoint> hull = new QuickHull().getHull(cluster.getPoints());
+            List<StockPoint> hull = new QuickHull().getHull(new ArrayList<StockPoint>(cluster.data.values()));
 
             if (hull.isEmpty())
                 continue;
@@ -114,15 +114,15 @@ public class CPanel extends JPanel
             Path2D path = new Path2D.Double();
 
             StockPoint s0 = hull.get(0);
-            int x0 = (int)(s0.getRateOfReturn() / (float)MAX_COORDINATE * getWidth());
-            int y0 = (int)(s0.getVolume() / (float)MAX_COORDINATE * getHeight());
+            int x0 = (int)(s0.getX() / (float)MAX_COORDINATE * getWidth());
+            int y0 = (int)(s0.getY() / (float)MAX_COORDINATE * getHeight());
             path.moveTo(x0, y0);
 
             for (int j = 1; j < hull.size(); j++)
             {
                 StockPoint s = hull.get(j);
-                int x = (int)(s.getRateOfReturn() / (float)MAX_COORDINATE * getWidth());
-                int y = (int)(s.getVolume() / (float)MAX_COORDINATE * getHeight());
+                int x = (int)(s.getX() / (float)MAX_COORDINATE * getWidth());
+                int y = (int)(s.getY() / (float)MAX_COORDINATE * getHeight());
                 path.lineTo(x, y);
             }
 
@@ -134,7 +134,12 @@ public class CPanel extends JPanel
 
     public void setClusterer(KMeans clusterer)
     {
-        _clusterer = clusterer;
+        _clusters = clusterer.clusters();
+        repaint();
+    }
+    public void setClusterer(List<ClusterGroup> clusters)
+    {
+        _clusters = clusters;
         repaint();
     }
 }

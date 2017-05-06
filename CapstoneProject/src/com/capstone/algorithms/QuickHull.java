@@ -109,7 +109,7 @@ public final class QuickHull
         StockPoint min = null;
 
         for (StockPoint pt : pts)
-            if (min == null || pt.getRateOfReturn() < min.getRateOfReturn())
+            if (min == null || pt.getX() < min.getX())
                 min = pt;
 
         return min;
@@ -120,7 +120,7 @@ public final class QuickHull
         StockPoint max = null;
 
         for (StockPoint pt : pts)
-            if (max == null || pt.getRateOfReturn() > max.getRateOfReturn())
+            if (max == null || pt.getX() > max.getX())
                 max = pt;
 
         return max;
@@ -132,7 +132,7 @@ public final class QuickHull
      */
     private static boolean isLeftSide(StockPoint linePt1, StockPoint linePt2, StockPoint pt)
     {
-        double val = (linePt2.getRateOfReturn() - linePt1.getRateOfReturn()) * (pt.getVolume() - linePt1.getVolume()) - (linePt2.getVolume() - linePt1.getVolume()) * (pt.getRateOfReturn() - linePt1.getRateOfReturn());
+        double val = (linePt2.getX() - linePt1.getX()) * (pt.getY() - linePt1.getY()) - (linePt2.getY() - linePt1.getY()) * (pt.getX() - linePt1.getX());
         return val > 0;
     }
     
@@ -162,9 +162,9 @@ public final class QuickHull
      */
     private static double getDistance(StockPoint linePt1, StockPoint linePt2, StockPoint pt)
     {
-        double lineX = linePt2.getRateOfReturn() - linePt1.getRateOfReturn();
-        double lineY = linePt2.getVolume() - linePt1.getVolume();
-        double val = lineX * (linePt1.getVolume() - pt.getVolume()) - lineY * (linePt1.getRateOfReturn() - pt.getRateOfReturn());
+        double lineX = linePt2.getX() - linePt1.getX();
+        double lineY = linePt2.getY() - linePt1.getY();
+        double val = lineX * (linePt1.getY() - pt.getY()) - lineY * (linePt1.getX() - pt.getX());
         return Math.abs(val);
     }
 }

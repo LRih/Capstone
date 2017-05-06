@@ -8,10 +8,7 @@ package com.capstone.entities;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 
@@ -29,97 +26,56 @@ public class StockPoint
     protected double priceClose;
     protected double priceHigh;
     protected double priceLow;
-    //Rate of Return (x value) = Highest Transaction - Lowest
-    protected double rateOfReturn;
-    //Volume (y value).
     protected double volume;
-    
     protected double deltaClose;
     protected double normalizedDeltaClose;
     protected double normalizedVolume;
-    private double jIndex;
-    
-    private int    pGroup_number = 0;
-    private int    flag_anomaly=0;
-    
-    public StockPoint()
+    private double jIndex = -1;
+
+    private int cluster = 0;
+
+    /**
+     * @param   listedDate  the string date to be converted into a date-time format and saved.
+     * @param   priceClose  the closing price of the stock.
+     * @param   priceHigh   the highest sold price of the stock.
+     * @param   priceLow    the lowest sold price of the stock.
+     * @param   priceOpen   the opening price of the stock.
+     * @param   stockSymbol the symbol of stock.
+     * @param   volume      the volume of stock sold.
+     */
+    public StockPoint (String listedDate, String stockSymbol, double priceOpen, double priceClose, double priceHigh, double priceLow, double volume)
     {
-        rateOfReturn = 0.0;
-        pGroup_number = 0;
-        flag_anomaly = 0;
-    }
-    
-    public StockPoint (String listedDate, String stockSymbol, double priceOpen, 
-            double priceClose, double priceHigh, double priceLow, long volume)
-    {
-        /**
-         * @param   strDate     the string date to be converted into a date-time format and saved.
-         * @param   priceClose  the closing price of the stock.
-         * @param   priceHigh   the highest sold price of the stock.
-         * @param   priceLow    the lowest sold price of the stock.
-         * @param   priceOpen   the opening price of the stock.
-         * @param   stockSymbol the symbol of stock.
-         * @param   volume      the volume of stock sold.
-         */
-        
         this.setListedDate(listedDate);
         this.stockSymbol = stockSymbol;
         this.priceOpen = priceOpen;
         this.priceClose = priceClose;
         this.priceHigh = priceHigh;
         this.priceLow = priceLow;
-        this.rateOfReturn = priceHigh - priceLow;
         this.volume = volume;
-        this.jIndex = 0.0;
+        this.jIndex = -1;
     }
-    
-    public StockPoint (String listedDate, String stockSymbol, double rateOfReturn, 
-            double volume)
+
+    public double getX()
     {
-        /**
-         * @param   strDate         the string date to be converted into a date-time format and saved.
-         * @param   rateOfReturn    the rate of return pre-calculated.
-         * @param   stockSymbol     the symbol of stock.
-         * @param   volume          the volume of stock sold.
-         */
-        
-        this.setListedDate(listedDate);
-        this.stockSymbol = stockSymbol;
-        this.rateOfReturn = rateOfReturn;
-        this.volume = volume;
+        return getNormalizedDeltaClose();
     }
-    
-    /**
-     * this is for test,which just create random points
-     * @param rateOfReturn
-     * @param volume
-     */
-    public StockPoint (double rateOfReturn, double volume)
+    public double getY()
     {
-    	 this.rateOfReturn = rateOfReturn;
-         this.volume = volume;
+        return getNormalizedVolume();
     }
-    
-    public void calculateRateOfReturn()
+
+
+    public Date getListedDate ()
     {
-        this.rateOfReturn = priceHigh - priceLow;
-        //System.out.println("asdas");
+        return listedDate;
     }
-    
+
     public double getDeltaClose()
     {
         /** 
          * @return the delta closing price of the stock.
          */
         return deltaClose;
-    }
-    
-    public double getJIndex ()
-    {
-        /**
-         * @return  the jaccard index of the stock that has been calculated;
-         */
-        return jIndex;
     }
     
     public double getNormalizedDeltaClose()
@@ -175,7 +131,7 @@ public class StockPoint
         /** 
          * @return the volume of stock sold.
          */
-        return rateOfReturn;
+        return priceHigh - priceLow;
     }
     
     public String getStockSymbol()
@@ -193,7 +149,13 @@ public class StockPoint
          */
         return volume;
     }
-    
+
+    public double getJIndex()
+    {
+        return jIndex;
+    }
+
+
     public boolean setListedDate (String strDate)
     {
         strDate = strDate.split(" ")[0]; // remove time
@@ -223,16 +185,6 @@ public class StockPoint
          */
         this.deltaClose = deltaClose;
     }
-    
-    
-    public void setJIndex (double jIndex)
-    {
-        /**
-         * @param   jIndex  sets the Jaccard index
-         */
-        this.jIndex = jIndex;
-    }
-    
     
     public void setNormalizedDeltaClose(double normalizedDeltaClose)
     {
@@ -282,14 +234,6 @@ public class StockPoint
         this.priceOpen = priceOpen;
     }
     
-    public void setRateofReturn(double rateOfReturn)
-    {
-        /** 
-         * @param priceOpen the opening price of the stock.
-         */
-        this.rateOfReturn = rateOfReturn;
-    }
-    
     public void setStockSymbol(String stockSymbol)
     {
         /** 
@@ -305,47 +249,31 @@ public class StockPoint
          */
         this.volume = volume;
     }
-    
+
+    public void setJIndex(double jIndex)
+    {
+        this.jIndex = jIndex;
+    }
+
+
     public String toString ()
     {
-        
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
         return df.format(this.listedDate) + "," + this.stockSymbol + "," + this.priceOpen + 
                 "," + this.priceClose + "," + this.priceLow + "," + this.priceHigh +
-                "," + this.volume + "," + this.rateOfReturn;                
+                "," + this.volume + "," + this.getRateOfReturn();
     }
     
-    //added by Jason
-    public int getpGroup_number()
+    public int getCluster()
 	{
-		return pGroup_number;
+		return cluster;
 	}
 
-	public void setpGroup_number(int pGroup_number)
+	public void setCluster(int cluster)
 	{
-		this.pGroup_number = pGroup_number;
+		this.cluster = cluster;
 	}
-
-	public int getFlag_anomaly()
-	{
-		return flag_anomaly;
-	}
-
-	public void setFlag_anomaly(int flag_anomaly)
-	{
-		this.flag_anomaly = flag_anomaly;
-	}
-
-	public void setRateOfReturn(double rateOfReturn)
-	{
-		this.rateOfReturn = rateOfReturn;
-	}
-
-	public Date getListedDate ()
-    {
-        return listedDate;
-    }
     
     /**
 	 * Calculates the distance between two points.
@@ -356,46 +284,7 @@ public class StockPoint
 	 */
 	public static double distance(StockPoint p1, StockPoint p2)
 	{
-		//double retValue = Math.sqrt(Math.pow((p2.getVolume() - p1.getVolume()), 2)
-		//		+ Math.pow((p2.getRateOfReturn() - p1.getRateOfReturn()), 2));
-		//BigDecimal bg = new BigDecimal(retValue).setScale(2, RoundingMode.UP);
-		//return bg.doubleValue();
-                
-                return (double) Math.sqrt(Math.pow((p2.getVolume() - p1.getVolume()), 2) + Math.pow((p2.getRateOfReturn() - p1.getRateOfReturn()), 2));
-	}
-
-	/**
-	 * Creates random StockPoint
-	 * @param min
-	 * @param max
-	 * @return
-	 */
-	public static StockPoint createRandomPoint(int min, int max)
-	{
-		Random r = new Random();
-		//double x = min + (max - min) * r.nextDouble();
-		//double y = min + (max - min) * r.nextDouble();
-		//BigDecimal bgx = new BigDecimal(x).setScale(2, RoundingMode.UP);
-		//BigDecimal bgy = new BigDecimal(y).setScale(2, RoundingMode.UP);
-		//return new StockPoint(bgx.doubleValue(), bgy.doubleValue());
-                return new StockPoint(min + (max - min) * r.nextDouble(), min + (max - min) * r.nextDouble());
-	}
-
-	/**
-	 * @param min
-	 * @param max
-	 * @param number how many records I want to create
-	 * @return
-	 */
-	public static List<StockPoint> createRandomPoints(int min, int max,
-			int number)
-	{
-		List<StockPoint> points = new ArrayList<StockPoint>(number);
-		for (int i = 0; i < number; i++)
-		{
-			points.add(createRandomPoint(min, max));
-		}
-		return points;
+		return Math.sqrt(Math.pow((p2.getX() - p1.getX()), 2) + Math.pow((p2.getY() - p1.getY()), 2));
 	}
 
 	
@@ -408,4 +297,15 @@ public class StockPoint
 		
 		return false;
 	}
+
+
+    public static final class JaccardIndexComparator implements Comparator<StockPoint>
+    {
+        public final int compare(StockPoint pt1, StockPoint pt2)
+        {
+            if (pt1.jIndex < pt2.jIndex) return -1;
+            else if (pt1.jIndex > pt2.jIndex) return 1;
+            return 0;
+        }
+    }
 }

@@ -8,27 +8,22 @@
  */
 package com.capstone.testDaniel;
 
-import com.capstone.algorithms.Jaccard;
-import com.capstone.algorithms.KMeans;
-import java.util.LinkedList;
+import com.capstone.algorithms.JI;
 
 import com.capstone.entities.Stock;
 import com.capstone.entities.StockPoint;
 
 import com.capstone.algorithms.timeStdDev;
 import com.capstone.algorithms.timeARMA;
-import com.capstone.dataService.LinearSigmoidPreprocessor;
 import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
-import com.capstone.entities.ClusterGroup;
 import com.capstone.entities.SearchStocks;
 
 import com.capstone.utils.SearchDataCSV;
 import com.capstone.utils.SearchDataImport;
 
 import java.io.File;
-import java.util.Date;
 
 import java.util.List;
 import java.util.Map;
@@ -46,11 +41,9 @@ public class MainDanielClass {
     public static void main(String[] args) {
         
         Map<String, List<StockPoint>> _stocks;
-        Map<Date, List<StockPoint>> _datestocks;
-        Map<Date, List<ClusterGroup>> _groups;
-        int k = 7;
-        int jDays = 365;
-        
+        int k = 4;
+        double stdDev = 2;
+
         // Pre-Process the data to normalize it.
         //new DataPreprocessService().preprocess();
         
@@ -61,20 +54,13 @@ public class MainDanielClass {
         
         // load stocks by means... optimize later
         _stocks = preprocessor.nameMap();
-        _datestocks = preprocessor.dateMap();
-        
-        KMeans kMeans = new KMeans(k, _datestocks);
-        kMeans.clusterGroups();
-        kMeans.calculate();
-        _datestocks = kMeans.getPoints();
-        _groups = kMeans.getGroups();
-        
+
         // Initialize the class
         //DataImport dataImport = new DataImport();
         
         // StockPoints of anomalies.
         // Needs a re-work to allow different stock items. ********************
-        LinkedList<StockPoint> anomalies;
+        List<StockPoint> anomalies;
         
         Anomalies _anomalies = new Anomalies();
         _anomalies.addAnomalyType(Anomalies.Type.STDDEV);
@@ -83,9 +69,8 @@ public class MainDanielClass {
         
         
         // Jaccard Index
-        Jaccard jaccard = new Jaccard(_datestocks, _groups, jDays);
-        jaccard.calculate();
-        _datestocks = jaccard.getStocks();
+        JI jaccard = new JI(k);
+        jaccard.calculate(preprocessor);
             //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
         // Load data into system
         //testStock = dataImport.importNormalizedData("normalized.csv");
@@ -144,13 +129,10 @@ public class MainDanielClass {
         }
         
         // jaccard index anomalies
-        anomalies = jaccard.findAnomalies();
+        anomalies = jaccard.getAnomalies(stdDev);
         for (StockPoint stockPoint : anomalies)
-        {
             _anomalies.addAnomaly(Anomalies.Type.Jaccard, stockPoint);
-        }
-        jaccard.outputToDebugFile("output.jaccard.debug.csv");
-        
+
         
         
         // Outputs to file

@@ -87,7 +87,7 @@ public class SigmoidSigmoidPreprocessor
         }
     }
     
-    
+
     public Map<String, List<StockPoint>> nameMap()
     {
         if (_data == null)
@@ -147,17 +147,9 @@ public class SigmoidSigmoidPreprocessor
                     continue;
                 }
 
-                StockPoint stockPoint = new StockPoint();
-
-                // Sets variables
-                stockPoint.setListedDate(split[0]);
-                stockPoint.setStockSymbol(split[1]);
-
-                stockPoint.setPriceOpen(Double.parseDouble(split[2]));
-                stockPoint.setPriceClose(Double.parseDouble(split[3]));
-                stockPoint.setPriceLow(Double.parseDouble(split[4]));
-                stockPoint.setPriceHigh(Double.parseDouble(split[5]));
-                stockPoint.setVolume(Double.parseDouble(split[6]));
+                StockPoint stockPoint = new StockPoint(split[0], split[1],
+                    Double.parseDouble(split[2]), Double.parseDouble(split[3]),
+                    Double.parseDouble(split[5]), Double.parseDouble(split[4]), Double.parseDouble(split[6]));
 
                 _data.add(stockPoint);
             }

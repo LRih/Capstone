@@ -51,10 +51,10 @@ public class KMeansAnomalizer
             // calculate distances to center for each stock point
             for (StockPoint pt : _data.get(date))
             {
-                int cluster = pt.getpGroup_number();
+                int cluster = pt.getCluster();
                 double dist = Math.sqrt(
-                    Math.pow(pt.getNormalizedDeltaClose() - _clusters.get(cluster).centerX, 2) +
-                    Math.pow(pt.getNormalizedVolume() - _clusters.get(cluster).centerY, 2)
+                    Math.pow(pt.getX() - _clusters.get(cluster).centerX, 2) +
+                    Math.pow(pt.getY() - _clusters.get(cluster).centerY, 2)
                 );
 
                 _clusterPts.add(new ClusterPoint(pt, dist));
@@ -88,9 +88,9 @@ public class KMeansAnomalizer
 
     private void assignPointToNearestCluster(StockPoint pt)
     {
-        int closestCenterIndex = getClosestClusterIndex(pt.getNormalizedDeltaClose(), pt.getNormalizedVolume());
+        int closestCenterIndex = getClosestClusterIndex(pt.getX(), pt.getY());
 
-        pt.setpGroup_number(closestCenterIndex);
+        pt.setCluster(closestCenterIndex);
         _clusters.get(closestCenterIndex).data.put(pt.getStockSymbol(), pt);
     }
 
@@ -187,8 +187,8 @@ public class KMeansAnomalizer
 
             for (StockPoint pt : data.values())
             {
-                centerX += pt.getNormalizedDeltaClose();
-                centerY += pt.getNormalizedVolume();
+                centerX += pt.getX();
+                centerY += pt.getY();
             }
 
             centerX = centerX / data.size();
