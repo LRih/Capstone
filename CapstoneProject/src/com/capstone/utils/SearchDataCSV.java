@@ -92,6 +92,7 @@ public class SearchDataCSV extends SearchDataOutput {
         int anomalyTypeHitsSize = anomalies.getKeySet().size();
         long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 1];
         long anomalyTypesCount[] = new long[anomalyTypeHitsSize + 1];
+        long anomalyTypesSearches[] = new long[anomalyTypeHitsSize + 1];
         long anomalyArticles = 0;
         
         // Get list of anomaly Types
@@ -193,7 +194,9 @@ public class SearchDataCSV extends SearchDataOutput {
                         }
                         else
                         {
+                            // Article Counter
                             anomalyArticles++;
+                            
                             // Writes anomaly stock and search data
                             for (SearchItem item : _searchResults)
                             {
@@ -203,6 +206,13 @@ public class SearchDataCSV extends SearchDataOutput {
                                         "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
                                         "\",\"" + item.getURL() + "\"");
                                 bufferedWriter.newLine();
+                            }
+                            
+                            //Adds search results counters
+                            for(String knownAType : anomaliesSorted.anomalyTypes)
+                            {
+                                if(anomalyTypes.contains(knownAType))
+                                    anomalyTypesSearches[anomaliesSorted.anomalyTypes.indexOf(knownAType)]++;
                             }
                         }
                     }
@@ -296,8 +306,21 @@ public class SearchDataCSV extends SearchDataOutput {
                 for (String anomalyType : anomaliesSorted.anomalyTypes)
                 {
                     
-                    bufferedWriter.write("Anomaly Type " + anomalyType + ": " + 
-                            anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)] );
+                    bufferedWriter.write("Anomaly Type - " + anomalyType);
+                    
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(" - Total Anomalies: " + 
+                            anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)]);
+                    
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(" - Anomalies with search result(s): " +
+                            anomalyTypesSearches[anomaliesSorted.anomalyTypes.indexOf(anomalyType)]);
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(" - Percent with search results(s): ");
+                    long typeSearches = anomalyTypesSearches[anomaliesSorted.anomalyTypes.indexOf(anomalyType)];
+                    long typeTotal = anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)];
+                    double searchPercentage = ( (double)typeSearches / (double)typeTotal * 100);
+                    bufferedWriter.write(String.format("%.2f",searchPercentage) + "%");
                     bufferedWriter.newLine();
                 }
                 bufferedWriter.newLine();
