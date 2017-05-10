@@ -119,7 +119,7 @@ public class SearchDataCSV extends SearchDataOutput {
              // Stock Details
             if(parameterSwitch == 'd' || parameterSwitch == 'a' || parameterSwitch == 'p')
             {
-                bufferedWriter.write("priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,");
+                bufferedWriter.write("priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,jaccard,");
             }
             
             // For each type, make a new column
@@ -155,7 +155,8 @@ public class SearchDataCSV extends SearchDataOutput {
                                 stockPoint.getPriceLow() + "," + 
                                 stockPoint.getPriceHigh() + "," + 
                                 stockPoint.getVolume() + "," +
-                                stockPoint.getRateOfReturn() + ",";
+                                stockPoint.getRateOfReturn() + "," +
+                                stockPoint.getJIndex() + ",";
                     }
                     
                     int aHits = 0;
