@@ -90,9 +90,9 @@ public class SearchDataCSV extends SearchDataOutput {
         
         // Statistics to gather
         int anomalyTypeHitsSize = anomalies.getKeySet().size();
-        long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 1];
-        long anomalyTypesCount[] = new long[anomalyTypeHitsSize + 1];
-        long anomalyTypesSearches[] = new long[anomalyTypeHitsSize + 1];
+        long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 2];
+        long anomalyTypesCount[] = new long[anomalyTypeHitsSize + 2];
+        long anomalyTypesSearches[] = new long[anomalyTypeHitsSize + 2];
         long anomalyArticles = 0;
         
         // Get list of anomaly Types
@@ -161,8 +161,14 @@ public class SearchDataCSV extends SearchDataOutput {
                     }
                     
                     int aHits = 0;
+                    if(anomalyTypes.contains("Jaccard") == true && anomalyTypes.size() == 1)
+                    {
+                        anomalyTypesCount[anomalyTypeHitsSize + 1]++;
+                    }
                     for(String knownAType : anomaliesSorted.anomalyTypes)
                     {
+                        
+                        
                         if(anomalyTypes.contains(knownAType))
                         {
                             toOutput = toOutput + "true,";
@@ -194,6 +200,7 @@ public class SearchDataCSV extends SearchDataOutput {
                         }
                         else
                         {
+                            
                             // Article Counter
                             anomalyArticles++;
                             
@@ -206,6 +213,11 @@ public class SearchDataCSV extends SearchDataOutput {
                                         "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
                                         "\",\"" + item.getURL() + "\"");
                                 bufferedWriter.newLine();
+                            }
+                            
+                            if(anomalyTypes.contains("Jaccard") == true && anomalyTypes.size() == 1)
+                            {
+                                anomalyTypesSearches[anomalyTypeHitsSize + 1]++;
                             }
                             
                             //Adds search results counters
@@ -323,6 +335,26 @@ public class SearchDataCSV extends SearchDataOutput {
                     bufferedWriter.write(String.format("%.2f",searchPercentage) + "%");
                     bufferedWriter.newLine();
                 }
+                
+                bufferedWriter.write("Anomaly Type - Jaccard Unique");
+                
+                // Unique Jaccards
+                bufferedWriter.newLine();
+                bufferedWriter.write(" - Total Anomalies: " + 
+                        anomalyTypesCount[anomalyTypeHitsSize + 1]);
+
+                bufferedWriter.newLine();
+                bufferedWriter.write(" - Anomalies with search result(s): " +
+                        anomalyTypesSearches[anomalyTypeHitsSize + 1]);
+                bufferedWriter.newLine();
+                bufferedWriter.write(" - Percent with search results(s): ");
+                long typeSearches = anomalyTypesSearches[anomalyTypeHitsSize + 1];
+                long typeTotal = anomalyTypesCount[anomalyTypeHitsSize + 1];
+                double searchPercentage = ( (double)typeSearches / (double)typeTotal * 100);
+                bufferedWriter.write(String.format("%.2f",searchPercentage) + "%");
+                bufferedWriter.newLine();
+                    
+                    
                 bufferedWriter.newLine();
                 
                 // Summary Data

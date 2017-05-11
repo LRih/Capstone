@@ -98,6 +98,12 @@ public class timeARMA extends timeAlgorithm{
          */
         return qValue;
     }
+   
+    public void setCoEfficents(double coefficent)
+    {
+        this.anomalyCoeffientRateOfReturn = coefficent;
+        this.anomalyCoeffientVolume = coefficent;
+    }
     
     public void setPValue(double pValue)
     {

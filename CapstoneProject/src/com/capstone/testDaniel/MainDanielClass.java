@@ -42,7 +42,7 @@ public class MainDanielClass {
         
         Map<String, List<StockPoint>> _stocks;
         int k = 4;
-        double stdDev = 2;
+        double stdDev = 3;
 
         // Pre-Process the data to normalize it.
         //new DataPreprocessService().preprocess();
@@ -71,6 +71,7 @@ public class MainDanielClass {
         // Jaccard Index
         JI jaccard = new JI(k);
         jaccard.calculate(preprocessor);
+        jaccard.writeToSingleFile();
             //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
         // Load data into system
         //testStock = dataImport.importNormalizedData("normalized.csv");
@@ -100,6 +101,7 @@ public class MainDanielClass {
             //System.out.printf("=========================\n\n");
             
             timeStdDev algorithmStdDev = new timeStdDev(unitStock);
+            algorithmStdDev.setCoEfficents(stdDev);
             anomalies = algorithmStdDev.findAnomalies();
             for (StockPoint stockPoint : anomalies)
             {
@@ -114,6 +116,7 @@ public class MainDanielClass {
             timeARMA algorithmARMA = new timeARMA(unitStock);
             algorithmARMA.setPValue(2);
             algorithmARMA.setQValue(3);
+            algorithmARMA.setCoEfficents(stdDev);
 
             anomalies = algorithmARMA.findAnomalies();
             for (StockPoint stockPoint : anomalies)
