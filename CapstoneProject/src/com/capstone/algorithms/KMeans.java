@@ -1,207 +1,133 @@
-/***********************************************************************
- * Semester 1 2017 
- * COSC2408_1710 (Programming Project 1)
- * Full Name        : Kaizhi.Zhuang
- * Student Number   : s3535252
- * Course Code      : COSC2408
- * Create Date      : March 2017
- * This class implements the K-Means algrithim
- * This is provided by Kaizhi.Zhuang 
- **********************************************************************/
-
 package com.capstone.algorithms;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import com.capstone.dataService.DataService;
 import com.capstone.entities.ClusterGroup;
 import com.capstone.entities.StockPoint;
-import com.capstone.utils.DataConstant;
+import com.capstone.utils.MathUtils;
 
-/**
- * @author Jason.Zhuang
- * @studentId s3535252
- * Mar 25, 2017
- * KMeans.java
- * Describe: This class implements the K-Means algrithim
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class KMeans
 {
-    /**
-     * The number of clusters
-     */
-	private int k;
+    private final int _k;
 
-	/**
-	 *  all stock points
-	 */
-	private List<StockPoint> points = new ArrayList<StockPoint>();
+    private List<StockPoint> _data;
+    private List<ClusterGroup> _clusters = new ArrayList<ClusterGroup>();
 
-	/**
-	 * cluster groups
-	 */
-	private List<ClusterGroup> groups = new ArrayList<ClusterGroup>();
 
-	/**
-	 *  Initializes the process
-	 */
-	public void init(int k,String day)
-	{
-	    this.k = k;
+    public KMeans(int k)
+    {
+        if (k <= 0)
+            throw new RuntimeException("k must be greater than 0");
 
-		// init stock Points
-		points.clear();
-		
-		points = DataService.loadDataByDay(day);
+        _k = k;
+    }
 
-		// init Cluster Group
-		groups.clear();
-		for (int i = 0; i < k; i++)
-		{
-			ClusterGroup group = new ClusterGroup(i);
 
-			// initialise the central point for every group
-			StockPoint centroid = StockPoint.createRandomPoint(DataConstant.MIN_COORDINATE,DataConstant.MAX_COORDINATE);
-			
-			centroid.setpGroup_number(i);
-			
-			group.setCentroid(centroid);
+    public final void clusterize(List<StockPoint> data)
+    {
+        clusterize(data, false);
+    }
+    public final void clusterize(List<StockPoint> data, boolean keepOldCenters)
+    {
+        _data = data;
 
-			group.setPoints(new ArrayList<StockPoint>());
+        if (!keepOldCenters || _clusters.isEmpty())
+            initClusters();
 
-			groups.add(group);
-			
-		}
-	}
+        do
+        {
+            for (ClusterGroup cluster : _clusters)
+                cluster.data.clear();
 
-	/**
-	 * The process to calculate the K Means, with iterating method.
-	 */
-	public void calculate()
-	{
-		boolean finish = false;
-		double distance_mini = 0;
-		double distance_temp = 0;
-		ArrayList<StockPoint> oldCentroids = new ArrayList<StockPoint>();
-		int i_loop = 0;
-		while (!finish)
-		{
-			for (int i = 0; i < k; i++)
-			{
-				groups.get(i).getPoints().clear();
-			}
-			//Iterator all the points
-			for (Iterator<StockPoint> itP = points.iterator(); itP.hasNext();)
-			{
-				StockPoint p = (StockPoint) itP.next();
-				//calculate the distance between p and the first group center point
-				distance_mini = StockPoint.distance(p, groups.get(0).getCentroid());
-				p.setpGroup_number(0);
+            for (StockPoint pt : _data)
+                assignPointToNearestCluster(pt);
 
-				for (Iterator<ClusterGroup> itG = groups.iterator(); itG.hasNext();)
-				{
-					ClusterGroup group = itG.next();
-					distance_temp = StockPoint.distance(p, group.getCentroid());
-					
-					if (distance_temp < distance_mini)
-					{
-						p.setpGroup_number(group.getId());
-						distance_mini = distance_temp;
-					}
-				}
-				groups.get(p.getpGroup_number()).addPoint(p);
-			}
+        } while (updateClusters()); // centers changed
+    }
+    public final void clusterize(List<StockPoint> data, List<ClusterGroup> centers)
+    {
+        _data = data;
 
-			// save old central point
-			oldCentroids.clear();
-			for (Iterator<ClusterGroup> itg = groups.iterator(); itg.hasNext();)
-			{
-				ClusterGroup cg = itg.next();
-				double x,y;
-				x = cg.getCentroid().getRateOfReturn();
-				y = cg.getCentroid().getVolume();
-				StockPoint old_central = new StockPoint(x, y);
-				oldCentroids.add(old_central);
-			}
+        if (centers != null)
+            _clusters = centers;
+        else
+            initClusters();
 
-			// calculate new central points
-			calculateNewCentroids();
+        do
+        {
+            for (ClusterGroup cluster : _clusters)
+                cluster.data.clear();
 
-			// compare all central point
-			finish = true;
-			for (int i = 0; i < k; i++)
-			{
-				ClusterGroup cg = groups.get(i);
-				StockPoint point_new = cg.getCentroid();
-				StockPoint point_old = oldCentroids.get(i);
-				if (StockPoint.distance(point_new, point_old) != 0)
-				{
-					finish = false;
-					break;
-				}
-			}
-			
-			if (i_loop>=DataConstant.MAX_LOOP)
-			{
-				finish = true;
-			}
-			
-			i_loop ++;
-		}
-	}
+            for (StockPoint pt : _data)
+                assignPointToNearestCluster(pt);
 
-	/**
-	 * reCalculate a new Centroid
-	 */
-	private void calculateNewCentroids()
-	{
-		for (ClusterGroup g : groups)
-		{
-			double sumX = 0;
-			double sumY = 0;
-			List<StockPoint> list = g.getPoints();
-			int num_points = list.size();
+        } while (updateClusters()); // centers changed
+    }
 
-			for (StockPoint point : list)
-			{
-				sumX += point.getRateOfReturn();
-				sumY += point.getVolume();
-			}
+    private void initClusters()
+    {
+        _clusters.clear();
 
-			StockPoint centroid = g.getCentroid();
-			if (num_points > 0)
-			{
-				double newX = sumX / num_points;
-				double newY = sumY / num_points;
-				BigDecimal bgX = new BigDecimal(newX).setScale(2, RoundingMode.UP);
-				BigDecimal bgY = new BigDecimal(newY).setScale(2, RoundingMode.UP);
-				centroid.setRateOfReturn(bgX.doubleValue());
-				centroid.setVolume(bgY.doubleValue());
-			}
-		}
-	}
+        for (int i = 0; i < _k; i++)
+        {
+            ClusterGroup cluster = new ClusterGroup(MathUtils.rand(0, 1), MathUtils.rand(0, 1));
+            _clusters.add(cluster);
+        }
+    }
 
-	/**
-	 * display the detail of a cluster group
-	 * @param cg
-	 */
-	public void plotClusterGroup(ClusterGroup cg) 
-	{
-		System.out.print("[ClusterGroupNo: " + cg.getId()+"]");
-		System.out.println("[Centroid: X=" + cg.getCentroid().getRateOfReturn()+",Y="+cg.getCentroid().getVolume() + "]");
-	}
-	
-	public List<StockPoint> getPoints()
-	{
-		return points;
-	}
+    private void assignPointToNearestCluster(StockPoint pt)
+    {
+        int closestCenterIndex = getClosestClusterIndex(pt.getX(), pt.getY());
 
-	public List<ClusterGroup> getGroups()
-	{
-		return groups;
-	}
+        pt.setCluster(closestCenterIndex);
+        _clusters.get(closestCenterIndex).data.put(pt.getStockSymbol(), pt);
+    }
+
+    private boolean updateClusters()
+    {
+        boolean centersChanged = false;
+
+        for (ClusterGroup cluster : _clusters)
+            if (cluster.updateCenter())
+                centersChanged = true;
+
+        return centersChanged;
+    }
+
+    private int getClosestClusterIndex(double x, double y)
+    {
+        double closestDist = 0;
+        int closestCenterIndex = -1;
+
+        for (int i = 0; i < _clusters.size(); i++)
+        {
+            double dist = Math.pow(x - _clusters.get(i).centerX, 2) + Math.pow(y - _clusters.get(i).centerY, 2);
+
+            // assign first checked center as closest
+            // otherwise check if new center is closer, update best distance if so
+            if (closestCenterIndex == -1 || dist < closestDist)
+            {
+                closestDist = dist;
+                closestCenterIndex = i;
+            }
+        }
+
+        return closestCenterIndex;
+    }
+
+
+    public final int k()
+    {
+        return _k;
+    }
+
+    public final List<StockPoint> data()
+    {
+        return _data;
+    }
+    public final List<ClusterGroup> clusters()
+    {
+        return _clusters;
+    }
 }

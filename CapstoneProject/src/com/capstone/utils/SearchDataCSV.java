@@ -90,8 +90,9 @@ public class SearchDataCSV extends SearchDataOutput {
         
         // Statistics to gather
         int anomalyTypeHitsSize = anomalies.getKeySet().size();
-        long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 1];
-        long anomalyTypesCount[] = new long[anomalyTypeHitsSize + 1];
+        long anomalyTypeHits[] = new long[anomalyTypeHitsSize + 2];
+        long anomalyTypesCount[] = new long[anomalyTypeHitsSize + 2];
+        long anomalyTypesSearches[] = new long[anomalyTypeHitsSize + 2];
         long anomalyArticles = 0;
         
         // Get list of anomaly Types
@@ -119,7 +120,7 @@ public class SearchDataCSV extends SearchDataOutput {
              // Stock Details
             if(parameterSwitch == 'd' || parameterSwitch == 'a' || parameterSwitch == 'p')
             {
-                bufferedWriter.write("priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,");
+                bufferedWriter.write("priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,jaccard,");
             }
             
             // For each type, make a new column
@@ -155,12 +156,19 @@ public class SearchDataCSV extends SearchDataOutput {
                                 stockPoint.getPriceLow() + "," + 
                                 stockPoint.getPriceHigh() + "," + 
                                 stockPoint.getVolume() + "," +
-                                stockPoint.getRateOfReturn() + ",";
+                                stockPoint.getRateOfReturn() + "," +
+                                stockPoint.getJIndex() + ",";
                     }
                     
                     int aHits = 0;
+                    if(anomalyTypes.contains("Jaccard") == true && anomalyTypes.size() == 1)
+                    {
+                        anomalyTypesCount[anomalyTypeHitsSize + 1]++;
+                    }
                     for(String knownAType : anomaliesSorted.anomalyTypes)
                     {
+                        
+                        
                         if(anomalyTypes.contains(knownAType))
                         {
                             toOutput = toOutput + "true,";
@@ -192,7 +200,10 @@ public class SearchDataCSV extends SearchDataOutput {
                         }
                         else
                         {
+                            
+                            // Article Counter
                             anomalyArticles++;
+                            
                             // Writes anomaly stock and search data
                             for (SearchItem item : _searchResults)
                             {
@@ -202,6 +213,18 @@ public class SearchDataCSV extends SearchDataOutput {
                                         "\"," + df.format(item.getDate()) + ",\"" + item.getNewsSource() + 
                                         "\",\"" + item.getURL() + "\"");
                                 bufferedWriter.newLine();
+                            }
+                            
+                            if(anomalyTypes.contains("Jaccard") == true && anomalyTypes.size() == 1)
+                            {
+                                anomalyTypesSearches[anomalyTypeHitsSize + 1]++;
+                            }
+                            
+                            //Adds search results counters
+                            for(String knownAType : anomaliesSorted.anomalyTypes)
+                            {
+                                if(anomalyTypes.contains(knownAType))
+                                    anomalyTypesSearches[anomaliesSorted.anomalyTypes.indexOf(knownAType)]++;
                             }
                         }
                     }
@@ -295,10 +318,43 @@ public class SearchDataCSV extends SearchDataOutput {
                 for (String anomalyType : anomaliesSorted.anomalyTypes)
                 {
                     
-                    bufferedWriter.write("Anomaly Type " + anomalyType + ": " + 
-                            anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)] );
+                    bufferedWriter.write("Anomaly Type - " + anomalyType);
+                    
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(" - Total Anomalies: " + 
+                            anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)]);
+                    
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(" - Anomalies with search result(s): " +
+                            anomalyTypesSearches[anomaliesSorted.anomalyTypes.indexOf(anomalyType)]);
+                    bufferedWriter.newLine();
+                    bufferedWriter.write(" - Percent with search results(s): ");
+                    long typeSearches = anomalyTypesSearches[anomaliesSorted.anomalyTypes.indexOf(anomalyType)];
+                    long typeTotal = anomalyTypesCount[anomaliesSorted.anomalyTypes.indexOf(anomalyType)];
+                    double searchPercentage = ( (double)typeSearches / (double)typeTotal * 100);
+                    bufferedWriter.write(String.format("%.2f",searchPercentage) + "%");
                     bufferedWriter.newLine();
                 }
+                
+                bufferedWriter.write("Anomaly Type - Jaccard Unique");
+                
+                // Unique Jaccards
+                bufferedWriter.newLine();
+                bufferedWriter.write(" - Total Anomalies: " + 
+                        anomalyTypesCount[anomalyTypeHitsSize + 1]);
+
+                bufferedWriter.newLine();
+                bufferedWriter.write(" - Anomalies with search result(s): " +
+                        anomalyTypesSearches[anomalyTypeHitsSize + 1]);
+                bufferedWriter.newLine();
+                bufferedWriter.write(" - Percent with search results(s): ");
+                long typeSearches = anomalyTypesSearches[anomalyTypeHitsSize + 1];
+                long typeTotal = anomalyTypesCount[anomalyTypeHitsSize + 1];
+                double searchPercentage = ( (double)typeSearches / (double)typeTotal * 100);
+                bufferedWriter.write(String.format("%.2f",searchPercentage) + "%");
+                bufferedWriter.newLine();
+                    
+                    
                 bufferedWriter.newLine();
                 
                 // Summary Data

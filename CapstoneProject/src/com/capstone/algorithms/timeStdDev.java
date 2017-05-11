@@ -59,6 +59,12 @@ public class timeStdDev extends timeAlgorithm {
         anomalyCoeffientVolume = 2.0;
     }
     
+    public void setCoEfficents(double coefficent)
+    {
+        this.anomalyCoeffientRateOfReturn = coefficent;
+        this.anomalyCoeffientVolume = coefficent;
+    }
+    
     public LinkedList<StockPoint> findAnomalies()
     {
         /**

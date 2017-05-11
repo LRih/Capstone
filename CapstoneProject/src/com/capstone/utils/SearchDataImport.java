@@ -62,6 +62,8 @@ public class SearchDataImport {
         SearchStocks _searchStocks = new SearchStocks();
         
         ArrayList<String> xmlFiles = new ArrayList<String>();
+        
+        System.out.printf("Importing Search Results...");
         for (File file : folder.listFiles()) 
         {
             if (file.getName().endsWith((".xml"))) {
@@ -72,6 +74,7 @@ public class SearchDataImport {
         
             }
         }
+        System.out.println("Completed!");
         
         return _searchStocks;
     }
@@ -85,14 +88,13 @@ public class SearchDataImport {
         {	
             //File inputFile = new File("single.xml");
             
-            
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
             
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("rec");
-            System.out.println("----------------------------");
+            //System.out.println("----------------------------");
 
             // Gets total length and puts into memory due to large amount of calls that will be made.
             records = nList.getLength();
@@ -133,6 +135,7 @@ public class SearchDataImport {
                     _searches.add(searchItem);
                 }
             }
+            
             
         }
         catch (Exception e) 

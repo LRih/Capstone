@@ -14,11 +14,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import com.capstone.algorithms.Jaccard;
+//import com.capstone.algorithms.Jaccard;
 import com.capstone.entities.StockPoint;
-import com.capstone.hiddenAnomalyBusiness.ClusterDataService;
+//import com.capstone.hiddenAnomalyBusiness.ClusterDataService;
 
-public class MainRun
+/*public class MainRun
 {
 
 	public static void main(String[] args)
@@ -90,3 +90,4 @@ public class MainRun
 	}
 
 }
+*/

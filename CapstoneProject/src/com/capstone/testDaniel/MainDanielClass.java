@@ -8,14 +8,13 @@
  */
 package com.capstone.testDaniel;
 
-import java.util.LinkedList;
+import com.capstone.algorithms.JI;
 
 import com.capstone.entities.Stock;
 import com.capstone.entities.StockPoint;
 
 import com.capstone.algorithms.timeStdDev;
 import com.capstone.algorithms.timeARMA;
-import com.capstone.dataService.LinearSigmoidPreprocessor;
 import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 
 import com.capstone.entities.Anomalies;
@@ -42,7 +41,9 @@ public class MainDanielClass {
     public static void main(String[] args) {
         
         Map<String, List<StockPoint>> _stocks;
-        
+        int k = 4;
+        double stdDev = 3;
+
         // Pre-Process the data to normalize it.
         //new DataPreprocessService().preprocess();
         
@@ -50,20 +51,28 @@ public class MainDanielClass {
         //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
         SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
         preprocessor.preprocess();
-        _stocks = preprocessor.nameMap();
         
+        // load stocks by means... optimize later
+        _stocks = preprocessor.nameMap();
+
         // Initialize the class
         //DataImport dataImport = new DataImport();
         
         // StockPoints of anomalies.
         // Needs a re-work to allow different stock items. ********************
-        LinkedList<StockPoint> anomalies;
+        List<StockPoint> anomalies;
         
         Anomalies _anomalies = new Anomalies();
         _anomalies.addAnomalyType(Anomalies.Type.STDDEV);
         _anomalies.addAnomalyType(Anomalies.Type.ARMA);
+        _anomalies.addAnomalyType(Anomalies.Type.Jaccard);
         
         
+        // Jaccard Index
+        JI jaccard = new JI(k);
+        jaccard.calculate(preprocessor);
+        jaccard.writeToSingleFile();
+            //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
         // Load data into system
         //testStock = dataImport.importNormalizedData("normalized.csv");
         
@@ -92,6 +101,7 @@ public class MainDanielClass {
             //System.out.printf("=========================\n\n");
             
             timeStdDev algorithmStdDev = new timeStdDev(unitStock);
+            algorithmStdDev.setCoEfficents(stdDev);
             anomalies = algorithmStdDev.findAnomalies();
             for (StockPoint stockPoint : anomalies)
             {
@@ -106,6 +116,7 @@ public class MainDanielClass {
             timeARMA algorithmARMA = new timeARMA(unitStock);
             algorithmARMA.setPValue(2);
             algorithmARMA.setQValue(3);
+            algorithmARMA.setCoEfficents(stdDev);
 
             anomalies = algorithmARMA.findAnomalies();
             for (StockPoint stockPoint : anomalies)
@@ -116,7 +127,16 @@ public class MainDanielClass {
             //algorithmARMA.outputToFile("output." + key + ".time.ARMA.csv");
             //algorithmARMA.outputToDebugFile("output." + key + ".time.ARMA.debug.csv");
             //System.out.println("Completed Algorithm: ARMA");
+            
+            
         }
+        
+        // jaccard index anomalies
+        anomalies = jaccard.getAnomalies(stdDev);
+        for (StockPoint stockPoint : anomalies)
+            _anomalies.addAnomaly(Anomalies.Type.Jaccard, stockPoint);
+
+        
         
         // Outputs to file
         _anomalies.outputToFile("anomalies.csv");
@@ -126,15 +146,6 @@ public class MainDanielClass {
         data.setSearchFolder(".\\searchData");
         SearchStocks searchStocks = data.importData();
         
-        /*for (String key : _anomalies.getKeySet())
-        {
-            List<StockPoint> list = _anomalies.getStockList(key); 
-            for (StockPoint stock : list)
-            {
-                searchStocks.getAnomaliesSearchResults(stock.getStockSymbol(), 
-                        stock.getListedDate());
-            }
-        }*/
         
         SearchDataCSV outputCSV = new SearchDataCSV(new File("output.searches.csv"), _stocks);
         outputCSV.outputToFile(searchStocks, _anomalies);

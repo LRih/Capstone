@@ -21,10 +21,10 @@ public final class DBI
 
         double dbi = 0;
 
-        for (ClusterGroup cluster : _clustering.getGroups())
+        for (ClusterGroup cluster : _clustering.clusters())
             dbi += calcD(cluster);
 
-        return dbi / _clustering.getGroups().size();
+        return dbi / _clustering.clusters().size();
     }
 
     /**
@@ -35,7 +35,7 @@ public final class DBI
         boolean maxAssigned = false;
         double maxR = 0;
 
-        for (ClusterGroup cluster2 : _clustering.getGroups())
+        for (ClusterGroup cluster2 : _clustering.clusters())
         {
             if (cluster1 == cluster2)
                 continue;
@@ -67,14 +67,14 @@ public final class DBI
     {
         double s = 0;
 
-        for (StockPoint pt : cluster.getPoints())
+        for (StockPoint pt : cluster.data.values())
         {
-            double xDist = pt.getRateOfReturn() - cluster.getCentroid().getRateOfReturn();
-            double yDist = pt.getVolume() - cluster.getCentroid().getVolume();
+            double xDist = pt.getX() - cluster.centerX;
+            double yDist = pt.getY() - cluster.centerY;
             s += Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
         }
 
-        return s / cluster.getPoints().size();
+        return s / cluster.data.size();
     }
 
     /**
@@ -83,8 +83,8 @@ public final class DBI
      */
     private double calcM(ClusterGroup cluster1, ClusterGroup cluster2)
     {
-        double xDist = cluster1.getCentroid().getRateOfReturn() - cluster2.getCentroid().getRateOfReturn();
-        double yDist = cluster1.getCentroid().getVolume() - cluster2.getCentroid().getVolume();
+        double xDist = cluster1.centerX - cluster2.centerX;
+        double yDist = cluster1.centerY - cluster2.centerY;
 
         return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
     }
