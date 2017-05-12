@@ -12,17 +12,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public final class JI
+public final class ThreadedJI
 {
     private int _k;
+
     private SigmoidSigmoidPreprocessor _preprocessor;
     private Map<Date, List<StockPoint>> _dateIndex;
     private Map<Date, KMeans> _clusterings = new HashMap<Date, KMeans>();
 
+    private int _threads;
+    private List<String> _names;
+    private boolean[] _nameDone;
 
-    public JI(int k)
+
+    public ThreadedJI(int k, int threads)
     {
         _k = k;
+        _threads = threads;
     }
 
 
@@ -40,6 +46,9 @@ public final class JI
             Date end = df.parse(endDate);
 
             _preprocessor = preprocessor;
+
+            _names = new ArrayList<String>(_preprocessor.nameMap().keySet());
+            _nameDone = new boolean[_names.size()];
 
             // trim dates to specified range
             _dateIndex = new TreeMap<Date, List<StockPoint>>();
@@ -87,20 +96,34 @@ public final class JI
 
         long ms = System.currentTimeMillis();
 
-        for (String name : _preprocessor.nameMap().keySet())
-            computeJaccardIndex(name);
+        // start threads
+        Thread[] threads = new Thread[_threads];
+        for (int i = 0; i < _threads; i++)
+        {
+            threads[i] = new JITask();
+            threads[i].start();
+        }
+
+        // wait for threads to finish
+        try
+        {
+            for (Thread thread : threads)
+                thread.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
 
         System.out.println("Completed Jaccard computations (" + (System.currentTimeMillis() - ms) + " ms)");
     }
     private void computeJaccardIndex(String stockName)
     {
-        System.out.print("Computing: " + stockName);
-
         long ms = System.currentTimeMillis();
         for (Date date : _dateIndex.keySet())
             computeJaccardIndex(stockName, date);
 
-        System.out.println(" (" + (System.currentTimeMillis() - ms) + " ms)");
+        System.out.println("Computed: " + stockName + " (" + (System.currentTimeMillis() - ms) + " ms)");
     }
     private void computeJaccardIndex(String stockName, Date dateJ)
     {
@@ -312,5 +335,28 @@ public final class JI
         mean /= count;
 
         return mean;
+    }
+
+
+    private synchronized boolean takeTask(int index)
+    {
+        if (!_nameDone[index])
+        {
+            _nameDone[index] = true;
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private final class JITask extends Thread
+    {
+        public final void run()
+        {
+            for (int i = 0; i < _names.size(); i++)
+                if (takeTask(i))
+                    computeJaccardIndex(_names.get(i));
+        }
     }
 }

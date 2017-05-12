@@ -14,6 +14,7 @@ import javax.swing.WindowConstants;
 import com.capstone.algorithms.JI;
 import com.capstone.algorithms.KMeans;
 import com.capstone.algorithms.KMeansAnomalizer;
+import com.capstone.algorithms.ThreadedJI;
 import com.capstone.dataService.SigmoidSigmoidPreprocessor;
 import com.capstone.entities.StockPoint;
 
@@ -61,7 +62,8 @@ public class MainTest
         preprocessor.preprocess();
 
         // calculate jaccard index in specified date range
-        final JI index = new JI(k);
+        final ThreadedJI index = new ThreadedJI(k, 8);
+//        final JI index = new JI(k);
         index.calculate(preprocessor, "2010-01-05", "2011-01-01");
 
         index.writeToSingleFile(); // write values to single file sorted by jaccard index

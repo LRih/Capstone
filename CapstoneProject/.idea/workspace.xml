@@ -16,14 +16,46 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainDanielClass.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
+      <file leaf-file-name="ThreadedJI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/ThreadedJI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="564">
-              <caret line="44" column="25" lean-forward="false" selection-start-line="44" selection-start-column="25" selection-end-line="44" selection-end-column="25" />
+            <state relative-caret-position="-381">
+              <caret line="158" column="18" lean-forward="false" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#calculate#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#clusterDates#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#writeToSingleFile#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#writeToIndividualFiles#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#writeAnomaliesFile#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#copyCenters#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#getUnion#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#getIntersection#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#getAnomalies#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#calcSampleVariance#0;class#ThreadedJI#0" expanded="false" />
+                <element signature="method#calcMean#0;class#ThreadedJI#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="63" column="55" lean-forward="false" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
+              <folding>
+                <element signature="method#testPreprocess#0;class#MainTest#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/JI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="92" column="108" lean-forward="false" selection-start-line="92" selection-start-column="108" selection-end-line="92" selection-end-column="108" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,9 +125,10 @@
         <option value="$PROJECT_DIR$/src/com/capstone/dataService/LinearSigmoidPreprocessor.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testDaniel/SearchDanielClass.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testrichard/CPanel.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/algorithms/JI.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/algorithms/JI.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/algorithms/ThreadedJI.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java" />
       </list>
     </option>
   </component>
@@ -120,6 +153,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -299,7 +333,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -318,8 +351,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.capstone.utils" />
       <recent name="com.capstone.algorithms" />
+      <recent name="com.capstone.utils" />
       <recent name="com.capstone.dataService" />
       <recent name="com.capstone" />
     </key>
@@ -330,7 +363,7 @@
       <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainDanielClass">
+  <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="MainDanielClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -621,14 +654,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/dataService/DataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -892,14 +917,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/DataPoint.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/timeAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="21" column="22" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/SearchItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1746">
@@ -918,9 +935,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
-          <folding>
-            <element signature="method#test#0;class#MainRun#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1018,14 +1033,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/Stock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-213">
-          <caret line="19" column="16" lean-forward="true" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/StockPoint.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -1096,9 +1103,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
           <caret line="28" column="44" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
-          <folding>
-            <marker date="1494044259489" expanded="false" signature="801:829" ph="&lt;~&gt;" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1194,40 +1198,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/Stock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="19" column="16" lean-forward="true" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/timeAlgorithm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="21" column="22" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1095">
+          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/JI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2646">
-          <caret line="139" column="44" lean-forward="false" selection-start-line="139" selection-start-column="44" selection-end-line="139" selection-end-column="44" />
+        <state relative-caret-position="441">
+          <caret line="92" column="108" lean-forward="false" selection-start-line="92" selection-start-column="108" selection-end-line="92" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/ThreadedJI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-381">
+          <caret line="158" column="18" lean-forward="false" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
           <folding>
-            <element signature="e#594#608#0" expanded="true" />
-            <element signature="e#4210#4222#0" expanded="true" />
-            <element signature="e#6859#6873#0" expanded="true" />
-            <element signature="e#7359#7371#0" expanded="true" />
-            <element signature="e#7812#7824#0" expanded="true" />
-            <element signature="e#8466#8467#0" expanded="true" />
-            <element signature="e#8529#8530#0" expanded="true" />
+            <element signature="method#calculate#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#clusterDates#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#writeToSingleFile#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#writeToIndividualFiles#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#writeAnomaliesFile#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#copyCenters#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#getUnion#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#getIntersection#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#getAnomalies#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#calcSampleVariance#0;class#ThreadedJI#0" expanded="false" />
+            <element signature="method#calcMean#0;class#ThreadedJI#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/testrichard/MainTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="53" column="37" lean-forward="true" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
+        <state relative-caret-position="189">
+          <caret line="63" column="55" lean-forward="false" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
           <folding>
             <element signature="method#testPreprocess#0;class#MainTest#0" expanded="false" />
-            <element signature="e#2387#2660#0" expanded="true" />
-            <element signature="e#2659#2660#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/testDaniel/MainDanielClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="44" column="25" lean-forward="false" selection-start-line="44" selection-start-column="25" selection-end-line="44" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
