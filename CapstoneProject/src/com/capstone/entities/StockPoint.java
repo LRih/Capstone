@@ -5,20 +5,10 @@
  */
 package com.capstone.entities;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * 
- * @author Daniel
- * StockPoint.java
- * Describe: This is a Stock class entity
- * @modify Jason.Zhuang
- * 30/03/2017
- */
-public class StockPoint 
+public final class StockPoint
 {
     protected Date   listedDate;
     protected String stockSymbol;
@@ -285,17 +275,6 @@ public class StockPoint
 	public static double distance(StockPoint p1, StockPoint p2)
 	{
 		return Math.sqrt(Math.pow((p2.getX() - p1.getX()), 2) + Math.pow((p2.getY() - p1.getY()), 2));
-	}
-
-	
-	public boolean sameStock(StockPoint arg)
-	{
-		if ( this.stockSymbol.equals(arg.stockSymbol))
-		{
-			return true;
-		}
-		
-		return false;
 	}
 
 

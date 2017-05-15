@@ -11,8 +11,6 @@ import java.util.*;
  * Takes raw stock data and performs the following normalization:
  *   close: (P(t) - P(t-1)) / P(t) then sigmoid function with translation = average close
  *   volume: sigmoid function with translation = average volume
- *
- * @author Richard Liu
  */
 public class SigmoidSigmoidPreprocessor
 {

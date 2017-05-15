@@ -16,17 +16,17 @@ import com.capstone.entities.Stock;
 import com.capstone.entities.StockPoint;
 
 /**
- *
  * @author daniel
  */
-public abstract class timeAlgorithm {
+public abstract class timeAlgorithm
+{
     /**
-     * @param   stock       Is the full set of stock data to be processed.
-     * @param   anomalies   Is the resulting dataset that is the stockpoints of anamoly data.
+     * @param stock       Is the full set of stock data to be processed.
+     * @param anomalies   Is the resulting dataset that is the stockpoints of anamoly data.
      */
     protected Stock stock;
     protected LinkedList<StockPoint> anomalies;
-    
+
     public timeAlgorithm(Stock stock)
     {
         /**
@@ -35,57 +35,49 @@ public abstract class timeAlgorithm {
         this.stock = stock;
         anomalies = new LinkedList<StockPoint>();
     }
-    
+
     public timeAlgorithm()
     {
         anomalies = new LinkedList<StockPoint>();
     }
-    
+
     public LinkedList<StockPoint> findAnomalies()
     {
         /**
-         * @return  returns all anomalies found in the calculations.
+         * @return returns all anomalies found in the calculations.
          */
         return anomalies;
-    } 
-    
-    public void setStock (Stock stock)
-    {
-        /**
-         * @param   stock   Stock dataset that contains the data to be used.
-         */
-        this.stock = stock;
     }
-    
+
     public LinkedList<StockPoint> getAnomalies()
     {
         /**
-         * @return  returns all anomalies found in the calculations.
+         * @return returns all anomalies found in the calculations.
          */
         return anomalies;
     }
-    
+
     public void outputToFile(String filename)
     {
         /**
          * @param   filename    filename to output anomalies to.
          */
         BufferedWriter bufferedWriter = null;
-        
+
         try
         {
-           
-            bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
-            
+
+            bufferedWriter = new BufferedWriter(new FileWriter(new File(filename)));
+
             bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn");
             bufferedWriter.newLine();
-            for(int i = 0; i < anomalies.size(); i++)
+            for (int i = 0; i < anomalies.size(); i++)
             {
                 bufferedWriter.write(anomalies.get(i).toString());
                 bufferedWriter.newLine();
             }
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -104,5 +96,5 @@ public abstract class timeAlgorithm {
             }
         }
     }
-            
+
 }

@@ -8,8 +8,6 @@ import com.capstone.entities.StockPoint;
  * Davies-Bouldin index metric.
  *
  * See: https://en.wikipedia.org/wiki/Davies%E2%80%93Bouldin_index
- *
- * @author Richard Liu (s3168087)
  */
 public final class DBI
 {

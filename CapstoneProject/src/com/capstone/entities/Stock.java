@@ -3,66 +3,56 @@
  */
 package com.capstone.entities;
 
-/* 
- * Package Imports 
- */
-import java.util.Date;
 import java.util.LinkedList;
-import java.text.SimpleDateFormat;
 
-import com.capstone.entities.StockPoint;
 import java.util.List;
 
-/**
- *
- * @author daniel
- */
-public class Stock {
-
-    List<StockPoint> stockPoints;
+public final class Stock
+{
+    private List<StockPoint> stockPoints;
     protected String stockSymbol;
-            
-    public Stock ()
+
+    public Stock()
     {
         stockPoints = new LinkedList<StockPoint>();
-    }    
-    
-    public Stock (String stockSymbol)
+    }
+
+    public Stock(String stockSymbol)
     {
         stockPoints = new LinkedList<StockPoint>();
-        this.stockSymbol = stockSymbol;
-    } 
-    
-    public void setStockSymbol (String stockSymbol)
-    {
-        /**
-         * @param   stockSymbol the symbol for this stock.
-         */
         this.stockSymbol = stockSymbol;
     }
-    
-    public void addStock (StockPoint stockPoint)
+
+    /**
+     * @param   stockSymbol the symbol for this stock.
+     */
+    public void setStockSymbol(String stockSymbol)
     {
-        /**
-         * @param   stockpoint  adds the element provided to the linkedlist.
-         */
+        this.stockSymbol = stockSymbol;
+    }
+
+    /**
+     * @param   stockPoint  adds the element provided to the linkedlist.
+     */
+    public void addStock(StockPoint stockPoint)
+    {
         stockPoints.add(stockPoint);
     }
-    
-    public int getStockElements ()
+
+    /**
+     * @return amount of elements in stock.
+     */
+    public int getStockElements()
     {
-        /**
-         * @return  amount of elements in stock.
-         */
         return stockPoints.size();
     }
-    
+
+    /**
+     * @param   element element Id of the stockPoints linkedlist.
+     * @return stock at element id that was provided.
+     */
     public StockPoint getStockElement(int element)
     {
-        /**
-         * @param   element element Id of the stockPoints linkedlist.
-         * @return          stock at element id that was provided.
-         */
         return stockPoints.get(element);
     }
 }

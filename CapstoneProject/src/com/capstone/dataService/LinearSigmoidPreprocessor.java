@@ -11,8 +11,6 @@ import com.capstone.entities.StockPoint;
  * Takes raw stock data and performs the following normalization:
  *   close: (P(t) - P(t-1)) / P(t) then [min, max] => [0, 1]
  *   volume: sigmoid function with translation = average volume
- *
- * @author Richard Liu
  */
 public class LinearSigmoidPreprocessor
 {

@@ -10,8 +10,6 @@ import java.util.List;
  * average case complexity: O(n log n).
  * <p>
  * See: https://en.wikipedia.org/wiki/Quickhull
- *
- * @author Richard Liu (s3168087)
  */
 public final class QuickHull
 {
