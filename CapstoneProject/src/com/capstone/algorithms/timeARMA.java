@@ -20,7 +20,7 @@ import com.capstone.entities.StockPoint;
 /**
  *
  */
-public class timeARMA extends timeAlgorithm
+public class TimeARMA extends TimeAlgorithm
 {
     /**
      * Notes:
@@ -59,7 +59,7 @@ public class timeARMA extends timeAlgorithm
     /**
      * @param   stock   Stock dataset that contains the data to be used.
      */
-    public timeARMA(Stock stock)
+    public TimeARMA(Stock stock)
     {
         super(stock);
 
@@ -71,7 +71,7 @@ public class timeARMA extends timeAlgorithm
 
     }
 
-    public timeARMA()
+    public TimeARMA()
     {
         super();
 

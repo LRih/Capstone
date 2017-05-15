@@ -1,25 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.capstone.entities;
 
-import java.text.SimpleDateFormat;
+import com.capstone.utils.DateUtils;
+
 import java.util.*;
 
 public final class StockPoint
 {
-    protected Date   listedDate;
-    protected String stockSymbol;
-    protected double priceOpen;
-    protected double priceClose;
-    protected double priceHigh;
-    protected double priceLow;
-    protected double volume;
-    protected double deltaClose;
-    protected double normalizedDeltaClose;
-    protected double normalizedVolume;
+    private Date listedDate;
+    private String stockSymbol;
+    private double priceOpen;
+    private double priceClose;
+    private double priceHigh;
+    private double priceLow;
+    private double volume;
+    private double deltaClose;
+    private double normalizedDeltaClose;
+    private double normalizedVolume;
     private double jIndex = -1;
 
     private int cluster = 0;
@@ -55,88 +51,88 @@ public final class StockPoint
     }
 
 
-    public Date getListedDate ()
+    public Date getListedDate()
     {
         return listedDate;
     }
 
+    /**
+     * @return the delta closing price of the stock.
+     */
     public double getDeltaClose()
     {
-        /** 
-         * @return the delta closing price of the stock.
-         */
         return deltaClose;
     }
-    
+
+    /**
+     * @return the normalized closing price of the stock.
+     */
     public double getNormalizedDeltaClose()
     {
-        /** 
-         * @return the normalized closing price of the stock.
-         */
         return normalizedDeltaClose;
     }
-    
+
+    /**
+     * @return the closing price of the stock.
+     */
     public double getNormalizedVolume()
     {
-        /** 
-         * @return the closing price of the stock.
-         */
         return normalizedVolume;
     }
-    
+
+    /**
+     * @return the closing price of the stock.
+     */
     public double getPriceClose()
     {
-        /** 
-         * @return the closing price of the stock.
-         */
         return priceOpen;
     }
-    
+
+    /**
+     * @return the highest sold price of the stock.
+     */
     public double getPriceHigh()
     {
-        /**
-         * @return the highest sold price of the stock.
-         */
         return priceHigh;
     }
-    
+
+    /**
+     * @return the lowest sold price of the stock.
+     */
     public double getPriceLow()
     {
-        /**
-         * @return the lowest sold price of the stock.
-         */
         return priceHigh;
     }
-    
+
+    /**
+     * @return the opening price of the stock.
+     */
     public double getPriceOpen()
     {
-        /** 
-         * @return the opening price of the stock.
-         */
         return priceOpen;
     }
-    
+
+    /**
+     * @return the volume of stock sold.
+     */
     public double getRateOfReturn()
     {
-        /** 
-         * @return the volume of stock sold.
-         */
         return priceHigh - priceLow;
     }
-    
+
+    /**
+     * @return the symbol of stock.
+     */
     public String getStockSymbol()
     {
-        /** 
-         * @return the symbol of stock.
-         */
         return stockSymbol;
     }
-    
+
+    /**
+     * @return the volume of stock sold.
+     */
     public double getVolume()
     {
-        /** 
-         * @return the volume of stock sold.
-         */
         return volume;
     }
 
@@ -145,19 +141,23 @@ public final class StockPoint
         return jIndex;
     }
 
+    public int getCluster()
+    {
+        return cluster;
+    }
 
-    public boolean setListedDate (String strDate)
+
+    /**
+     * @param   strDate the string date to be converted into a date-time format and saved.
+     * @return  a boolean that states if the operation was successful.
+     */
+    private boolean setListedDate(String strDate)
     {
         strDate = strDate.split(" ")[0]; // remove time
 
-        /**
-         * @param   strDate the string date to be converted into a date-time format and saved.
-         * @return  a boolean that states if the operation was successful.
-         */
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         try
         {
-            listedDate = dateFormatter.parse(strDate);
+            listedDate = DateUtils.DATE_FORMAT.parse(strDate);
         }
         catch(Exception e)
         {
@@ -167,77 +167,29 @@ public final class StockPoint
         
         return true;
     }
-    
+
+    /**
+     * @param deltaClose the delta closing price of the stock.
+     */
     public void setDeltaClose(double deltaClose)
     {
-        /** 
-         * @param deltaClose the delta closing price of the stock.
-         */
         this.deltaClose = deltaClose;
     }
-    
+
+    /**
+     * @param normalizedDeltaClose the normalized delta closing price of the stock.
+     */
     public void setNormalizedDeltaClose(double normalizedDeltaClose)
     {
-        /** 
-         * @param normalizedDeltaClose the normalized delta closing price of the stock.
-         */
         this.normalizedDeltaClose = normalizedDeltaClose;
     }
-    
-    public void setNormalizedVolume (double normalizedVolume)
+
+    /**
+     * @param normalizedVolume the normalized volume of trade of the stock.
+     */
+    public void setNormalizedVolume(double normalizedVolume)
     {
-        /** 
-         * @param normalizedVolume the normalized volume of trade of the stock.
-         */
         this.normalizedVolume = normalizedVolume;
-    }
-    
-    public void setPriceClose(double priceClose)
-    {
-        /** 
-         * @param priceClose the closing price of the stock.
-         */
-        this.priceClose = priceClose;
-    }
-    
-    public void setPriceHigh(double priceHigh)
-    {
-        /**
-         * @param priceHigh the highest sold price of the stock.
-         */
-        this.priceHigh = priceHigh;
-    }
-    
-    public void setPriceLow(double priceLow)
-    {
-        /**
-         * @param priceLow the lowest sold price of the stock.
-         */
-        this.priceLow = priceLow;
-    }
-    
-    public void setPriceOpen(double priceOpen)
-    {
-        /** 
-         * @param priceOpen the opening price of the stock.
-         */
-        this.priceOpen = priceOpen;
-    }
-    
-    public void setStockSymbol(String stockSymbol)
-    {
-        /** 
-         * @param stockSymbol the symbol of stock.
-         */
-        this.stockSymbol = stockSymbol;
-    }
-    
-    public void setVolume(double volume)
-    {
-        /** 
-         * @param volume the volume of stock sold.
-         */
-        this.volume = volume;
     }
 
     public void setJIndex(double jIndex)
@@ -245,25 +197,18 @@ public final class StockPoint
         this.jIndex = jIndex;
     }
 
-
-    public String toString ()
+    public void setCluster(int cluster)
     {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        
-        return df.format(this.listedDate) + "," + this.stockSymbol + "," + this.priceOpen + 
+        this.cluster = cluster;
+    }
+
+
+    public String toString()
+    {
+        return DateUtils.DATE_FORMAT.format(this.listedDate) + "," + this.stockSymbol + "," + this.priceOpen +
                 "," + this.priceClose + "," + this.priceLow + "," + this.priceHigh +
                 "," + this.volume + "," + this.getRateOfReturn();
     }
-    
-    public int getCluster()
-	{
-		return cluster;
-	}
-
-	public void setCluster(int cluster)
-	{
-		this.cluster = cluster;
-	}
     
     /**
 	 * Calculates the distance between two points.

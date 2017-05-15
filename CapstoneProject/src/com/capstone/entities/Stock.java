@@ -1,6 +1,3 @@
-/*
- * Purpose: Stock data storage container.
- */
 package com.capstone.entities;
 
 import java.util.LinkedList;

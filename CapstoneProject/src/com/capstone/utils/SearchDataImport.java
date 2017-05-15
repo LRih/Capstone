@@ -8,16 +8,14 @@
 package com.capstone.utils;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.lang.String;
-
-import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -126,8 +124,7 @@ public class SearchDataImport {
 
                     Element dtElement = (Element) eElement.getElementsByTagName("dt").item(0);
 
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                    Date eDate = df.parse(dtElement.getAttribute("year") + "-" +
+                    Date eDate = DateUtils.DATE_FORMAT.parse(dtElement.getAttribute("year") + "-" +
                            dtElement.getAttribute("month") + "-" + 
                            dtElement.getAttribute("day"));
 

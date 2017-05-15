@@ -21,7 +21,8 @@ import com.capstone.entities.StockPoint;
  *
  * @author daniel
  */
-public class timeStdDev extends timeAlgorithm {
+public class TimeStdDev extends TimeAlgorithm
+{
     protected double meanRateOfReturn;
     protected double meanVolume;
     
@@ -40,7 +41,7 @@ public class timeStdDev extends timeAlgorithm {
     protected LinkedList<Double> varRateOfReturn;
     protected LinkedList<Double> varVolume;
     
-    public timeStdDev(Stock stock)
+    public TimeStdDev(Stock stock)
     {
         /**
          * @param   stock   Stock dataset that contains the data to be used.
@@ -51,7 +52,7 @@ public class timeStdDev extends timeAlgorithm {
         anomalyCoeffientVolume = 2.0;
     }
     
-    public timeStdDev()
+    public TimeStdDev()
     {
         super();
         

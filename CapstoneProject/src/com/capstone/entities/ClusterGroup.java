@@ -3,6 +3,9 @@ package com.capstone.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a cluster group in clustering algorithms.
+ */
 public final class ClusterGroup
 {
     public double centerX;
@@ -17,7 +20,9 @@ public final class ClusterGroup
         this.centerY = centerY;
     }
 
-
+    /**
+     * Updates centers. Used by the K-means algorithm.
+     */
     public final boolean updateCenter()
     {
         // no data in cluster

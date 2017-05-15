@@ -7,6 +7,9 @@ import com.capstone.utils.MathUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Performs the K-means clustering algorithm for a given data set.
+ */
 public class KMeans
 {
     private final int _k;

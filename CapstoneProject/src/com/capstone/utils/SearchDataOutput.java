@@ -12,35 +12,34 @@ import com.capstone.entities.Anomalies;
 import com.capstone.entities.SearchStocks;
 
 /**
- *
  * @author Shadow
  */
-public abstract class SearchDataOutput {
+public abstract class SearchDataOutput
+{
     protected File file;
-    
-    public SearchDataOutput ()
+
+    public SearchDataOutput()
     {
         this.file = new File("output.txt");
     }
-    
-    public SearchDataOutput (File file)
+
+    /**
+     * @param   file    File to specify as the output.
+     */
+    public SearchDataOutput(File file)
     {
-        /**
-         * @param   file    File to specify as the output.
-         */
         this.file = file;
     }
-    
-    public void setFile (File file)
+
+    /**
+     * @param   file    File to specify as the output.
+     */
+    public void setFile(File file)
     {
-        /**
-         * @param   file    File to specify as the output.
-         */
         this.file = file;
     }
-    
-    public void outputToFile (SearchStocks search, Anomalies anomalies)
+
+    public void outputToFile(SearchStocks search, Anomalies anomalies)
     {
-        
     }
 }

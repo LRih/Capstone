@@ -11,72 +11,68 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- *
- * @author Shadow
- */
 public class Anomalies
 {
     private Map<Type, List<StockPoint>> anomalies;
 
     /**
-     *  Creates the HashMap used for the class.
+     * Creates the HashMap used for the class.
      */
-    public Anomalies ()
+    public Anomalies()
     {
         anomalies = new HashMap<Type, List<StockPoint>>();
     }
 
     /**
-     * @param   type    Name of the key for the type of anomaly being used.
+     * @param type Name of the key for the type of anomaly being used.
      */
-    public void addAnomalyType (Type type)
+    public void addAnomalyType(Type type)
     {
         anomalies.put(type, new LinkedList<StockPoint>());
     }
 
     /**
-     * @param   type        Name of the key for the type of anomaly being used.
-     * @param   stockPoint  Data point that is an anomaly.
+     * @param type       Name of the key for the type of anomaly being used.
+     * @param stockPoint Data point that is an anomaly.
      */
     public void addAnomaly(Type type, StockPoint stockPoint)
     {
         anomalies.get(type).add(stockPoint);
     }
-    
-    public Set<Type> getKeySet ()
+
+    public Set<Type> getKeySet()
     {
         return anomalies.keySet();
     }
-    
-    public List<StockPoint> getStockList (Type key)
+
+    public List<StockPoint> getStockList(Type key)
     {
         return anomalies.get(key);
     }
 
     /**
-     * @param   filename    filename to output anomalies to.
+     * @param filename filename to output anomalies to.
      */
     public void outputToFile(String filename)
     {
         // Output to file(s)
         BufferedWriter bufferedWriter = null;
-        
+
         try
         {
-           
-            bufferedWriter = new BufferedWriter(new FileWriter(new File(filename))); 
-            
+
+            bufferedWriter = new BufferedWriter(new FileWriter(new File(filename)));
+
             bufferedWriter.write("date,symbol,priceOpen,priceClose,priceLow,priceHigh,volume,rateOfReturn,anomalytype");
             bufferedWriter.newLine();
-            
-            for ( Type key : anomalies.keySet() )
+
+            for (Type key : anomalies.keySet())
             {
                 // Adds all stock that are relevant to stock class.
                 for (StockPoint stockPoint : anomalies.get(key))
                 //for (int i = 0; i < anomalies.get(key).size(); i++)
                 {
-                    
+
                     //bufferedWriter.write(anomalies.get(key).get(i).toString() + "," + key);
                     bufferedWriter.write(stockPoint.toString() + "," + key);
                     bufferedWriter.newLine();
@@ -84,7 +80,7 @@ public class Anomalies
 
             }
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             e.printStackTrace();
         }
