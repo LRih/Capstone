@@ -15,7 +15,20 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="Hartigan.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1428">
+              <caret line="71" column="36" lean-forward="false" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -51,7 +64,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/com/capstone/utils/DataConstant.java" />
-        <option value="$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/MainRun.java" />
         <option value="$PROJECT_DIR$/Time-Series/TimeSeries/src/timeseries/utils/DataImport.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/entities/IDataPoint.java" />
@@ -101,6 +113,7 @@
         <option value="$PROJECT_DIR$/src/com/capstone/algorithms/KMeans.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/utils/SearchDataOutput.java" />
         <option value="$PROJECT_DIR$/src/com/capstone/utils/SearchDataImport.java" />
+        <option value="$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java" />
       </list>
     </option>
   </component>
@@ -125,8 +138,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -261,7 +272,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -285,8 +298,8 @@
       <recent name="com.capstone.dataService" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone\entities" />
       <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone\algorithms" />
+      <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone\entities" />
       <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone\dataService" />
       <recent name="C:\Users\Richard\Documents\Documents\School\2017 S1 Programming Project 1\Capstone\CapstoneProject\src\com\capstone" />
     </key>
@@ -501,12 +514,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -517,8 +529,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21548998" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21548998" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -529,7 +540,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -540,21 +553,8 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/FlexDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="41" column="16" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/DataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/FlexDataService.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/DataService.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/KMeans.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -569,24 +569,14 @@
             <element signature="method#updateClusters#0;class#KMeans#0" expanded="false" />
             <element signature="method#getClosestClusterIndex#0;class#KMeans#0" expanded="false" />
             <element signature="e#2734#2775#0" expanded="false" />
+            <element signature="e#3110#3111#0" expanded="true" />
+            <element signature="e#3135#3136#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testrichard/MainTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="34" column="29" lean-forward="false" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/FlexDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testrichard/MainTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/FlexDataService.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/DataConstant.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/CPanel.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -596,7 +586,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/Test.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_25/src.zip!/java/lang/Math.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -606,24 +595,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Time-Series/TimeSeries/src/timeseries/utils/DataImport.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/entities/DataPoint.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/FlexDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="19" column="43" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/FlexDataService.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/cli/NormalizeOption.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/hiddenAnomalyBusiness/ClusterDataService.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/uiService/UiService.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/DataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/data/DataService.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/JI.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/TimeARMA.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -766,22 +742,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testDaniel/SearchDanielClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="61" column="52" lean-forward="false" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testDaniel/MainDanielClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testDaniel/SearchDanielClass.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testDaniel/MainDanielClass.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/JaccardIndex.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1575">
@@ -807,21 +769,11 @@
             <element signature="method#takeTask#0;class#JaccardIndex#0" expanded="false" />
             <element signature="class#JITask#0;class#JaccardIndex#0" expanded="false" />
             <element signature="method#run#0;class#JITask#0;class#JaccardIndex#0" expanded="false" />
-            <marker date="1495329996413" expanded="false" signature="4981:5052" ph="/**...*/" />
-            <marker date="1495329996413" expanded="false" signature="6054:6123" ph="/**...*/" />
-            <marker date="1495329996413" expanded="false" signature="7047:7110" ph="/**...*/" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testrichard/MainTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/toremove/testrichard/MainTest.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/CPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -863,14 +815,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/DataImport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-712">
-          <caret line="71" column="2" lean-forward="true" selection-start-line="71" selection-start-column="2" selection-end-line="71" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/utils/DataImport.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/data/LinearSigmoidPreprocessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -896,14 +841,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Jaccard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="31" column="43" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="126" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Jaccard.java" />
     <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/TimeAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
@@ -1045,6 +983,16 @@
             <element signature="class#AnomalySorted#0;class#SearchDataCSV#0" expanded="false" />
             <element signature="method#AnomalySorted#0;class#AnomalySorted#0;class#SearchDataCSV#0" expanded="false" />
             <element signature="method#addAnomaly#0;class#AnomalySorted#0;class#SearchDataCSV#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/capstone/algorithms/Hartigan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="71" column="36" lean-forward="false" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
