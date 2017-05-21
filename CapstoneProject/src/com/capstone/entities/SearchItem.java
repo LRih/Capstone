@@ -11,11 +11,6 @@ public final class SearchItem
     private String URL;
     private String newsSource;
 
-    public SearchItem()
-    {
-
-    }
-
     /**
      * @param symbol Symbol of stock's name that the search was made with.
      */

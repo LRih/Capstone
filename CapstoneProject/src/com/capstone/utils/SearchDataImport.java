@@ -1,10 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* Code from https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm */
 package com.capstone.utils;
 
 import java.io.File;
@@ -24,72 +17,69 @@ import org.w3c.dom.Element;
 import com.capstone.entities.SearchItem;
 import com.capstone.entities.SearchStocks;
 
-/**
- *
- * @author Shadow
- */
-public class SearchDataImport {
+public class SearchDataImport
+{
     private boolean debugMode;
     private File folder;
-    
-    public SearchDataImport ()
+
+    public SearchDataImport()
     {
         debugMode = false;
     }
-    
-    public SearchDataImport (boolean debugMode)
+
+    public SearchDataImport(boolean debugMode)
     {
         this.debugMode = debugMode;
     }
-    
-    public void setSearchFolder (String folder)
+
+    public void setSearchFolder(String folder)
     {
         this.folder = new File(folder);
     }
-    
-    public String getSearchFolder ()
+
+    public String getSearchFolder()
     {
         return folder.getPath();
     }
-    
-    
-    
+
+
     public SearchStocks importData()
     {
         File inputFile;
         SearchStocks _searchStocks = new SearchStocks();
-        
+
         ArrayList<String> xmlFiles = new ArrayList<String>();
-        
+
         System.out.printf("Importing Search Results...");
-        for (File file : folder.listFiles()) 
+        for (File file : folder.listFiles())
         {
-            if (file.getName().endsWith((".xml"))) {
+            if (file.getName().endsWith((".xml")))
+            {
                 String filename = file.getName();
                 filename = filename.substring(0, filename.lastIndexOf("."));
-                
-                _searchStocks.addSearchItemsList(importFileData (file, filename));
-        
+
+                _searchStocks.addSearchItemsList(importFileData(file, filename));
+
             }
         }
         System.out.println("Completed!");
-        
+
         return _searchStocks;
     }
-    
-    private ArrayList<SearchItem> importFileData (File inputFile, String stockSymbol)
+
+    private ArrayList<SearchItem> importFileData(File inputFile, String stockSymbol)
     {
         int records = 0;
         ArrayList<SearchItem> _searches = new ArrayList<SearchItem>();
-                
-        try 
-        {	
+
+        try
+        {
             //File inputFile = new File("single.xml");
-            
+
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
-            
+
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("rec");
             //System.out.println("----------------------------");
@@ -102,14 +92,14 @@ public class SearchDataImport {
                 //System.out.println(record);
                 Node nNode = nList.item(record);
 
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+                if (nNode.getNodeType() == Node.ELEMENT_NODE)
                 {
-                    Element eElement = (Element) nNode; 
+                    Element eElement = (Element)nNode;
                     SearchItem searchItem = new SearchItem(stockSymbol);
 
 
                     searchItem.setLongName(eElement.getElementsByTagName("atl").item(0).getTextContent());
-                    
+
                     //searchItem.setShortName(eElement.getElementsByTagName("au").item(0).getTextContent());
                     searchItem.setNewsSource(eElement.getElementsByTagName("jtl").item(0).getTextContent());
                     searchItem.setStockSymbol(stockSymbol);
@@ -122,24 +112,22 @@ public class SearchDataImport {
                     //System.out.println("longDB: " + headerElement.getAttribute("longDbName"));
 
 
-                    Element dtElement = (Element) eElement.getElementsByTagName("dt").item(0);
+                    Element dtElement = (Element)eElement.getElementsByTagName("dt").item(0);
 
                     Date eDate = DateUtils.DATE_FORMAT.parse(dtElement.getAttribute("year") + "-" +
-                           dtElement.getAttribute("month") + "-" + 
-                           dtElement.getAttribute("day"));
+                        dtElement.getAttribute("month") + "-" +
+                        dtElement.getAttribute("day"));
 
                     searchItem.setDate(eDate);
                     _searches.add(searchItem);
                 }
             }
-            
-            
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             e.printStackTrace();
         }
-        
+
         return _searches;
     }
 }

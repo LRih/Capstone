@@ -6,6 +6,7 @@ import com.capstone.utils.MathUtils;
 
 import java.util.*;
 
+@Deprecated
 public class KMeansAnomalizer
 {
     private final int _k;

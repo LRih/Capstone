@@ -18,7 +18,9 @@ import java.util.*;
  */
 public final class JaccardIndex
 {
-    // cluster size
+    /**
+     * Cluster size.
+     */
     private int _k;
 
     private SigmoidSigmoidPreprocessor _preprocessor;
@@ -166,6 +168,9 @@ public final class JaccardIndex
             sJ.setJIndex(index);
     }
 
+    /**
+     * Write values to single file sorted by jaccard index.
+     */
     public final void writeToSingleFile()
     {
         List<StockPoint> pts = new ArrayList<StockPoint>();
@@ -197,6 +202,9 @@ public final class JaccardIndex
             e.printStackTrace();
         }
     }
+    /**
+     * Write values to one file per stock sorted by date.
+     */
     public final void writeToIndividualFiles()
     {
         try
@@ -224,6 +232,9 @@ public final class JaccardIndex
             e.printStackTrace();
         }
     }
+    /**
+     * Write anomalies to file calcuated per stock.
+     */
     public final void writeAnomaliesFile(double thresStdDev)
     {
         try
@@ -340,6 +351,13 @@ public final class JaccardIndex
     }
 
 
+    /**
+     * Check whether stock at index is already being calculated by another thread.
+     * If not, flags the stock as being taken and returns true.
+     *
+     * @param index stock index
+     * @return true if stock is not yet being computed
+     */
     private synchronized boolean takeTask(int index)
     {
         if (!_nameDone[index])

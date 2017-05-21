@@ -13,6 +13,7 @@ import com.capstone.utils.DateUtils;
  *   close: (P(t) - P(t-1)) / P(t) then [min, max] => [0, 1]
  *   volume: sigmoid function with translation = average volume
  */
+@Deprecated
 public class LinearSigmoidPreprocessor
 {
     private static String RAW_DATA_FILENAME = "prices.csv";

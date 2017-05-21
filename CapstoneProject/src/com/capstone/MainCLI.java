@@ -20,7 +20,7 @@ import java.util.Map;
  * Serves as the main entry point for the application, allowing various options
  * and parameters to be set which modify the application's behaviour.
  */
-public final class Main
+public final class MainCLI
 {
     private static final String OPT_HELP = "help";
     private static final String OPT_SEARCH = "search";
