@@ -21,8 +21,7 @@ import com.capstone.entities.StockPoint;
  *
  * @author daniel
  */
-public class TimeStdDev extends TimeAlgorithm
-{
+public class TimeStdDev extends TimeAlgorithm {
     protected double meanRateOfReturn;
     protected double meanVolume;
     
