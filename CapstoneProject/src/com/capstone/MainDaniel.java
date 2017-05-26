@@ -26,29 +26,21 @@ public class MainDaniel
 {
     public static void main(String[] args)
     {
-        fullRun(4, 3);
+        fullRun(4, 2);
     }
 
     private static void fullRun(int k, double stdDev)
     {
         Map<String, List<StockPoint>> _stocks;
 
-        // Pre-Process the data to normalize it.
-        //new DataPreprocessService().preprocess();
-
         // Post-Process it so can be used directly.
-        //LinearSigmoidPreprocessor preprocessor = new LinearSigmoidPreprocessor();
         SigmoidSigmoidPreprocessor preprocessor = new SigmoidSigmoidPreprocessor();
         preprocessor.preprocess();
 
         // load stocks by means... optimize later
         _stocks = preprocessor.nameMap();
 
-        // Initialize the class
-        //DataImport dataImport = new DataImport();
-
         // StockPoints of anomalies.
-        // Needs a re-work to allow different stock items. ********************
         List<StockPoint> anomalies;
 
         Anomalies _anomalies = new Anomalies();
@@ -61,16 +53,10 @@ public class MainDaniel
         JaccardIndex jaccard = new JaccardIndex(k, 8);
         jaccard.calculate(preprocessor);
         jaccard.writeToSingleFile();
-        //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
-        // Load data into system
-        //testStock = dataImport.importNormalizedData("normalized.csv");
-
 
         // Runs each stock in a bubble for time-series detection.
         for (String key : _stocks.keySet())
         {
-            // Debug Keys
-            //System.out.println( key );
 
             // Creates a new stock unit for each time-series
             Stock unitStock = new Stock();
@@ -82,10 +68,6 @@ public class MainDaniel
             }
 
             // Runs each time-series algorithm to find anomalies.
-            //. Time Series
-            //System.out.printf("\n\n=========================\n");
-            //System.out.println("Stock ID: " + key);
-            //System.out.printf("=========================\n\n");
 
             TimeStdDev algorithmStdDev = new TimeStdDev(unitStock);
             algorithmStdDev.setCoEfficents(stdDev);
@@ -94,12 +76,7 @@ public class MainDaniel
             {
                 _anomalies.addAnomaly(Anomalies.Type.STDDEV, stockPoint);
             }
-            //System.out.println("Running Algorithm: Standard Deviation");
-            //algorithmStdDev.outputToFile("output." + key + ".time.StdDev.csv");
-            //algorithmStdDev.outputToDebugFile("output." + key + ".time.StdDev.debug.csv");
-            //System.out.println("Completed Algorithm: Standard Deviation");
-
-            //System.out.println("Running Algorithm: ARMA");
+            
             TimeARMA algorithmARMA = new TimeARMA(unitStock);
             algorithmARMA.setPValue(2);
             algorithmARMA.setQValue(3);
@@ -108,12 +85,8 @@ public class MainDaniel
             anomalies = algorithmARMA.findAnomalies();
             for (StockPoint stockPoint : anomalies)
             {
-                //_anomalies.get("STDDEV").add(stockPoint);
                 _anomalies.addAnomaly(Anomalies.Type.ARMA, stockPoint);
             }
-            //algorithmARMA.outputToFile("output." + key + ".time.ARMA.csv");
-            //algorithmARMA.outputToDebugFile("output." + key + ".time.ARMA.debug.csv");
-            //System.out.println("Completed Algorithm: ARMA");
         }
 
         // jaccard index anomalies
